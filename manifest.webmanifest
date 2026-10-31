@@ -1,0 +1,23 @@
+{
+ "name": "Sổ luyện JLPT N3",
+ "short_name": "Sổ N3",
+ "lang": "vi",
+ "start_url": "./",
+ "scope": "./",
+ "display": "standalone",
+ "background_color": "#EEF1F5",
+ "theme_color": "#2C4A8E",
+ "icons": [
+  {
+   "src": "icon-180.png",
+   "sizes": "180x180",
+   "type": "image/png"
+  },
+  {
+   "src": "icon-512.png",
+   "sizes": "512x512",
+   "type": "image/png",
+   "purpose": "any maskable"
+  }
+ ]
+}
