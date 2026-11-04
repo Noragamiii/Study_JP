@@ -425,6 +425,137 @@ nav button{padding:9px 10px 10px}
 .foc{list-style:none;margin:10px 0 0;padding:0;display:flex;flex-direction:column;gap:8px;counter-reset:foc}
 .foc li{display:flex;gap:10px;align-items:center;counter-increment:foc;border:1px solid var(--line);border-radius:8px;padding:10px 12px;background:var(--paper)}
 .foc li::before{content:counter(foc);flex:0 0 24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
+
+/* ===== v10: kanji mở rộng · bộ thủ · trò chơi ===== */
+:root{--lv5:#23734F;--lv4:#0F7C8C;--lv3:#2C4A8E;--lv2:#9A6200;--lv1:#B42A22;
+  --c0:#FDE2E1;--c0i:#B42A22;--c1:#FFEBCC;--c1i:#9A5A00;--c2:#DDF3E4;--c2i:#1E6B46;--c3:#DCE8FB;--c3i:#2753A8;--c4:#EDE1FA;--c4i:#6B3FA0;--c5:#FBE0EF;--c5i:#A3306E}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--lv5:#5CC596;--lv4:#4FC3D2;--lv3:#8EA7EA;--lv2:#E3B45C;--lv1:#F2877D;
+  --c0:#4A2222;--c0i:#FFB3AD;--c1:#47331A;--c1i:#FFCF8A;--c2:#1C3D2B;--c2i:#8EE0B5;--c3:#1E2E4F;--c3i:#A9C3FF;--c4:#33244A;--c4i:#D3B5FF;--c5:#4A1F38;--c5i:#FFB0D9}}
+:root[data-theme="dark"]{--lv5:#5CC596;--lv4:#4FC3D2;--lv3:#8EA7EA;--lv2:#E3B45C;--lv1:#F2877D;
+  --c0:#4A2222;--c0i:#FFB3AD;--c1:#47331A;--c1i:#FFCF8A;--c2:#1C3D2B;--c2i:#8EE0B5;--c3:#1E2E4F;--c3i:#A9C3FF;--c4:#33244A;--c4i:#D3B5FF;--c5:#4A1F38;--c5i:#FFB0D9}
+.chip.lv5{background:none;border:1px solid var(--lv5);color:var(--lv5)}.chip.lv4{background:none;border:1px solid var(--lv4);color:var(--lv4)}.chip.lv3{background:none;border:1px solid var(--lv3);color:var(--lv3)}.chip.lv2{background:none;border:1px solid var(--lv2);color:var(--lv2)}.chip.lv1{background:none;border:1px solid var(--lv1);color:var(--lv1)}
+.lvdot{display:block;width:6px;height:6px;border-radius:50%;margin-top:2px}.lvdot.lv5{background:var(--lv5)}.lvdot.lv4{background:var(--lv4)}.lvdot.lv3{background:var(--lv3)}.lvdot.lv2{background:var(--lv2)}.lvdot.lv1{background:var(--lv1)}
+.kjchip.weakc{border-color:var(--bad);background:var(--bad-soft)}
+.kjchip{position:relative}
+body.kxlock{overflow:hidden}
+.kxmodal{position:fixed;inset:0;z-index:50;background:rgba(10,14,22,.45);display:flex;align-items:flex-start;justify-content:center;padding:max(16px,env(safe-area-inset-top,0px)) 12px 16px;overflow-y:auto}
+.kxdlg{width:100%;max-width:640px;position:relative;margin:auto 0;box-shadow:0 12px 40px rgba(0,0,0,.25)}
+.kxx{position:absolute;right:8px;top:8px}
+.kxcard{display:flex;flex-direction:column;gap:10px}
+.kxhead{display:flex;gap:14px;align-items:flex-start;padding-right:70px}
+.kxbig{font-size:76px;line-height:1;min-width:84px;text-align:center;border:1px solid var(--line);border-radius:10px;padding:6px 4px;background:var(--paper)}
+.kxvi{font-weight:600}
+.kxsec{border-top:1px solid var(--line);padding-top:8px}
+.kxsec>.eyebrow{margin-bottom:6px}
+.kxparts{display:flex;flex-wrap:wrap;gap:6px}
+.kxpart{font:inherit;color:inherit;display:flex;align-items:center;gap:6px;flex-wrap:wrap;border:1px solid var(--line-strong);background:var(--sheet);border-radius:8px;padding:5px 9px;cursor:pointer;text-align:left}
+.kxpart .jp{font-size:24px;line-height:1}
+.kxradline{font:inherit;color:inherit;display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;width:100%;text-align:left;border:1px solid var(--line);background:var(--accent-soft);border-radius:8px;padding:7px 10px;cursor:pointer}
+.kxradline .jp{font-size:26px;line-height:1}
+.kxwords{display:flex;flex-direction:column;gap:4px}
+.kxw{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap}
+.kxww{font-size:18px}
+.lkbtn{font:inherit;font-size:12px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);border-radius:6px;padding:1px 6px;cursor:pointer}
+.kxstroke{display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap}
+.kxsvg{width:170px;height:170px;border:1px solid var(--line);border-radius:10px;background:var(--paper);flex:none}
+.kxsvg path{fill:none;stroke-linecap:round;stroke-linejoin:round}
+.kxsvg .kxgrid{stroke:var(--line);stroke-width:.6;stroke-dasharray:2 2}
+.kxsvg .kxghost path{stroke:var(--line-strong);stroke-width:3;opacity:.55}
+.kxsvg .kxdraw path{stroke:var(--ink);stroke-width:3.4}
+.kxsvg .kxnum text{font:7px var(--font-ui);fill:var(--bad);font-weight:700}
+.kxstroke .col{flex:1;min-width:180px}
+.kxvar{font-size:22px}
+.kxlvrow{display:flex;gap:8px;align-items:flex-start;margin:6px 0}
+.kxlvrow>.chip{margin-top:10px}
+.kxrgrid{display:flex;flex-wrap:wrap;gap:6px}
+.kxrchip{font:inherit;color:inherit;position:relative;display:flex;flex-direction:column;align-items:center;min-width:64px;max-width:86px;padding:6px 6px 5px;border-radius:8px;border:1px solid var(--line-strong);background:var(--sheet);cursor:pointer}
+.kxrchip .jp{font-size:26px;line-height:1.1}
+.kxrchip .kxrv{position:absolute;left:5px;top:3px;font-size:12px;color:var(--muted)}
+.kxrchip small{font-size:10.5px;line-height:1.25;text-align:center}
+.kxrchip i{position:absolute;right:5px;top:3px;font-style:normal;font-size:10px;color:var(--accent);font-weight:700}
+.kxpos{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:8px;margin-top:8px}
+.kxpos>div{display:grid;grid-template-columns:34px 1fr;gap:0 8px;border:1px solid var(--line);border-radius:8px;padding:7px 9px}
+.kxpos .jp{grid-row:span 2;font-size:26px;line-height:1.2}
+.kxpos b{font-size:13px}.kxpos span:last-child{font-size:12.5px;color:var(--muted)}
+.kxph{display:flex;flex-direction:column;gap:6px}
+.kxphlist{display:flex;flex-direction:column;gap:3px}
+.kxphrow{font:inherit;color:inherit;display:grid;grid-template-columns:34px 80px 110px 1fr 8px;gap:8px;align-items:center;text-align:left;border:0;border-bottom:1px solid var(--line);background:none;padding:4px 2px;cursor:pointer}
+.kxphrow .jp:first-child{font-size:24px}
+@media (max-width:520px){.kxphrow{grid-template-columns:30px 70px 1fr 8px}.kxphrow>.small.muted{display:none}}
+.kxtw{border-bottom:1px solid var(--line);padding:5px 0}
+.kxtw summary{cursor:pointer;list-style:none;display:flex;gap:6px;align-items:baseline;flex-wrap:wrap}
+.kxtw summary::-webkit-details-marker{display:none}
+.kxtex{padding:6px 0 4px 30px;display:flex;flex-direction:column;gap:3px}
+.kxgd{font-size:13.5px;background:var(--paper);border-radius:8px;padding:8px 10px;margin-bottom:6px}
+.kxgex{border-left:3px solid var(--accent-soft);padding:2px 0 2px 9px;margin:5px 0}
+/* trò chơi */
+.gmcfg{grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin-top:10px}
+.gmcards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.gmcard h3{font-size:16px;margin:6px 0 4px}
+.gmcard p{margin:0 0 6px}
+.gmico{width:44px;height:44px;border-radius:10px;display:grid;place-items:center;font-size:26px;background:var(--accent-soft);color:var(--accent)}
+.gmplay{padding:12px}
+.gmtop{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.gmtitle{font-weight:700;font-size:15px;text-align:center;flex:1}
+.gmright{min-width:70px;text-align:right}
+.gminfo{margin-top:10px;min-height:44px;font-size:13.5px;background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:7px 10px;line-height:1.6}
+.gmi-c{font-size:22px;margin-right:6px;vertical-align:-2px}
+.gmend{text-align:center;padding:12px 0 6px}
+.gmbig{font-size:22px;font-weight:700;margin-bottom:4px}
+.gmrow{padding:6px 0;border-bottom:1px solid var(--line);font-size:13.5px}
+.pkbar{display:flex;align-items:center;gap:8px}
+.pktime{flex:1;height:8px;border-radius:4px;background:var(--line);overflow:hidden}
+.pktime i{display:block;height:100%;background:var(--ok);transition:width .25s linear}
+.pktime i.low{background:var(--bad)}
+.pkwrap{position:relative;margin:0 auto;max-width:100%}
+.pkgrid{display:grid;grid-auto-rows:var(--cs)}
+.pkc{width:var(--cs);height:var(--cs)}
+.pkt{font:inherit;color:var(--ink);border:1px solid var(--line-strong);border-radius:7px;margin:0;padding:1px;display:grid;place-items:center;cursor:pointer;line-height:1.1;overflow:hidden;word-break:break-word;text-align:center;transition:transform .12s,opacity .25s;box-shadow:0 1px 0 var(--line-strong)}
+.pkt.pka{background:var(--sheet)}
+.pkt.pkb{background:var(--accent-soft);color:var(--accent);font-weight:600}
+.pkt.sel{outline:3px solid var(--warn);outline-offset:-3px;transform:scale(.94)}
+.pkt.hint{animation:gmpulse .6s ease-in-out 3}
+.pkt.gone{opacity:0;transform:scale(.6)}
+.pkt.shake,.cdt.shake{animation:gmshake .35s}
+.pksvg{position:absolute;left:0;top:0;pointer-events:none}
+.pksvg polyline{fill:none;stroke:var(--ok);stroke-width:4;stroke-linecap:round;stroke-linejoin:round;animation:pkline .3s forwards}
+.pkpause{position:absolute;inset:0;display:grid;place-items:center;background:var(--sheet);border-radius:8px}
+@keyframes pkline{0%{opacity:1}80%{opacity:1}100%{opacity:0}}
+@keyframes gmpulse{50%{transform:scale(1.08);box-shadow:0 0 0 4px var(--warn)}}
+@keyframes gmshake{20%{transform:translateX(-4px)}40%{transform:translateX(4px)}60%{transform:translateX(-3px)}80%{transform:translateX(3px)}}
+.flfield{position:relative;height:min(46vh,360px);border:1px solid var(--line);border-radius:10px;background:linear-gradient(var(--paper),var(--sheet));overflow:hidden;margin:6px 0 10px}
+.flground{position:absolute;left:0;right:0;bottom:0;height:5px;background:var(--bad-soft);border-top:1px solid var(--bad)}
+.flitem{position:absolute;top:0;min-width:62px;max-width:46%;min-height:62px;padding:4px 8px;border-radius:12px;border:2px solid var(--accent);background:var(--sheet);display:grid;place-items:center;text-align:center;box-shadow:0 4px 12px rgba(0,0,0,.12)}
+.flitem.flg{max-width:70%}
+.flitem.hit{border-color:var(--ok);background:var(--ok-soft);transform:scale(1.15);transition:transform .2s,opacity .5s .2s;opacity:0}
+.flitem.miss{border-color:var(--bad);background:var(--bad-soft)}
+.flpop{position:absolute;font-weight:700;color:var(--ok);opacity:0;pointer-events:none}
+.flpop.show{animation:flpop .7s forwards}
+@keyframes flpop{0%{opacity:1;transform:translateY(0)}100%{opacity:0;transform:translateY(-40px)}}
+.flopts{grid-template-columns:1fr 1fr}
+.flopts .opt{min-height:48px}
+.cdgoal{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:2px 0 8px}
+.cdmoves{font-size:13px;padding:3px 10px;border-radius:999px;border:1px solid var(--line-strong)}
+.cdg{font-size:13px;padding:3px 10px;border-radius:999px;background:var(--cg);color:var(--cgi)}
+.cdg .jp{font-size:16px}
+.cdg.done{outline:2px solid var(--ok)}
+.cdlegend{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:8px}
+.cdleg{font:inherit;color:var(--cgi);background:var(--cg);border:0;border-radius:8px;padding:3px 8px;display:flex;align-items:baseline;gap:5px;cursor:pointer}
+.cdleg .jp{font-size:20px}.cdleg small{font-size:11px}.cdleg .muted{color:inherit;opacity:.75}
+.cd0{--cg:var(--c0);--cgi:var(--c0i)}.cd1{--cg:var(--c1);--cgi:var(--c1i)}.cd2{--cg:var(--c2);--cgi:var(--c2i)}.cd3{--cg:var(--c3);--cgi:var(--c3i)}.cd4{--cg:var(--c4);--cgi:var(--c4i)}.cd5{--cg:var(--c5);--cgi:var(--c5i)}
+.cdboard{position:relative;margin:0 auto;border-radius:10px;background:var(--paper);border:1px solid var(--line);touch-action:none;user-select:none;-webkit-user-select:none;box-sizing:content-box}
+.cdt{position:absolute;left:0;top:0;width:var(--cs);height:var(--cs);padding:2px;transition:transform .2s ease-in}
+.cdt span{display:grid;place-items:center;width:100%;height:100%;border-radius:9px;background:var(--cg);color:var(--cgi);font-size:calc(var(--cs)*.56);line-height:1;box-shadow:inset 0 -3px 0 rgba(0,0,0,.08)}
+.cdboard.hard .cdt span{background:var(--sheet);color:var(--ink);border:1px solid var(--line-strong)}
+.cdt.sel span{outline:3px solid var(--ink);outline-offset:-3px}
+.cdt.hint span{animation:gmpulse .6s ease-in-out 3}
+.cdt.pop{transition:transform .22s,opacity .22s;opacity:0}
+.cdt.pop span{transform:scale(1.35)}
+.cdt.sp-row span{background-image:repeating-linear-gradient(0deg,transparent 0 7px,rgba(255,255,255,.55) 7px 10px)}
+.cdt.sp-col span{background-image:repeating-linear-gradient(90deg,transparent 0 7px,rgba(255,255,255,.55) 7px 10px)}
+.cdt.sp-bomb span{box-shadow:0 0 0 3px var(--warn) inset;animation:gmpulse 1.4s infinite}
+.cdquiz{margin-top:10px;border:2px solid var(--warn);border-radius:10px;padding:10px;background:var(--warn-soft)}
+.flopts .opt span:not(.jp):not(.bub),.cdquiz .opt span:not(.jp):not(.bub){font-family:var(--font-ui)}
 </style>
 
 <div class="wrap">
@@ -437,6 +568,7 @@ nav button{padding:9px 10px 10px}
     <button role="tab" data-v="practice" aria-selected="false">Luyện đề</button>
     <button role="tab" data-v="listen" aria-selected="false">Nghe</button>
     <button role="tab" data-v="kanji" aria-selected="false">Kanji</button>
+    <button role="tab" data-v="games" aria-selected="false">Chơi & nhớ</button>
     <button role="tab" data-v="review" aria-selected="false">Ôn tập<span class="badge" id="dueBadge" hidden>0</span></button>
     <button role="tab" data-v="kb" aria-selected="false">Kiến thức</button>
     <button role="tab" data-v="stats" aria-selected="false">Phân tích</button>
@@ -1056,7 +1188,7 @@ let TTS_RUN=null;
 function ttsStop(){if(TTS_RUN){TTS_RUN.stop=true;TTS_RUN=null}try{speechSynthesis.cancel()}catch(e){} document.querySelectorAll('[data-lp="tts"]').forEach(b=>b.textContent="Nghe bằng giọng trình duyệt")}
 function ttsPlay(q,btn){
   if(TTS_RUN){ttsStop();return}
-  const vs=pickVoices(); if(!vs.F){toast("Máy này chưa có giọng tiếng Nhật. Hãy mở bằng Microsoft Edge hoặc cài giọng tiếng Nhật trong Windows.");return}
+  const vs=pickVoices(); if(!vs.F){toast("Máy này chưa có giọng tiếng Nhật. Dùng file ghi sẵn nhé.");return}
   const run={stop:false}; TTS_RUN=run; if(btn) btn.textContent="Dừng";
   const segs=q.segs.slice(); let i=0;
   const step=()=>{
@@ -1071,7 +1203,7 @@ function ttsPlay(q,btn){
 }
 function listenStemHTML(q,checked){
   const info=LT_INFO[q.lt]; const showQ=checked||LST.showText;
-  const voiceNote=JA_VOICES.length?"":`<p class="small muted" style="margin:6px 0 0">Máy này chưa có giọng đọc tiếng Nhật. Mở sổ bằng Microsoft Edge (có sẵn giọng Nanami khi có mạng), hoặc thêm giọng tiếng Nhật trong Windows: Cài đặt → Thời gian và ngôn ngữ → Giọng nói.</p>`;
+  const voiceNote=JA_VOICES.length?"":`<p class="small muted" style="margin:6px 0 0">Máy này chưa có giọng tiếng Nhật của trình duyệt, nên dùng file ghi sẵn.</p>`;
   let prompt="";
   if(q.lt==="hatsuwa") prompt=`<div class="lsit"><b>状況</b> <span class="jp">${esc(q.intro[0])}</span>${checked?`<div class="small muted">${esc(q.intro[1])}</div>`:""}</div>`;
   else if(q.lt==="kadai"||q.lt==="point") prompt=showQ?`<div class="lsit"><b>質問</b> <span class="jp">${esc(q.q)}</span></div>`:`<div class="lsit muted small">Câu hỏi chỉ đọc trong bài nghe, giống đề thật.</div>`;
@@ -1079,7 +1211,7 @@ function listenStemHTML(q,checked){
   return `<div class="lwrap">
     <div class="row" style="justify-content:space-between;gap:8px"><span class="chip">問題${info.no} · ${esc(info.jp)} · ${esc(info.vi)}</span><span class="small muted">${esc(q.title||"")}</span></div>
     <div class="lplayer" data-lid="${esc(q.id)}">
-      <audio hidden preload="none"></audio><p class="small muted" style="margin:0">Bản chuyển qua tin nhắn không kèm file âm thanh: bấm “Nghe bằng giọng trình duyệt”.</p>
+      <audio controls preload="none" src="${esc(q.au)}"></audio>
       <div class="row" style="gap:6px">
         <span class="small muted">Tốc độ</span>${[0.8,1,1.2].map(r=>`<button class="kbchip ${LST.rate===r?"on":""}" data-rate="${r}">${r}×</button>`).join("")}
         ${JA_VOICES.length?`<button class="btn small" data-lp="tts">Nghe bằng giọng trình duyệt</button>`:""}
@@ -1610,7 +1742,7 @@ function kjCardHTML(c,opts){
     <div class="kbtip"><b>Câu chuyện nhớ</b> ${esc(k.mn)}</div>
     <div class="kjwords">${k.w.map(([w,r,m,s])=>`<div><span class="jp kjw">${esc(w)}</span> <span class="jp small">${esc(r.replace(/\|/g,""))}</span> · <span class="small">${esc(m)}</span> <span class="small muted">· Hán Việt: ${esc(w.split("").filter(ch=>/[一-鿿]/.test(ch)).map(kjHv).join(" "))}</span><div class="jp small muted">${esc(s)}</div></div>`).join("")}</div>
     ${k.sim.length?`<div class="kbrel"><span class="small muted">Dễ nhầm với:</span>${k.sim.map(s=>`<button class="kbchip" data-kjopen="${esc(s)}"><span class="jp">${esc(s)}</span> ${esc(kjHv(s))} · ${esc(kjM(s))}</button>`).join("")}</div>`:""}
-    <div class="row" style="gap:6px">${opts&&opts.noPractice?"":`<button class="btn small" data-kjpractice="${esc(c)}" ${n?"":"disabled"}>Luyện ${Math.min(n,8)} câu có chữ này</button>`}<button class="btn ghost small" data-kjwrite="${esc(c)}">Viết thử</button></div>
+    <div class="row" style="gap:6px">${opts&&opts.noPractice?"":`<button class="btn small" data-kjpractice="${esc(c)}" ${n?"":"disabled"}>Luyện ${Math.min(n,8)} câu có chữ này</button>`}<button class="btn ghost small" data-kjwrite="${esc(c)}">Viết thử</button><button class="btn ghost small" data-kxopen="${esc(c)}">Thứ tự nét · bộ thủ · câu nhớ khác</button></div>
     <div class="kjcanvas" hidden></div>
   </div>`;
 }
@@ -1690,7 +1822,7 @@ function kjPractice(chars,title){
 }
 function kjClick(e){
   const op=e.target.closest("[data-kjopen]");
-  if(op){const c=op.dataset.kjopen; if(!KJ_BY[c]){toast(`${c}: ${kjHv(c)} · ${kjM(c)}`);return}
+  if(op){const c=op.dataset.kjopen; if(!KJ_BY[c]){kxOpen(c);return}
     const famBox=op.closest("[data-fam]"); const card=op.closest(".kjcard");
     const slot=famBox?famBox.querySelector(".kjfamopen"):card?null:document.getElementById("kjopen");
     const html=kjCardHTML(c);
@@ -1910,7 +2042,7 @@ function lkEntryHTML(x,showSrc){
 }
 function lkKanjiRow(ch){
   const d=KJD[ch]||[]; const hv=d[0]||kjHv(ch); const k=typeof KJ_BY!=="undefined"&&KJ_BY[ch];
-  return `<div class="lkkj"><span class="jp lkkjc">${esc(ch)}</span><div style="min-width:0"><b>${esc((hv||"").toUpperCase())}</b> ${k?esc(k.m):d[3]?`<span class="muted">${esc(d[3])}</span>`:""}<div class="small muted">On: <span class="jp">${esc(d[1]||(k?k.on.join("、"):"—"))}</span> · Kun: <span class="jp">${esc(d[2]||(k?k.kun.join("、"):"—"))}</span>${k?` · <button class="lkbtn" data-lkkj="${esc(ch)}">thẻ chữ</button>`:""}</div></div></div>`;
+  return `<div class="lkkj"><span class="jp lkkjc">${esc(ch)}</span><div style="min-width:0"><b>${esc((hv||"").toUpperCase())}</b> ${k?esc(k.m):d[3]?`<span class="muted">${esc(d[3])}</span>`:""}<div class="small muted">On: <span class="jp">${esc(d[1]||(k?k.on.join("、"):"—"))}</span> · Kun: <span class="jp">${esc(d[2]||(k?k.kun.join("、"):"—"))}</span>${k?` · <button class="lkbtn" data-lkkj="${esc(ch)}">thẻ chữ</button>`:""} · <button class="lkbtn" data-kxopen="${esc(ch)}">chi tiết</button></div></div></div>`;
 }
 function lkBuild(text){
   const whole=lkFind(text.replace(/\s+/g,""));
@@ -3444,7 +3576,7 @@ function missionsHTML(mis,pr){
   </section>`;
 }
 function extrasHTML(open){
-  const W=planWeek(); const items=[["adaptive","","Bài thích ứng 20 câu","Chọn theo điểm yếu, câu đến hạn, từ hay ra trong đề"],["xnew","","Học vượt 10 câu","Câu mới của tuần "+(W+1)+" trở đi"],["xwords","","Thêm 10 từ mới","Ngoài số từ trong nhiệm vụ"],["rx","","Phản xạ 20 từ","Mỗi từ vài giây"],["exam","","Thi thử","Đề rút gọn hoặc đủ giờ"],["write","","Viết / hội thoại","Dùng tiếng Nhật, có AI sửa nếu đã bật"],["daily","","Bài tổng hợp kiểu cũ","Trộn ôn + mới + nghe + đọc"],["chat","","Hỏi trợ lý AI","Hỏi điều chưa hiểu"]];
+  const W=planWeek(); const items=[["adaptive","","Bài thích ứng 20 câu","Chọn theo điểm yếu, câu đến hạn, từ hay ra trong đề"],["xnew","","Học vượt 10 câu","Câu mới của tuần "+(W+1)+" trở đi"],["xwords","","Thêm 10 từ mới","Ngoài số từ trong nhiệm vụ"],["rx","","Phản xạ 20 từ","Mỗi từ vài giây"],["exam","","Thi thử","Đề rút gọn hoặc đủ giờ"],["write","","Viết / hội thoại","Dùng tiếng Nhật, có AI sửa nếu đã bật"],["daily","","Bài tổng hợp kiểu cũ","Trộn ôn + mới + nghe + đọc"],["chat","","Hỏi trợ lý AI","Hỏi điều chưa hiểu"],["games","","Chơi & nhớ kanji","Pikachu · Candy bộ thủ · Kanji rơi"]];
   return `<section class="sheet xtra ${open?"":"locked"}"><div class="row" style="justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap"><div class="eyebrow">Luyện thêm${open?" · đã mở":""}</div><span class="small muted">${open?"Làm thêm bao nhiêu tùy sức; càng nhiều càng lên cấp nhanh.":"Mở khi xong nhiệm vụ bắt buộc. Các tab khác vẫn dùng bình thường."}</span></div>
     <div class="xgrid">${items.map(([a,arg,t,s])=>`<button class="xbtn" data-co="${a}" ${arg?`data-arg="${arg}"`:""} ${open?"":"disabled"}><b>${t}</b><span class="small muted">${s}</span></button>`).join("")}</div></section>`;
 }
@@ -3493,6 +3625,7 @@ function planAct(a,arg){
   if(a==="xnew"){extraAhead(); return true}
   if(a==="xwords"){extraWords(10); return true}
   if(a==="exam"){go("exam"); return true}
+  if(a==="games"){go("games"); return true}
   return false;
 }
 function wirePlan(m){} // các nút dùng data-co (bắt sự kiện chung ở coach.js)
@@ -3591,7 +3724,7 @@ function render(){
   const m=document.getElementById("main");
   if(view==="quiz"&&session) return renderQuiz(m);
   if(view==="exam"&&session&&session.mode==="exam") return renderQuiz(m);
-  ({today:renderToday,practice:renderPractice,review:renderReview,exam:renderExam,plan:renderPlan,kb:renderKB,listen:renderListen,stats:renderStats,kanji:renderKanji,coach:renderCoach,vocab:renderVocab})[view](m);
+  ({today:renderToday,practice:renderPractice,review:renderReview,exam:renderExam,plan:renderPlan,kb:renderKB,listen:renderListen,stats:renderStats,kanji:renderKanji,games:renderGames,coach:renderCoach,vocab:renderVocab})[view](m);
 }
 
 // ---------- TODAY ----------
@@ -4029,6 +4162,770 @@ document.addEventListener("keydown",e=>{
   if(e.key>="1"&&e.key<="4"){ if(!session.checked[session.i]) choose(+e.key-1); }
   else if(e.key==="Enter"){ e.preventDefault(); if(session.mode==="exam") return; if(session.checked[session.i]) next(); else check(); }
 });
+const KX_AUD={"愛":[0,16,12196],"あい":[0,16,12196],"愛情":[0,12212,29474],"あいじょう":[0,12212,29474],"握手":[0,41686,14500],"あくしゅ":[0,41686,14500],"アドバイス":[0,56186,28900],"穴":[0,85086,28900],"あな":[0,85086,28900],"余り":[0,113986,21412],"あまり":[0,113986,21412],"アンケート":[0,135398,34816],"いたずら":[0,170214,21412],"一瞬":[0,191626,25177],"いっしゅん":[0,191626,25177],"違反":[0,216803,16804],"いはん":[0,216803,16804],"イベント":[0,233607,33649],"イメージ":[0,267256,25804],"印刷":[0,293060,29663],"いんさつ":[0,293060,29663],"印象":[0,322723,41380],"いんしょう":[0,322723,41380],"うそ":[0,364103,16228],"内側":[0,380331,25177],"うちがわ":[0,380331,25177],"影響":[0,405508,41380],"えいきょう":[0,405508,41380],"営業":[0,446888,22564],"えいぎょう":[0,446888,22564],"エネルギー":[0,469452,26596],"オイル":[0,496048,29566],"（お）祝い":[0,525614,19684],"（お）いわい":[0,525614,19684],"応援":[0,545298,29474],"おうえん":[0,545298,29474],"大型":[0,574772,27804],"おおがた":[0,574772,27804],"おしゃべり":[0,602576,19684],"思い出":[0,622260,39460],"おもいで":[0,622260,39460],"オリンピック":[0,661720,29476],"カード":[0,691196,17956],"解決":[0,709152,36462],"かいけつ":[0,709152,36462],"改正":[0,745614,32171],"かいせい":[0,745614,32171],"解説":[0,777785,48100],"かいせつ":[0,777785,48100],"回転":[0,825885,19684],"かいてん":[0,825885,19684],"ガイドブック":[0,845569,28939],"書留":[0,874508,21412],"かきとめ":[0,874508,21412],"拡大":[0,895920,17380],"かくだい":[0,895920,17380],"家事":[0,913300,26134],"かじ":[0,913300,26134],"数":[0,939434,13970],"かず":[0,939434,13970],"型":[0,953404,13348],"かた":[0,953404,13348],"カタログ":[0,966752,42340],"価値":[0,1009092,12196],"かち":[0,1009092,12196],"カット":[0,1021288,26134],"活動":[0,1047422,35319],"かつどう":[0,1047422,35319],"我慢":[0,1082741,23716],"がまん":[0,1082741,23716],"神":[0,1106457,18432],"かみ":[0,1106457,18432],"空":[0,1124889,20480],"から":[0,1124889,20480],"革":[0,1145369,34660],"かわ":[0,1145369,34660],"歓迎":[0,1180029,19684],"かんげい":[0,1180029,19684],"観光":[0,1199713,20260],"かんこう":[0,1199713,20260],"観察":[0,1219973,40851],"かんさつ":[0,1219973,40851],"感じ":[0,1260824,26624],"かんじ":[0,1260824,26624],"感謝":[0,1287448,22564],"かんしゃ":[0,1287448,22564],"感情":[0,1310012,19684],"かんじょう":[0,1310012,19684],"感心":[0,1329696,18532],"かんしん":[0,1329696,18532],"関心":[0,1348228,18532],"完成":[0,1366760,35319],"かんせい":[0,1366760,35319],"感想":[0,1402079,27748],"かんそう":[0,1402079,27748],"感動":[0,1429827,29566],"かんどう":[0,1429827,29566],"乾杯":[0,1459393,15652],"かんぱい":[0,1459393,15652],"管理":[0,1475045,19108],"かんり":[0,1475045,19108],"機会":[0,1494153,32740],"きかい":[0,1494153,32740],"帰国":[0,1526893,23716],"きこく":[0,1526893,23716],"記事":[0,1550609,27685],"きじ":[0,1550609,27685],"技術":[0,1578294,39460],"ぎじゅつ":[0,1578294,39460],"期待":[0,1617754,20260],"きたい":[0,1617754,20260],"帰宅":[0,1638014,20836],"きたく":[0,1638014,20836],"希望":[0,1658850,31979],"きぼう":[0,1658850,31979],"基本":[0,1690829,11760],"きほん":[0,1690829,11760],"義務":[0,1702589,13924],"ぎむ":[0,1702589,13924],"疑問":[0,1716513,14686],"ぎもん":[0,1716513,14686],"休憩":[0,1731199,21412],"きゅうけい":[0,1731199,21412],"急用":[0,1752611,26596],"きゅうよう":[0,1752611,26596],"競争":[0,1779207,24292],"きょうそう":[0,1779207,24292],"共通":[0,1803499,33649],"きょうつう":[0,1803499,33649],"協力":[0,1837148,32814],"きょうりょく":[0,1837148,32814],"行列":[0,1869962,20836],"ぎょうれつ":[0,1869962,20836],"許可":[0,1890798,15076],"きょか":[0,1890798,15076],"漁業":[0,1905874,35319],"ぎょぎょう":[0,1905874,35319],"距離":[0,1941193,23923],"きょり":[0,1941193,23923],"記録":[0,1965116,16804],"きろく":[0,1965116,16804],"金":[0,1981920,16384],"きん":[0,1981920,16384],"銀":[0,1998304,34816],"ぎん":[0,1998304,34816],"金庫":[0,2033120,21988],"きんこ":[0,2033120,21988],"近視":[0,2055108,29476],"きんし":[0,2055108,29476],"金属":[0,2084584,38912],"きんぞく":[0,2084584,38912],"緊張":[0,2123496,52900],"きんちょう":[0,2123496,52900],"具合":[0,2176396,32740],"ぐあい":[0,2176396,32740],"工夫":[0,2209136,26596],"くふう":[0,2209136,26596],"苦労":[0,2235732,20260],"くろう":[0,2235732,20260],"経営":[0,2255992,29474],"けいえい":[0,2255992,29474],"敬語":[0,2285466,31979],"けいご":[0,2285466,31979],"掲示":[0,2317445,19684],"けいじ":[0,2317445,19684],"景色":[0,2337129,20836],"けしき":[0,2337129,20836],"結果":[0,2357965,37540],"けっか":[0,2357965,37540],"決心":[0,2395505,21988],"けっしん":[0,2395505,21988],"欠席":[0,2417493,24292],"けっせき":[0,2417493,24292],"決定":[0,2441785,20836],"けってい":[0,2441785,20836],"欠点":[0,2462621,20836],"けってん":[0,2462621,20836],"結論":[0,2483457,19108],"けつろん":[0,2483457,19108],"券":[0,2502565,14500],"けん":[0,2502565,14500],"研修":[0,2517065,24868],"けんしゅう":[0,2517065,24868],"建設":[0,2541933,36989],"けんせつ":[0,2541933,36989],"建築":[0,2578922,19108],"けんちく":[0,2578922,19108],"憲法":[0,2598030,43300],"けんぽう":[0,2598030,43300],"権利":[0,2641330,22042],"けんり":[0,2641330,22042],"原料":[0,2663372,28312],"げんりょう":[0,2663372,28312],"講演":[0,2691684,21412],"こうえん":[0,2691684,21412],"効果":[0,2713096,19108],"こうか":[0,2713096,19108],"工業":[0,2732204,31979],"こうぎょう":[0,2732204,31979],"航空便":[0,2764183,30628],"こうくうびん":[0,2764183,30628],"合計":[0,2794811,15104],"ごうけい":[0,2794811,15104],"広告":[0,2809915,20260],"こうこく":[0,2809915,20260],"交際":[0,2830175,18532],"こうさい":[0,2830175,18532],"工事":[0,2848707,13499],"こうじ":[0,2848707,13499],"行動":[0,2862206,23140],"こうどう":[0,2862206,23140],"公立":[0,2885346,46180],"こうりつ":[0,2885346,46180],"交流":[0,2931526,24292],"こうりゅう":[0,2931526,24292],"コース":[0,2955818,30193],"コーナー":[0,2986011,19108],"ゴール":[0,3005119,18532],"誤解":[0,3023651,27804],"ごかい":[0,3023651,27804],"小型":[0,3051455,16804],"こがた":[0,3051455,16804],"国産":[0,3068259,19684],"こくさん":[0,3068259,19684],"心":[0,3087943,31034],"こころ":[0,3087943,31034],"故障":[0,3118977,46180],"こしょう":[0,3118977,46180],"国会":[0,3165157,24292],"こっかい":[0,3165157,24292],"小包":[0,3189449,25975],"こづつみ":[0,3189449,25975],"粉":[0,3215424,13924],"こな":[0,3215424,13924],"ごぶさた":[0,3229348,27172],"コミュニケーション":[0,3256520,53860],"小麦":[0,3310380,25483],"こむぎ":[0,3310380,25483],"コンクール":[0,3335863,21988],"コンクリート":[0,3357851,12772],"サービス":[0,3370623,27172],"最高":[0,3397795,34484],"さいこう":[0,3397795,34484],"最低":[0,3432279,31446],"さいてい":[0,3432279,31446],"裁判":[0,3463725,21412],"さいばん":[0,3463725,21412],"材料":[0,3485137,55296],"ざいりょう":[0,3485137,55296],"サイン":[0,3540433,25804],"作業":[0,3566237,41380],"さぎょう":[0,3566237,41380],"作品":[0,3607617,23716],"さくひん":[0,3607617,23716],"撮影":[0,3631333,29663],"さつえい":[0,3631333,29663],"騒ぎ":[0,3660996,20789],"さわぎ":[0,3660996,20789],"参加":[0,3681785,48100],"さんか":[0,3681785,48100],"産業":[0,3729885,31335],"さんぎょう":[0,3729885,31335],"残業":[0,3761220,42834],"ざんぎょう":[0,3761220,42834],"賛成":[0,3804054,19108],"さんせい":[0,3804054,19108],"産地":[0,3823162,18281],"さんち":[0,3823162,18281],"資源":[0,3841443,19535],"しげん":[0,3841443,19535],"事件":[0,3860978,19684],"じけん":[0,3860978,19684],"指示":[0,3880662,23629],"しじ":[0,3880662,23629],"事実":[0,3904291,31204],"じじつ":[0,3904291,31204],"事情":[0,3935495,48100],"じじょう":[0,3935495,48100],"自信":[0,3983595,21988],"じしん":[0,3983595,21988],"支度":[0,4005583,44260],"したく":[0,4005583,44260],"失業":[0,4049843,48100],"しつぎょう":[0,4049843,48100],"実際":[0,4097943,27804],"じっさい":[0,4097943,27804],"実力":[0,4125747,23140],"じつりょく":[0,4125747,23140],"支店":[0,4148887,39460],"してん":[0,4148887,39460],"指導":[0,4188347,43300],"しどう":[0,4188347,43300],"事務":[0,4231647,21415],"じむ":[0,4231647,21415],"締め切り":[0,4253062,52900],"しめきり":[0,4253062,52900],"じゃま":[0,4305962,31780],"集会":[0,4337742,17956],"しゅうかい":[0,4337742,17956],"宗教":[0,4355698,21988],"しゅうきょう":[0,4355698,21988],"就職":[0,4377686,36989],"しゅうしょく":[0,4377686,36989],"集中":[0,4414675,33007],"しゅうちゅう":[0,4414675,33007],"充電":[0,4447682,26020],"じゅうでん":[0,4447682,26020],"修理":[0,4473702,44260],"しゅうり":[0,4473702,44260],"主義":[0,4517962,21304],"しゅぎ":[0,4517962,21304],"縮小":[0,4539266,31335],"しゅくしょう":[0,4539266,31335],"出場":[0,4570601,23140],"しゅつじょう":[0,4570601,23140],"出張":[0,4593741,38692],"しゅっちょう":[0,4593741,38692],"種類":[0,4632433,18908],"しゅるい":[0,4632433,18908],"順序":[0,4651341,33700],"じゅんじょ":[0,4651341,33700],"順番":[0,4685041,28827],"じゅんばん":[0,4685041,28827],"使用":[0,4713868,22669],"しよう":[0,4713868,22669],"条件":[0,4736537,55780],"じょうけん":[0,4736537,55780],"常識":[0,4792317,27991],"じょうしき":[0,4792317,27991],"招待":[0,4820308,44260],"しょうたい":[0,4820308,44260],"状態":[0,4864568,44260],"じょうたい":[0,4864568,44260],"冗談":[0,4908828,49060],"じょうだん":[0,4908828,49060],"承知":[0,4957888,16804],"しょうち":[0,4957888,16804],"商品":[0,4974692,35319],"しょうひん":[0,4974692,35319],"情報":[0,5010011,28672],"じょうほう":[0,5010011,28672],"証明書":[0,5038683,37668],"しょうめいしょ":[0,5038683,37668],"職場":[0,5076351,26134],"しょくば":[0,5076351,26134],"ショック":[0,5102485,41380],"署名":[0,5143865,19108],"しょめい":[0,5143865,19108],"書類":[0,5162973,37540],"しょるい":[0,5162973,37540],"私立":[0,5200513,15104],"しりつ/わたくしりつ":[0,5200513,15104],"資料":[0,5215617,49060],"しりょう":[0,5215617,49060],"印":[0,5264677,23811],"しるし":[0,5264677,23811],"シングル":[0,5288488,21412],"人生":[0,5309900,21988],"じんせい":[0,5309900,21988],"進歩":[0,5331888,21412],"しんぽ":[0,5331888,21412],"信用":[0,5353300,32932],"しんよう":[0,5353300,32932],"心理":[0,5386232,15522],"しんり":[0,5386232,15522],"スケジュール":[0,5401754,47140],"スタイル":[0,5448894,41380],"スピーチ":[0,5490274,32073],"すり":[0,5522347,25483],"制限":[0,5547830,18532],"せいげん":[0,5547830,18532],"成功":[0,5566362,27172],"せいこう":[0,5566362,27172],"生産":[0,5593534,26020],"せいさん":[0,5593534,26020],"政治":[0,5619554,28639],"せいじ":[0,5619554,28639],"製造":[0,5648193,27991],"せいぞう":[0,5648193,27991],"成長":[0,5676184,24292],"せいちょう":[0,5676184,24292],"制度":[0,5700476,14500],"せいど":[0,5700476,14500],"政党":[0,5714976,26319],"せいとう":[0,5714976,26319],"製品":[0,5741295,23811],"せいひん":[0,5741295,23811],"政府":[0,5765106,27155],"せいふ":[0,5765106,27155],"整理":[0,5792261,25299],"せいり":[0,5792261,25299],"石炭":[0,5817560,29663],"せきたん":[0,5817560,29663],"責任":[0,5847223,34581],"せきにん":[0,5847223,34581],"石油":[0,5881804,38343],"せきゆ":[0,5881804,38343],"選挙":[0,5920147,40420],"せんきょ":[0,5920147,40420],"全体":[0,5960567,33649],"ぜんたい":[0,5960567,33649],"宣伝":[0,5994216,22669],"せんでん":[0,5994216,22669],"全力":[0,6016885,19108],"ぜんりょく":[0,6016885,19108],"増加":[0,6035993,16804],"ぞうか":[0,6035993,16804],"葬式":[0,6052797,23923],"そうしき":[0,6052797,23923],"送信":[0,6076720,28639],"そうしん":[0,6076720,28639],"想像":[0,6105359,31979],"そうぞう":[0,6105359,31979],"送別会":[0,6137338,31204],"そうべつかい":[0,6137338,31204],"速達":[0,6168542,28324],"そくたつ":[0,6168542,28324],"外側":[0,6196866,31335],"そとがわ":[0,6196866,31335],"尊敬":[0,6228201,21988],"そんけい":[0,6228201,21988],"対":[0,6250189,16384],"たい":[0,6250189,16384],"台":[0,6266573,22976],"だい":[0,6266573,22976],"題":[0,6289549,17784],"大会":[0,6307333,26020],"たいかい":[0,6307333,26020],"体操":[0,6333353,35319],"たいそう":[0,6333353,35319],"態度":[0,6368672,38500],"たいど":[0,6368672,38500],"タイトル":[0,6407172,29474],"代表":[0,6436646,27172],"だいひょう":[0,6436646,27172],"逮捕":[0,6463818,17956],"たいほ":[0,6463818,17956],"頼み":[0,6481774,18796],"たのみ":[0,6481774,18796],"玉":[0,6500570,11846],"たま":[0,6500570,11846],"担当":[0,6512416,31144],"たんとう":[0,6512416,31144],"チェック":[0,6543560,30309],"チェックアウト":[0,6573869,31204],"チェックイン":[0,6605073,23716],"違い":[0,6628789,24292],"ちがい":[0,6628789,24292],"チャンス":[0,6653081,21988],"注目":[0,6675069,23140],"ちゅうもく":[0,6675069,23140],"注文":[0,6698209,31144],"ちゅうもん":[0,6698209,31144],"朝刊":[0,6729353,19684],"ちょうかん":[0,6729353,19684],"調査":[0,6749037,36154],"ちょうさ":[0,6749037,36154],"調子":[0,6785191,40420],"ちょうし":[0,6785191,40420],"ツイン":[0,6825611,16804],"通勤":[0,6842415,42340],"つうきん":[0,6842415,42340],"通知":[0,6884755,28639],"つうち":[0,6884755,28639],"都合":[0,6913394,19108],"つごう":[0,6913394,19108],"勤め":[0,6932502,25483],"つとめ":[0,6932502,25483],"定員":[0,6957985,32814],"ていいん":[0,6957985,32814],"定価":[0,6990799,22564],"ていか":[0,6990799,22564],"提出":[0,7013363,28900],"ていしゅつ":[0,7013363,28900],"程度":[0,7042263,15652],"ていど":[0,7042263,15652],"テーマ":[0,7057915,25299],"デザイン":[0,7083214,35835],"鉄":[0,7119049,36864],"てつ":[0,7119049,36864],"手作り":[0,7155913,21412],"てづくり":[0,7155913,21412],"手続き":[0,7177325,25444],"てつづき":[0,7177325,25444],"点":[0,7202769,28939],"てん":[0,7202769,28939],"電源":[0,7231708,25444],"でんげん":[0,7231708,25444],"伝統":[0,7257152,39494],"でんとう":[0,7257152,39494],"電波":[0,7296646,36154],"でんぱ":[0,7296646,36154],"銅":[0,7332800,22976],"どう":[0,7332800,22976],"当然":[0,7355776,41380],"とうぜん":[0,7355776,41380],"投票":[0,7397156,33649],"とうひょう":[0,7397156,33649],"特色":[0,7430805,24292],"とくしょく":[0,7430805,24292],"特徴":[0,7455097,20836],"とくちょう":[0,7455097,20836],"途中":[0,7475933,22564],"とちゅう":[0,7475933,22564],"トップ":[0,7498497,22564],"届け":[0,7521061,25483],"とどけ":[0,7521061,25483],"努力":[0,7546544,36580],"どりょく":[0,7546544,36580],"トレーニング":[0,7583124,30628],"内容":[0,7613752,30720],"ないよう":[0,7613752,30720],"生":[0,7644472,20789],"なま":[0,7644472,20789],"偽物":[0,7665261,33649],"にせもの":[0,7665261,33649],"入場":[0,7698910,17314],"にゅうじょう":[0,7698910,17314],"人気":[0,7716224,23716],"にんき":[0,7716224,23716],"寝坊":[0,7739940,27804],"ねぼう":[0,7739940,27804],"年賀状":[0,7767744,24868],"ねんがじょう":[0,7767744,24868],"農業":[0,7792612,20836],"のうぎょう":[0,7792612,20836],"ノック":[0,7813448,18281],"配達":[0,7831729,46180],"はいたつ":[0,7831729,46180],"拍手":[0,7877909,41380],"はくしゅ":[0,7877909,41380],"パスポート":[0,7919289,44260],"パスワード":[0,7963549,21988],"旗":[0,7985537,20789],"はた":[0,7985537,20789],"発見":[0,8006326,16425],"はっけん":[0,8006326,16425],"発言":[0,8022751,19684],"はつげん":[0,8022751,19684],"発行":[0,8042435,33327],"はっこう":[0,8042435,33327],"発生":[0,8075762,26596],"はっせい":[0,8075762,26596],"発達":[0,8102358,19684],"はったつ":[0,8102358,19684],"発売":[0,8122042,16007],"はつばい":[0,8122042,16007],"発表":[0,8138049,44260],"はっぴょう":[0,8138049,44260],"発明":[0,8182309,20836],"はつめい":[0,8182309,20836],"幅":[0,8203145,20480],"はば":[0,8203145,20480],"犯罪":[0,8223625,18532],"はんざい":[0,8223625,18532],"反省":[0,8242157,22669],"はんせい":[0,8242157,22669],"判断":[0,8264826,24550],"はんだん":[0,8264826,24550],"犯人":[0,8289376,30309],"はんにん":[0,8289376,30309],"日当たり":[0,8319685,28639],"ひあたり":[0,8319685,28639],"日帰り":[0,8348324,48100],"ひがえり":[0,8348324,48100],"比較":[0,8396424,31335],"ひかく":[0,8396424,31335],"久しぶり":[0,8427759,40091],"ひさしぶり":[0,8427759,40091],"引っ越し":[0,8467850,37824],"ひっこし":[0,8467850,37824],"秘密":[0,8505674,19684],"ひみつ":[0,8505674,19684],"評判":[0,8525358,29474],"ひょうばん":[0,8525358,29474],"表面":[0,8554832,48100],"ひょうめん":[0,8554832,48100],"昼寝":[0,8602932,21988],"ひるね":[0,8602932,21988],"不足":[0,8624920,35620],"ふそく":[0,8624920,35620],"部分":[0,8660540,19684],"ぶぶん":[0,8660540,19684],"ふるさと":[0,8680224,27804],"ブログ":[0,8708028,19108],"雰囲気":[0,8727136,42340],"ふんいき":[0,8727136,42340],"平均":[0,8769476,25483],"へいきん":[0,8769476,25483],"別々":[0,8794959,24292],"べつべつ":[0,8794959,24292],"変化":[0,8819251,11342],"へんか":[0,8819251,11342],"変更":[0,8830593,33649],"へんこう":[0,8830593,33649],"返信":[0,8864242,27172],"へんしん":[0,8864242,27172],"貿易":[0,8891414,28939],"ぼうえき":[0,8891414,28939],"方言":[0,8920353,12682],"ほうげん":[0,8920353,12682],"報告":[0,8933035,24868],"ほうこく":[0,8933035,24868],"防止":[0,8957903,18532],"ぼうし":[0,8957903,18532],"忘年会":[0,8976435,27748],"ぼうねんかい":[0,8976435,27748],"方法":[0,9004183,24292],"ほうほう":[0,9004183,24292],"訪問":[0,9028475,21304],"ほうもん":[0,9028475,21304],"法律":[0,9049779,52900],"ほうりつ":[0,9049779,52900],"ホームステイ":[0,9102679,28324],"ホームページ":[0,9131003,59620],"募集":[0,9190623,31979],"ぼしゅう":[0,9190623,31979],"ポスター":[0,9222602,23140],"保存":[0,9245742,25299],"ほぞん":[0,9245742,25299],"ボランティア":[0,9271041,37716],"本社":[0,9308757,37540],"ほんしゃ":[0,9308757,37540],"本物":[0,9346297,14335],"ほんもの":[0,9346297,14335],"翻訳":[0,9360632,27155],"ほんやく":[0,9360632,27155],"マーク":[0,9387787,21412],"待ち合わせ":[0,9409199,47009],"まちあわせ":[0,9409199,47009],"マニュアル":[0,9456208,19108],"まね":[0,9475316,21124],"満員":[0,9496440,30628],"まんいん":[0,9496440,30628],"ミス":[0,9527068,33700],"夢中":[0,9560768,25299],"むちゅう":[0,9560768,25299],"名所":[0,9586067,25444],"めいしょ":[0,9586067,25444],"名物":[0,9611511,15171],"めいぶつ":[0,9611511,15171],"命令":[0,9626682,19684],"めいれい":[0,9626682,19684],"メールアドレス":[0,9646366,54820],"メダル":[0,9701186,26596],"メモ":[0,9727782,34660],"免許":[0,9762442,31780],"めんきょ":[0,9762442,31780],"面接":[0,9794222,41380],"めんせつ":[0,9794222,41380],"申し込み":[0,9835602,27172],"もうしこみ":[0,9835602,27172],"目次":[0,9862774,16002],"もくじ":[0,9862774,16002],"目的":[0,9878776,27172],"もくてき":[0,9878776,27172],"持ち物":[0,9905948,24292],"もちもの":[0,9905948,24292],"物語":[0,9930240,25177],"ものがたり":[0,9930240,25177],"模様":[0,9955417,43300],"もよう":[0,9955417,43300],"約":[0,9998717,28672],"やく":[0,9998717,28672],"勇気":[0,10027389,19108],"ゆうき":[0,10027389,19108],"優勝":[0,10046497,31979],"ゆうしょう":[0,10046497,31979],"友情":[0,10078476,20836],"ゆうじょう":[0,10078476,20836],"郵便":[0,10099312,23811],"ゆうびん":[0,10099312,23811],"要求":[0,10123123,34484],"ようきゅう":[0,10123123,34484],"予想":[0,10157607,31446],"よそう":[0,10157607,31446],"予報":[0,10189053,33327],"よほう":[0,10189053,33327],"来日":[0,10222380,32814],"らいにち":[0,10222380,32814],"理解":[0,10255194,18532],"りかい":[0,10255194,18532],"リズム":[0,10273726,16228],"理想":[0,10289954,21988],"りそう":[0,10289954,21988],"流行":[0,10311942,15104],"りゅうこう":[0,10311942,15104],"量":[0,10327046,39460],"りょう":[0,10327046,39460],"両側":[0,10366506,26319],"りょうがわ":[0,10366506,26319],"旅券":[0,10392825,20836],"りょけん":[0,10392825,20836],"ルール":[0,10413661,30193],"留守番":[0,10443854,20260],"るすばん":[0,10443854,20260],"例":[0,10464114,13432],"れい":[0,10464114,13432],"例外":[0,10477546,16358],"れいがい":[0,10477546,16358],"列":[0,10493904,26319],"れつ":[0,10493904,26319],"恋愛":[0,10520223,22669],"れんあい":[0,10520223,22669],"連続":[0,10542892,25129],"れんぞく":[0,10542892,25129],"労働":[0,10568021,41380],"ろうどう":[0,10568021,41380],"録音":[0,10609401,39460],"ろくおん":[0,10609401,39460],"録画":[0,10648861,31144],"ろくが":[0,10648861,31144],"話題":[0,10680005,13014],"わだい":[0,10680005,13014],"割合":[0,10693019,24647],"わりあい":[0,10693019,24647],"悪口":[0,10717666,51940],"わるくち":[0,10717666,51940],"辺り":[0,10769606,11011],"あたり":[0,10769606,11011],"位置":[0,10780617,36864],"いち":[0,10780617,36864],"田舎":[0,10817481,38500],"いなか":[0,10817481,38500],"奥":[0,10855981,18532],"おく":[0,10855981,18532],"オフィス":[0,10874513,16804],"海外":[0,10891317,43300],"かいがい":[0,10891317,43300],"カウンター":[0,10934617,25444],"看板":[0,10960061,22976],"かんばん":[0,10960061,22976],"喫茶店":[0,10983037,30052],"きっさてん":[0,10983037,30052],"グラウンド":[0,11013089,38659],"警察署":[0,11051748,31780],"けいさつしょ":[0,11051748,31780],"掲示板":[0,11083528,33649],"けいじばん":[0,11083528,33649],"劇場":[0,11117177,52900],"げきじょう":[0,11117177,52900],"郊外":[0,11170077,20836],"こうがい":[0,11170077,20836],"混雑":[0,11190913,43300],"こんざつ":[0,11190913,43300],"コンビニ":[0,11234213,35812],"裁判所":[0,11270025,21412],"さいばんしょ":[0,11270025,21412],"坂":[0,11291437,18281],"さか":[0,11291437,18281],"自動販売機":[0,11309718,40960],"じどうはんばいき":[0,11309718,40960],"州":[0,11350678,16384],"しゅう":[0,11350678,16384],"周囲":[0,11367062,17956],"しゅうい":[0,11367062,17956],"商店":[0,11385018,22669],"しょうてん":[0,11385018,22669],"商店街":[0,11407687,47332],"しょうてんがい":[0,11407687,47332],"城":[0,11455019,30720],"しろ":[0,11455019,30720],"隅":[0,11485739,17956],"すみ":[0,11485739,17956],"席":[0,11503695,37540],"せき":[0,11503695,37540],"全国":[0,11541235,16717],"ぜんこく":[0,11541235,16717],"センター":[0,11557952,36462],"地域":[0,11594414,37540],"ちいき":[0,11594414,37540],"地下":[0,11631954,13924],"ちか":[0,11631954,13924],"地方":[0,11645878,30309],"ちほう":[0,11645878,30309],"中央":[0,11676187,17380],"ちゅうおう":[0,11676187,17380],"突き当たり":[0,11693567,24868],"つきあたり":[0,11693567,24868],"手前":[0,11718435,43008],"てまえ":[0,11718435,43008],"電柱":[0,11761443,31335],"でんちゅう":[0,11761443,31335],"都会":[0,11792778,27804],"とかい":[0,11792778,27804],"床屋":[0,11820582,41380],"とこや":[0,11820582,41380],"都市":[0,11861962,22528],"とし":[0,11861962,22528],"土地":[0,11884490,32073],"とち":[0,11884490,32073],"斜め":[0,11916563,43008],"ななめ":[0,11916563,43008],"バー":[0,11959571,23716],"売店":[0,11983287,23716],"ばいてん":[0,11983287,23716],"墓":[0,12007003,29566],"はか":[0,12007003,29566],"博物館":[0,12036569,35514],"はくぶつかん":[0,12036569,35514],"非常口":[0,12072083,47140],"ひじょうぐち":[0,12072083,47140],"フロント":[0,12119223,23140],"ベンチ":[0,12142363,17380],"方角":[0,12159743,21412],"ほうがく":[0,12159743,21412],"方向":[0,12181155,15463],"ほうこう":[0,12181155,15463],"待合室":[0,12196618,18933],"まちあいしつ":[0,12196618,18933],"窓口":[0,12215551,21412],"まどぐち":[0,12215551,21412],"周り":[0,12236963,37540],"まわり":[0,12236963,37540],"マンション":[0,12274503,27172],"役所":[0,12301675,24576],"やくしょ":[0,12301675,24576],"薬局":[0,12326251,26624],"やっきょく":[0,12326251,26624],"遊園地":[0,12352875,51940],"ゆうえんち":[0,12352875,51940],"旅館":[0,12404815,33954],"りょかん":[0,12404815,33954],"ロビー":[0,12438769,43300],"エンジン":[0,12482069,45220],"往復":[0,12527289,21412],"おうふく":[0,12527289,21412],"改札":[0,12548701,37716],"かいさつ":[0,12548701,37716],"回数券":[0,12586417,31335],"かいすうけん":[0,12586417,31335],"片道":[0,12617752,24868],"かたみち":[0,12617752,24868],"救急車":[0,12642620,49060],"きゅうきゅうしゃ":[0,12642620,49060],"下り":[0,12691680,17124],"くだり":[0,12691680,17124],"航空機":[0,12708804,35236],"こうくうき":[0,12708804,35236],"高速道路":[0,12744040,57700],"こうそくどうろ":[0,12744040,57700],"交通機関":[0,12801740,33508],"こうつうきかん":[0,12801740,33508],"交通事故":[0,12835248,24292],"こうつうじこ":[0,12835248,24292],"座席":[0,12859540,44260],"ざせき":[0,12859540,44260],"シートベルト":[0,12903800,33508],"時刻表":[0,12937308,27748],"じこくひょう":[0,12937308,27748],"私鉄":[0,12965056,14268],"してつ":[0,12965056,14268],"車庫":[0,12979324,21988],"しゃこ":[0,12979324,21988],"渋滞":[0,13001312,29474],"じゅうたい":[0,13001312,29474],"新幹線":[0,13030786,54820],"しんかんせん":[0,13030786,54820],"スピード":[0,13085606,44260],"速度":[0,13129866,13917],"そくど":[0,13129866,13917],"タイヤ":[0,13143783,38500],"近道":[0,13182283,18568],"ちかみち":[0,13182283,18568],"駐車":[0,13200851,18532],"ちゅうしゃ":[0,13200851,18532],"通過":[0,13219383,15652],"つうか":[0,13219383,15652],"横断歩道":[0,13235035,28324],"おうだんほどう":[0,13235035,28324],"交差点":[0,13263359,45220],"こうさてん":[0,13263359,45220],"信号":[0,13308579,24868],"しんごう":[0,13308579,24868],"線路":[0,13333447,13499],"せんろ":[0,13333447,13499],"トンネル":[0,13346946,27172],"バス停":[0,13374118,30720],"バスてい":[0,13374118,30720],"踏切":[0,13404838,20836],"ふみきり":[0,13404838,20836],"歩道":[0,13425674,22669],"ほどう":[0,13425674,22669],"歩道橋":[0,13448343,23716],"ほどうきょう":[0,13448343,23716],"鉄道":[0,13472059,32768],"てつどう":[0,13472059,32768],"到着":[0,13504827,30309],"とうちゃく":[0,13504827,30309],"道路":[0,13535136,24576],"どうろ":[0,13535136,24576],"ドライブ":[0,13559712,32768],"上り":[0,13592480,19684],"のぼり":[0,13592480,19684],"発車":[0,13612164,36989],"はっしゃ":[0,13612164,36989],"パトカー":[0,13649153,41380],"ハンドル":[0,13690533,26020],"便":[0,13716553,13081],"びん":[0,13716553,13081],"ブレーキ":[0,13729634,18532],"トラック":[0,13748166,30820],"ロケット":[0,13778986,24292],"汗":[0,13803278,28939],"あせ":[0,13803278,28939],"アレルギー":[0,13832217,26624],"医院":[0,13858841,26969],"いいん":[0,13858841,26969],"息":[0,13885810,11342],"いき":[0,13885810,11342],"居眠り":[0,13897152,37540],"いねむり":[0,13897152,37540],"命":[0,13934692,13917],"いのち":[0,13934692,13917],"インフルエンザ":[0,13948609,28672],"ウイルス":[0,13977281,21988],"香り":[0,13999269,29566],"かおり":[0,13999269,29566],"花粉症":[0,14028835,28672],"かふんしょう":[0,14028835,28672],"髪の毛":[0,14057507,35514],"かみのけ":[0,14057507,35514],"がん":[0,14093021,14336],"患者":[0,14107357,42340],"かんじゃ":[0,14107357,42340],"傷":[0,14149697,34660],"きず":[0,14149697,34660],"禁煙":[0,14184357,38912],"きんえん":[0,14184357,38912],"禁止":[0,14223269,30145],"くしゃみ":[0,14253414,16804],"血圧":[0,14270218,25444],"けつあつ":[0,14270218,25444],"血液":[0,14295662,23811],"けつえき":[0,14295662,23811],"下痢":[0,14319473,12772],"げり":[0,14319473,12772],"健康":[0,14332245,42340],"けんこう":[0,14332245,42340],"検査":[0,14374585,27804],"けんさ":[0,14374585,27804],"呼吸":[0,14402389,32356],"こきゅう":[0,14402389,32356],"骨折":[0,14434745,21412],"こっせつ":[0,14434745,21412],"死亡":[0,14456157,28900],"しぼう":[0,14456157,28900],"手術":[0,14485057,45220],"しゅじゅつ":[0,14485057,45220],"出血":[0,14530277,19346],"しゅっけつ":[0,14530277,19346],"症状":[0,14549623,24868],"しょうじょう":[0,14549623,24868],"食中毒":[0,14574491,36989],"しょくちゅうどく":[0,14574491,36989],"食欲":[0,14611480,23716],"しょくよく":[0,14611480,23716],"診察":[0,14635196,24550],"しんさつ":[0,14635196,24550],"身長":[0,14659746,53860],"しんちょう":[0,14659746,53860],"睡眠":[0,14713606,41380],"すいみん":[0,14713606,41380],"頭痛":[0,14754986,34484],"ずつう":[0,14754986,34484],"ストレス":[0,14789470,30309],"ダイエット":[0,14857319,31979],"体重":[0,14889298,23140],"たいじゅう":[0,14889298,23140],"体力":[0,14912438,31144],"たいりょく":[0,14912438,31144],"疲れ":[0,14943582,22976],"つかれ":[0,14943582,22976],"涙":[0,14966558,26969],"なみだ":[0,14966558,26969],"吐き気":[0,14993527,19632],"はきけ":[0,14993527,19632],"肌":[0,15013159,31034],"はだ":[0,15013159,31034],"裸":[0,15044193,37089],"はだか":[0,15044193,37089],"眼科":[0,15081282,20836],"がんか":[0,15081282,20836],"外科":[0,15102118,13924],"げか":[0,15102118,13924],"産婦人科":[0,15116042,31780],"さんふじんか":[0,15116042,31780],"歯科":[0,15147822,13924],"しか":[0,15147822,13924],"耳鼻科":[0,15161746,20260],"じびか":[0,15161746,20260],"小児科":[0,15182006,24868],"しょうにか":[0,15182006,24868],"内科":[0,15206874,17956],"ないか":[0,15206874,17956],"はだし":[0,15224830,26319],"腹":[0,15251149,11620],"はら":[0,15251149,11620],"皮膚":[0,15262769,31034],"ひふ":[0,15262769,31034],"副作用":[0,15293803,26596],"ふくさよう":[0,15293803,26596],"骨":[0,15320399,31022],"ほね":[0,15320399,31022],"マスク":[0,15351421,28639],"虫歯":[0,15380060,20836],"むしば":[0,15380060,20836],"目薬":[0,15400896,43669],"めぐすり":[0,15400896,43669],"やけど":[0,15444565,17380],"予防":[0,15461945,16804],"よぼう":[0,15461945,16804],"レントゲン":[0,15478749,23140],"胃":[0,15501889,31034],"い":[0,15501889,31034],"おなか":[0,15532923,31032],"肩":[0,15563955,13348],"唇":[0,15577303,31034],"くちびる":[0,15577303,31034],"腰":[0,15608337,31034],"こし":[0,15608337,31034],"舌":[0,15639371,40960],"した":[0,15639371,40960],"尻":[0,15680331,31032],"しり":[0,15680331,31032],"心臓":[0,15711363,31034],"しんぞう":[0,15711363,31034],"爪":[0,15742397,31034],"つめ":[0,15742397,31034],"肺":[0,15773431,18796],"はい":[0,15773431,18796],"胸":[0,15792227,31033],"むね":[0,15792227,31033],"相手":[0,15823260,13348],"あいて":[0,15823260,13348],"医師":[0,15836608,13924],"いし":[0,15836608,13924],"委員":[0,15850532,26969],"王":[0,15877501,22669],"おう":[0,15877501,22669],"おじさん":[0,15900170,23140],"お嬢さん":[0,15923310,36154],"おじょうさん":[0,15923310,36154],"おばさん":[0,15959464,19684],"親子":[0,15979148,36580],"おやこ":[0,15979148,36580],"会員":[0,16015728,27804],"かいいん":[0,16015728,27804],"ガイド":[0,16043532,17956],"係り":[0,16061488,41380],"かかり":[0,16061488,41380],"学歴":[0,16102868,19684],"がくれき":[0,16102868,19684],"方":[0,16122552,22976],"観客":[0,16145528,37824],"かんきゃく":[0,16145528,37824],"教授":[0,16183352,17956],"きょうじゅ":[0,16183352,17956],"恋人":[0,16201308,17956],"こいびと":[0,16201308,17956],"コーチ":[0,16219264,19108],"国王":[0,16238372,20260],"こくおう":[0,16238372,20260],"国籍":[0,16258632,27172],"こくせき":[0,16258632,27172],"国民":[0,16285804,20836],"こくみん":[0,16285804,20836],"個人":[0,16306640,13348],"こじん":[0,16306640,13348],"才能":[0,16319988,23716],"さいのう":[0,16319988,23716],"作者":[0,16343704,16478],"さくしゃ":[0,16343704,16478],"作家":[0,16360182,35812],"さっか":[0,16360182,35812],"サラリーマン":[0,16395994,55780],"司会":[0,16451774,34084],"しかい":[0,16451774,34084],"資格":[0,16485858,19684],"しかく":[0,16485858,19684],"氏名":[0,16505542,17380],"しめい":[0,16505542,17380],"社員":[0,16522922,13850],"しゃいん":[0,16522922,13850],"住民":[0,16536772,27804],"じゅうみん":[0,16536772,27804],"首相":[0,16564576,24292],"しゅしょう":[0,16564576,24292],"主婦":[0,16588868,32073],"しゅふ":[0,16588868,32073],"少女":[0,16620941,37287],"しょうじょ":[0,16620941,37287],"少年":[0,16658228,37288],"しょうねん":[0,16658228,37288],"女王":[0,16695516,25804],"じょおう":[0,16695516,25804],"職業":[0,16721320,21412],"しょくぎょう":[0,16721320,21412],"女子":[0,16742732,11846],"じょし":[0,16742732,11846],"親戚":[0,16754578,64420],"しんせき":[0,16754578,64420],"親友":[0,16818998,26020],"しんゆう":[0,16818998,26020],"スター":[0,16845018,32814],"姓":[0,16877832,20260],"せい":[0,16877832,20260],"性格":[0,16898092,29474],"せいかく":[0,16898092,29474],"青年":[0,16927566,14772],"せいねん":[0,16927566,14772],"性別":[0,16942338,22564],"せいべつ":[0,16942338,22564],"全員":[0,16964902,23140],"ぜんいん":[0,16964902,23140],"選手":[0,16988042,30309],"せんしゅ":[0,16988042,30309],"総理大臣":[0,17018351,37186],"そうりだいじん":[0,17018351,37186],"大臣":[0,17055537,20260],"だいじん":[0,17055537,20260],"大統領":[0,17075797,40329],"だいとうりょう":[0,17075797,40329],"他人":[0,17116126,12264],"たにん":[0,17116126,12264],"チーム":[0,17128390,20836],"長所":[0,17149226,24868],"ちょうしょ":[0,17149226,24868],"天才":[0,17174094,24868],"てんさい":[0,17174094,24868],"天皇":[0,17198962,22140],"てんのう":[0,17198962,22140],"特技":[0,17221102,12596],"とくぎ":[0,17221102,12596],"独身":[0,17233698,41380],"どくしん":[0,17233698,41380],"年上":[0,17275078,19108],"としうえ":[0,17275078,19108],"年下":[0,17294186,18532],"としした":[0,17294186,18532],"年寄り":[0,17312718,41380],"としより":[0,17312718,41380],"ドライバー":[0,17354098,27748],"仲間":[0,17381846,41380],"なかま":[0,17381846,41380],"仲良し":[0,17423226,15171],"なかよし":[0,17423226,15171],"人間":[0,17438397,31031],"にんげん":[0,17438397,31031],"年齢":[0,17469428,24868],"ねんれい":[0,17469428,24868],"能力":[0,17494296,13432],"のうりょく":[0,17494296,13432],"ファン":[0,17507728,19684],"夫婦":[0,17527412,64420],"ふうふ":[0,17527412,64420],"プロ":[0,17591832,18619],"本人":[0,17610451,10016],"ほんにん":[0,17610451,10016],"迷子":[0,17620467,31979],"まいご":[0,17620467,31979],"父親":[0,17652446,16843],"ちちおや":[0,17652446,16843],"母親":[0,17669289,15589],"ははおや":[0,17669289,15589],"祖父":[0,17684878,23629],"そふ":[0,17684878,23629],"祖母":[0,17708507,31035],"そぼ":[0,17708507,31035],"長男":[0,17739542,33954],"ちょうなん":[0,17739542,33954],"孫":[0,17773496,31035],"まご":[0,17773496,31035],"おい":[0,17804531,31035],"めい":[0,17835566,31035],"いとこ":[0,17866601,31035],"民族":[0,17897636,44260],"みんぞく":[0,17897636,44260],"息子":[0,17941896,15104],"むすこ":[0,17941896,15104],"娘":[0,17957000,41380],"むすめ":[0,17957000,41380],"目上":[0,17998380,33649],"めうえ":[0,17998380,33649],"友人":[0,18032029,25299],"ゆうじん":[0,18032029,25299],"リーダー":[0,18057328,16804],"履歴書":[0,18074132,20260],"りれきしょ":[0,18074132,20260],"老人":[0,18094392,32932],"ろうじん":[0,18094392,32932],"若者":[0,18127324,23140],"わかもの":[0,18127324,23140],"エンジニア":[0,18150464,23716],"画家":[0,18174180,26969],"がか":[0,18174180,26969],"歌手":[0,18201149,37289],"かしゅ":[0,18201149,37289],"看護師":[0,18238438,37288],"かんごし":[0,18238438,37288],"記者":[0,18275726,22564],"きしゃ":[0,18275726,22564],"教師":[0,18298290,20480],"きょうし":[0,18298290,20480],"公務員":[0,18318770,22528],"こうむいん":[0,18318770,22528],"女優":[0,18341298,18532],"じょゆう":[0,18341298,18532],"通訳":[0,18359830,22564],"つうやく":[0,18359830,22564],"デザイナー":[0,18382394,26624],"俳優":[0,18409018,33649],"はいゆう":[0,18409018,33649],"弁護士":[0,18442667,37287],"べんごし":[0,18442667,37287],"解答":[0,18479954,49060],"かいとう":[0,18479954,49060],"学年":[0,18529014,14772],"がくねん":[0,18529014,14772],"学力":[0,18543786,19684],"がくりょく":[0,18543786,19684],"学期":[0,18563470,16228],"がっき":[0,18563470,16228],"科目":[0,18579698,19684],"かもく":[0,18579698,19684],"願書":[0,18599382,16804],"がんしょ":[0,18599382,16804],"カンニング":[0,18616186,23923],"キャンパス":[0,18640109,32700],"給食":[0,18672809,25444],"きゅうしょく":[0,18672809,25444],"教科書":[0,18698253,20260],"きょうかしょ":[0,18698253,20260],"組":[0,18718513,9733],"くみ":[0,18718513,9733],"グラフ":[0,18728246,27172],"計算":[0,18755418,38343],"けいさん":[0,18755418,38343],"合格":[0,18793761,50980],"ごうかく":[0,18793761,50980],"講義":[0,18844741,26969],"こうぎ":[0,18844741,26969],"講座":[0,18871710,16804],"こうざ":[0,18871710,16804],"講習":[0,18888514,48100],"こうしゅう":[0,18888514,48100],"サークル":[0,18936614,23716],"実験":[0,18960330,48100],"じっけん":[0,18960330,48100],"実習":[0,19008430,36462],"じっしゅう":[0,19008430,36462],"受験":[1,16,22794],"じゅけん":[1,16,22794],"小学生":[1,22810,17280],"しょうがくせい":[1,22810,17280],"初級":[1,40090,14753],"しょきゅう":[1,40090,14753],"進学":[1,54843,26596],"しんがく":[1,54843,26596],"図":[1,81439,8921],"ず":[1,81439,8921],"数字":[1,90360,40996],"すうじ":[1,90360,40996],"正解":[1,131356,43300],"せいかい":[1,131356,43300],"成績":[1,174656,34581],"せいせき":[1,174656,34581],"専門":[1,209237,26596],"せんもん":[1,209237,26596],"早退":[1,235833,31979],"そうたい":[1,235833,31979],"体積":[1,267812,24647],"たいせき":[1,267812,24647],"単語":[1,292459,25299],"たんご":[1,292459,25299],"知識":[1,317758,39460],"ちしき":[1,317758,39460],"中級":[1,357218,16425],"ちゅうきゅう":[1,357218,16425],"点数":[1,373643,16060],"てんすう":[1,373643,16060],"ばつ":[1,389703,20468],"円":[1,410171,8921],"えん":[1,410171,8921],"下線":[1,419092,15652],"かせん":[1,419092,15652],"括弧":[1,434744,24647],"かっこ":[1,434744,24647],"曲線":[1,459391,31204],"きょくせん":[1,459391,31204],"直線":[1,490595,38692],"ちょくせん":[1,490595,38692],"直径":[1,529287,38116],"ちょっけい":[1,529287,38116],"半径":[1,567403,21412],"はんけい":[1,567403,21412],"矢じるし":[1,588815,29663],"やじるし":[1,588815,29663],"表":[1,618478,41380],"ひょう":[1,618478,41380],"プラス":[1,659858,17956],"文":[1,677814,11011],"ぶん":[1,677814,11011],"マイナス":[1,688825,23140],"丸":[1,711965,35236],"まる":[1,711965,35236],"面積":[1,747201,27748],"めんせき":[1,747201,27748],"文字":[1,774949,33649],"もじ/もんじ":[1,774949,33649],"留学":[1,808598,30499],"りゅうがく":[1,808598,30499],"ローマ字":[1,839097,30720],"ローマじ":[1,839097,30720],"大学院":[1,869817,24292],"だいがくいん":[1,869817,24292],"幼稚園":[1,894109,21412],"ようちえん":[1,894109,21412],"化学":[1,915521,16804],"かがく":[1,915521,16804],"国語":[1,932325,40960],"こくご":[1,932325,40960],"体育":[1,973285,24576],"たいいく":[1,973285,24576],"物理":[1,997861,21988],"ぶつり":[1,997861,21988],"理科":[1,1019849,20480],"りか":[1,1019849,20480],"演奏":[1,1040329,29476],"えんそう":[1,1040329,29476],"海水浴":[1,1069805,30628],"かいすいよく":[1,1069805,30628],"歌詞":[1,1100433,25444],"かし":[1,1100433,25444],"楽器":[1,1125877,16228],"キャンプ":[1,1142105,32740],"曲":[1,1174845,24550],"きょく":[1,1174845,24550],"芸術":[1,1199395,15104],"げいじゅつ":[1,1199395,15104],"劇":[1,1214499,17124],"げき":[1,1214499,17124],"コンサート":[1,1231623,23716],"作曲":[1,1255339,33954],"さっきょく":[1,1255339,33954],"詩":[1,1289293,9253],"し":[1,1289293,9253],"チケット":[1,1298546,23716],"読書":[1,1322262,26969],"どくしょ":[1,1322262,26969],"登山":[1,1349231,33649],"とざん":[1,1349231,33649],"ドラマ":[1,1382880,30309],"花火":[1,1413189,23296],"はなび":[1,1413189,23296],"美術":[1,1436485,41380],"びじゅつ":[1,1436485,41380],"相撲":[1,1477865,50020],"すもう":[1,1477865,50020],"卓球":[1,1527885,25444],"たっきゅう":[1,1527885,25444],"釣り":[1,1553329,33700],"つり":[1,1553329,33700],"ハイキング":[1,1587029,24292],"マラソン":[1,1611321,23716],"ランニング":[1,1635037,36154],"ロック":[1,1671191,16228],"ロック（音楽）":[1,1671191,16228],"赤字":[1,1687419,17380],"あかじ":[1,1687419,17380],"売り切れ":[1,1704799,15608],"うりきれ":[1,1704799,15608],"会計":[1,1720407,18532],"かいけい":[1,1720407,18532],"会費":[1,1738939,24868],"かいひ":[1,1738939,24868],"学費":[1,1763807,20260],"がくひ":[1,1763807,20260],"給料":[1,1784067,41380],"きゅうりょう":[1,1784067,41380],"黒字":[1,1825447,20836],"くろじ":[1,1825447,20836],"景気":[1,1846283,16804],"けいき":[1,1846283,16804],"経済":[1,1863087,24576],"けいざい":[1,1863087,24576],"現金":[1,1887663,50980],"げんきん":[1,1887663,50980],"小遣い":[1,1938643,23811],"こづかい":[1,1938643,23811],"財産":[1,1962454,27748],"ざいさん":[1,1962454,27748],"支払い":[1,1990202,24292],"しはらい":[1,1990202,24292],"集金":[1,2014494,16843],"しゅうきん":[1,2014494,16843],"収入":[1,2031337,20836],"しゅうにゅう":[1,2031337,20836],"奨学金":[1,2052173,40996],"しょうがくきん":[1,2052173,40996],"賞金":[1,2093169,20836],"しょうきん":[1,2093169,20836],"消費":[1,2114005,31446],"しょうひ":[1,2114005,31446],"税金":[1,2145451,16804],"ぜいきん":[1,2145451,16804],"送料":[1,2162255,19108],"そうりょう":[1,2162255,19108],"損":[1,2181363,17960],"そん":[1,2181363,17960],"宝くじ":[1,2199323,39494],"たからくじ":[1,2199323,39494],"ただ":[1,2238817,19454],"貯金":[1,2258271,41380],"ちょきん":[1,2258271,41380],"低下":[1,2299651,22564],"得":[1,2322215,20950],"とく":[1,2322215,20950],"値上がり":[1,2343165,29474],"ねあがり":[1,2343165,29474],"費用":[1,2372639,15652],"ひよう":[1,2372639,15652],"物価":[1,2388291,33700],"ぶっか":[1,2388291,33700],"ボーナス":[1,2421991,24868],"保険":[1,2446859,27804],"ほけん":[1,2446859,27804],"前売り":[1,2474663,32171],"まえうり":[1,2474663,32171],"無料":[1,2506834,38500],"むりょう":[1,2506834,38500],"家賃":[1,2545334,24292],"やちん":[1,2545334,24292],"預金":[1,2569626,17380],"よきん":[1,2569626,17380],"予算":[1,2587006,34660],"よさん":[1,2587006,34660],"両替":[1,2621666,40224],"りょうがえ":[1,2621666,40224],"料金":[1,2661890,32356],"りょうきん":[1,2661890,32356],"領収書":[1,2694246,27748],"りょうしゅうしょ":[1,2694246,27748],"割り勘":[1,2721994,30499],"わりかん":[1,2721994,30499],"割引":[1,2752493,17956],"わりびき":[1,2752493,17956],"岩":[1,2770449,16384],"いわ":[1,2770449,16384],"宇宙":[1,2786833,41380],"うちゅう":[1,2786833,41380],"液体":[1,2828213,30193],"えきたい":[1,2828213,30193],"餌":[1,2858406,28900],"えさ":[1,2858406,28900],"枝":[1,2887306,17124],"えだ":[1,2887306,17124],"大雨":[1,2904430,31979],"おおあめ":[1,2904430,31979],"温泉":[1,2936409,45220],"おんせん":[1,2936409,45220],"温度":[1,2981629,11342],"おんど":[1,2981629,11342],"影":[1,2992971,25804],"かげ":[1,2992971,25804],"火山":[1,3018775,19684],"かざん":[1,3018775,19684],"雷":[1,3038459,20260],"かみなり":[1,3038459,20260],"皮":[1,3058719,34660],"環境":[1,3093379,48100],"かんきょう":[1,3093379,48100],"乾燥":[1,3141479,27748],"気温":[1,3169227,19535],"きおん":[1,3169227,19535],"気候":[1,3188762,19684],"きこう":[1,3188762,19684],"気体":[1,3208446,20260],"草":[1,3228706,38912],"くさ":[1,3228706,38912],"警報":[1,3267618,23140],"けいほう":[1,3267618,23140],"煙":[1,3290758,25129],"けむり":[1,3290758,25129],"洪水":[1,3315887,22564],"こうずい":[1,3315887,22564],"紅葉":[1,3338451,26596],"こうよう":[1,3338451,26596],"酸素":[1,3365047,25483],"さんそ":[1,3365047,25483],"自然":[1,3390530,29474],"しぜん":[1,3390530,29474],"湿度":[1,3420004,18532],"しつど":[1,3420004,18532],"芝生":[1,3438536,30193],"しばふ":[1,3438536,30193],"消火器":[1,3468729,28900],"しょうかき":[1,3468729,28900],"植物":[1,3497629,47104],"しょくぶつ":[1,3497629,47104],"震度":[1,3544733,29309],"しんど":[1,3544733,29309],"森林":[1,3574042,23140],"しんりん":[1,3574042,23140],"太陽":[1,3597182,43008],"たいよう":[1,3597182,43008],"大陸":[1,3640190,23716],"たいりく":[1,3640190,23716],"種":[1,3663906,26801],"たね":[1,3663906,26801],"断水":[1,3690707,26431],"だんすい":[1,3690707,26431],"地球":[1,3717138,41380],"ちきゅう":[1,3717138,41380],"注意報":[1,3758518,24292],"ちゅういほう":[1,3758518,24292],"土":[1,3782810,24464],"つち":[1,3782810,24464],"津波":[1,3807274,21412],"つなみ":[1,3807274,21412],"梅雨":[1,3828686,38500],"つゆ/ばいう":[1,3828686,38500],"停電":[1,3867186,16228],"ていでん":[1,3867186,16228],"電線":[1,3883414,19108],"でんせん":[1,3883414,19108],"泥":[1,3902522,24576],"どろ":[1,3902522,24576],"波":[1,3927098,17956],"なみ":[1,3927098,17956],"根":[1,3945054,36864],"ね":[1,3945054,36864],"畑":[1,3981918,19684],"はたけ":[1,3981918,19684],"半島":[1,4001602,21412],"はんとう":[1,4001602,21412],"避難":[1,4023014,16804],"ひなん":[1,4023014,16804],"風速":[1,4039818,24868],"ふうそく":[1,4039818,24868],"ほこり":[1,4064686,19684],"虫":[1,4084370,31035],"むし":[1,4084370,31035],"ろうそく":[1,4115405,24292],"湾":[1,4139697,17124],"わん":[1,4139697,17124],"うさぎ":[1,4156821,31035],"牛":[1,4187856,31035],"うし":[1,4187856,31035],"馬":[1,4218891,31035],"うま":[1,4218891,31035],"蚊":[1,4249926,31034],"か":[1,4249926,31034],"貝":[1,4280960,31035],"かい":[1,4280960,31035],"からす":[1,4311995,24868],"猿":[1,4336863,31035],"さる":[1,4336863,31035],"象":[1,4367898,18796],"ぞう":[1,4367898,18796],"虎":[1,4386694,20836],"とら":[1,4386694,20836],"鶏":[1,4407530,31034],"にわとり":[1,4407530,31034],"ねずみ":[1,4438564,31035],"羊":[1,4469599,31035],"ひつじ":[1,4469599,31035],"豚":[1,4500634,31034],"ぶた":[1,4500634,31034],"蛇":[1,4531668,31035],"へび":[1,4531668,31035],"桜":[1,4562703,16804],"さくら":[1,4562703,16804],"以前":[1,4579507,28639],"いぜん":[1,4579507,28639],"延期":[1,4608146,43300],"えんき":[1,4608146,43300],"延長":[1,4651446,30052],"えんちょう":[1,4651446,30052],"開始":[1,4681498,30309],"かいし":[1,4681498,30309],"過去":[1,4711807,20480],"かこ":[1,4711807,20480],"期間":[1,4732287,29566],"きかん":[1,4732287,29566],"期限":[1,4761853,13924],"きげん":[1,4761853,13924],"休日":[1,4775777,24868],"きゅうじつ":[1,4775777,24868],"下旬":[1,4800645,16228],"げじゅん":[1,4800645,16228],"月末":[1,4816873,21988],"げつまつ":[1,4816873,21988],"現在":[1,4838861,24576],"げんざい":[1,4838861,24576],"現代":[1,4863437,31446],"げんだい":[1,4863437,31446],"後半":[1,4894883,23140],"こうはん":[1,4894883,23140],"頃":[1,4918023,16288],"ころ":[1,4918023,16288],"今回":[1,4934311,13518],"こんかい":[1,4934311,13518],"シーズン":[1,4947829,17956],"時期":[1,4965785,20260],"じき":[1,4965785,20260],"時刻":[1,4986045,17380],"じこく":[1,4986045,17380],"時差":[1,5003425,29860],"じさ":[1,5003425,29860],"週":[1,5033285,45056],"週末":[1,5078341,50020],"しゅうまつ":[1,5078341,50020],"終了":[1,5128361,28939],"しゅうりょう":[1,5128361,28939],"上旬":[1,5157300,25483],"じょうじゅん":[1,5157300,25483],"新年":[1,5182783,30193],"しんねん":[1,5182783,30193],"深夜":[1,5212976,27748],"しんや":[1,5212976,27748],"スタート":[1,5240724,20836],"先日":[1,5261560,27748],"せんじつ":[1,5261560,27748],"遅刻":[1,5289308,35620],"ちこく":[1,5289308,35620],"中旬":[1,5324928,20836],"ちゅうじゅん":[1,5324928,20836],"同時":[1,5345764,16002],"どうじ":[1,5345764,16002],"当日":[1,5361766,20260],"とうじつ":[1,5361766,20260],"年代":[1,5382026,35996],"ねんだい":[1,5382026,35996],"半年":[1,5418022,43008],"はんとし":[1,5418022,43008],"日にち":[1,5461030,19108],"ひにち":[1,5461030,19108],"平日":[1,5480138,34484],"へいじつ":[1,5480138,34484],"本日":[1,5514622,20260],"ほんじつ":[1,5514622,20260],"未来":[1,5534882,22528],"みらい":[1,5534882,22528],"夜中":[1,5557410,21988],"よなか":[1,5557410,21988],"臨時":[1,5579398,25177],"りんじ":[1,5579398,25177],"連休":[1,5604575,49060],"れんきゅう":[1,5604575,49060],"着替え":[1,5653635,22976],"きがえ":[1,5653635,22976],"化粧":[1,5676611,22564],"けしょう":[1,5676611,22564],"香水":[1,5699175,20260],"こうすい":[1,5699175,20260],"エプロン":[1,5719435,17380],"コート":[1,5736815,42340],"サンダル":[1,5779155,20836],"ジャケット":[1,5799991,24576],"スニーカー":[1,5824567,28900],"ドレス":[1,5853467,19684],"パジャマ":[1,5873151,17956],"下着":[1,5891107,20480],"したぎ":[1,5891107,20480],"制服":[1,5911587,29476],"せいふく":[1,5911587,29476],"ファッション":[1,5941063,31979],"ブーツ":[1,5973042,21988],"ブラウス":[1,5995030,20260],"水着":[1,6015290,20260],"みずぎ":[1,6015290,20260],"レインコート":[1,6035550,28324],"ワンピース":[1,6063874,24868],"口紅":[1,6088742,35236],"くちべに":[1,6088742,35236],"サングラス":[1,6123978,34484],"ネックレス":[1,6158462,24868],"バッグ":[1,6183330,15076],"服装":[1,6198406,19684],"ふくそう":[1,6198406,19684],"宝石":[1,6218090,30820],"ほうせき":[1,6218090,30820],"リボン":[1,6248910,16228],"ベルト":[1,6265138,20260],"マフラー":[1,6285398,20836],"襟":[1,6306234,20480],"えり":[1,6306234,20480],"袖":[1,6326714,22528],"そで":[1,6326714,22528],"ファスナー":[1,6349242,28672],"毛糸":[1,6377914,14354],"けいと":[1,6377914,14354],"家具":[1,6392268,29860],"かぐ":[1,6392268,29860],"住宅":[1,6422128,50020],"じゅうたく":[1,6422128,50020],"チャイム":[1,6472148,24464],"天井":[1,6496612,29663],"てんじょう":[1,6496612,29663],"戸棚":[1,6526275,25483],"とだな":[1,6526275,25483],"柱":[1,6551758,24647],"はしら":[1,6551758,24647],"バス":[1,6576405,14336],"屋根":[1,6590741,11342],"やね":[1,6590741,11342],"床":[1,6602083,22976],"ゆか":[1,6602083,22976],"洋室":[1,6625059,16007],"ようしつ":[1,6625059,16007],"寮":[1,6641066,18532],"和室":[1,6659598,44260],"わしつ":[1,6659598,44260],"お手洗い":[1,6703858,36462],"おてあらい":[1,6703858,36462],"カーペット":[1,6740320,23140],"キッチン":[1,6763460,27748],"寝室":[1,6791208,41572],"しんしつ":[1,6791208,41572],"ソファー":[1,6832780,24868],"たんす":[1,6857648,32740],"流し":[1,6890388,19136],"ながし":[1,6890388,19136],"ベランダ":[1,6909524,34484],"便所":[1,6944008,13081],"べんじょ":[1,6944008,13081],"インスタント食品":[1,6957089,35236],"インスタントしょくひん":[1,6957089,35236],"栄養":[1,6992325,24292],"えいよう":[1,6992325,24292],"おかず":[1,7016617,16804],"アイスクリーム":[1,7033421,45056],"ウイスキー":[1,7078477,28312],"うどん":[1,7106789,30720],"オレンジ":[1,7137509,34816],"缶詰":[1,7172325,19108],"かんづめ":[1,7172325,19108],"小麦粉":[1,7191433,25483],"こむぎこ":[1,7191433,25483],"さしみ":[1,7216916,21412],"そば":[1,7238328,12772],"チーズ":[1,7251100,18532],"おやつ":[1,7269632,21412],"外食":[1,7291044,34484],"がいしょく":[1,7291044,34484],"クリーム":[1,7325528,37540],"氷":[1,7363068,38912],"こおり":[1,7363068,38912],"鳥肉":[1,7401980,33649],"とりにく":[1,7401980,33649],"丼":[1,7435629,22140],"どんぶり":[1,7435629,22140],"パスタ":[1,7457769,28672],"フルーツ":[1,7486441,31979],"豆":[1,7518420,26624],"まめ":[1,7518420,26624],"ワイン":[1,7545044,37540],"食品":[1,7582584,22564],"しょくひん":[1,7582584,22564],"食料":[1,7605148,19684],"しょくりょう":[1,7605148,19684],"食器":[1,7624832,15104],"しょっき":[1,7624832,15104],"ゼリー":[1,7639936,23716],"調味料":[1,7663652,46180],"ちょうみりょう":[1,7663652,46180],"定食":[1,7709832,17380],"ていしょく":[1,7709832,17380],"冷凍":[1,7727212,25444],"れいとう":[1,7727212,25444],"油":[1,7752656,24576],"あぶら":[1,7752656,24576],"酢":[1,7807541,16384],"す":[1,7807541,16384],"ソース":[1,7823925,19108],"みそ":[1,7843033,17960],"朝食":[1,7860993,45056],"ちょうしょく":[1,7860993,45056],"昼食":[1,7906049,35835],"ちゅうしょく":[1,7906049,35835],"デザート":[1,7941884,30720],"ランチ":[1,7972604,13924],"糸":[1,7986528,11428],"いと":[1,7986528,11428],"温度計":[1,7997956,34484],"おんどけい":[1,7997956,34484],"鏡":[1,8032440,16804],"かがみ":[1,8032440,16804],"カバー":[1,8049244,22528],"缶":[1,8071772,23296],"かん":[1,8071772,23296],"蛍光灯":[1,8095068,43300],"けいこうとう":[1,8095068,43300],"洗剤":[1,8138368,31780],"せんざい":[1,8138368,31780],"雑巾":[1,8170148,32171],"ぞうきん":[1,8170148,32171],"お盆":[1,8202319,20260],"おぼん":[1,8202319,20260],"グラス":[1,8222579,20836],"炊飯器":[1,8243415,44452],"すいはんき":[1,8243415,44452],"鍋":[1,8287867,20289],"なべ":[1,8287867,20289],"フライパン":[1,8308156,23716],"包丁":[1,8331872,34816],"ほうちょう":[1,8331872,34816],"ポット":[1,8366688,31780],"まないた":[1,8398468,24868],"やかん":[1,8423336,15652],"掃除用具":[1,8438988,27991],"そうじようぐ":[1,8438988,27991],"チェーン":[1,8466979,13924],"手帳":[1,8480903,44260],"てちょう":[1,8480903,44260],"電子レンジ":[1,8525163,24868],"でんしレンジ":[1,8525163,24868],"布":[1,8550031,25965],"ぬの":[1,8550031,25965],"歯磨き":[1,8575996,19684],"はみがき":[1,8575996,19684],"針":[1,8595680,14500],"はり":[1,8595680,14500],"判こ":[1,8610180,23811],"はんこ":[1,8610180,23811],"ファイル":[1,8633991,25299],"アイロン":[1,8659290,45220],"エアコン":[1,8704510,20260],"コンセント":[1,8724770,21412],"スイッチ":[1,8746182,29566],"スタンド":[1,8775748,18532],"スピーカー":[1,8794280,24292],"扇風機":[1,8818572,57700],"せんぷうき":[1,8818572,57700],"電球":[1,8876272,25444],"でんきゅう":[1,8876272,25444],"プラグ":[1,8901716,20260],"ヘッドホン":[1,8921976,24292],"風船":[1,8946268,13912],"ふうせん":[1,8946268,13912],"袋":[1,8960180,20480],"ふくろ":[1,8960180,20480],"筆":[1,8980660,20480],"ふで":[1,8980660,20480],"部品":[1,9001140,30820],"ぶひん":[1,9001140,30820],"文房具":[1,9031960,32768],"ぶんぼうぐ":[1,9031960,32768],"ペンキ":[1,9064728,32740],"名刺":[1,9097468,21988],"めいし":[1,9097468,21988],"アルバム":[1,9119456,24292],"シーツ":[1,9143748,23716],"扇子":[1,9167464,20260],"せんす":[1,9167464,20260],"タオル":[1,9187724,21440],"電池":[1,9209164,23629],"でんち":[1,9209164,23629],"ひも":[1,9232793,22528],"ふた":[1,9255321,25299],"枕":[1,9280620,17956],"まくら":[1,9280620,17956],"目覚まし":[1,9298576,30193],"めざまし":[1,9298576,30193],"毛布":[1,9328769,22564],"もうふ":[1,9328769,22564],"ライター":[1,9351333,21988],"ランプ":[1,9373321,25177],"レバー":[1,9398498,18532],"ロボット":[1,9417030,41478],"インク":[1,9458508,26624],"定規":[1,9485132,26624],"じょうぎ":[1,9485132,26624],"電卓":[1,9511756,21412],"でんたく":[1,9511756,21412],"のり":[1,9533168,11409],"はさみ":[1,9544577,30628],"輪ゴム":[1,9575205,37540],"わゴム":[1,9575205,37540],"愛する":[1,9612745,23140],"あいする":[1,9612745,23140],"諦める":[1,9635885,39494],"あきらめる":[1,9635885,39494],"飽きる":[1,9675379,16228],"あきる":[1,9675379,16228],"預かる":[1,9691607,21412],"あずかる":[1,9691607,21412],"預ける":[1,9713019,25177],"あずける":[1,9713019,25177],"暖める":[1,9738196,23140],"あたためる":[1,9738196,23140],"温める":[1,9761336,23140],"当たる":[1,9784476,20836],"あたる":[1,9784476,20836],"余る":[1,9805312,27172],"あまる":[1,9805312,27172],"編む":[1,9832484,30820],"あむ":[1,9832484,30820],"現れる":[1,9863304,30720],"あらわれる":[1,9863304,30720],"合わせる":[1,9894024,27991],"あわせる":[1,9894024,27991],"慌てる":[1,9922015,33649],"あわてる":[1,9922015,33649],"生かす":[1,9955664,22564],"いかす":[1,9955664,22564],"いじめる":[1,9978228,33649],"いためる":[1,10011877,47104],"祈る":[1,10058981,25965],"いのる":[1,10058981,25965],"嫌がる":[1,10084946,20836],"いやがる":[1,10084946,20836],"祝う":[1,10105782,19632],"いわう":[1,10105782,19632],"植える":[1,10125414,37540],"うえる":[1,10125414,37540],"浮く":[1,10162954,33700],"うく":[1,10162954,33700],"受け付ける":[1,10196654,37824],"うけつける":[1,10196654,37824],"受け取る":[1,10234478,45220],"うけとる":[1,10234478,45220],"動かす":[1,10279698,24292],"うごかす":[1,10279698,24292],"移す":[1,10303990,27804],"うつす":[1,10303990,27804],"写る":[1,10331794,11846],"うつる":[1,10331794,11846],"売り切れる":[1,10343640,32932],"うりきれる":[1,10343640,32932],"選ぶ":[1,10376572,16804],"えらぶ":[1,10376572,16804],"追いかける":[1,10393376,17261],"おいかける":[1,10393376,17261],"追い越す":[1,10410637,24647],"おいこす":[1,10410637,24647],"追う":[1,10435284,22669],"贈る":[1,10457953,26134],"おくる":[1,10457953,26134],"行う":[1,10484087,32700],"おこなう":[1,10484087,32700],"押さえる":[1,10516787,24868],"おさえる":[1,10516787,24868],"落ち着く":[1,10541655,48100],"おちつく":[1,10541655,48100],"折れる":[1,10589755,20260],"おれる":[1,10589755,20260],"飼う":[1,10610015,21959],"かう":[1,10610015,21959],"返る":[1,10631974,24576],"かえる":[1,10631974,24576],"輝く":[1,10656550,30499],"かがやく":[1,10656550,30499],"かかる":[1,10687049,32073],"かく":[1,10739602,18432],"隠す":[1,10776466,20789],"かくす":[1,10776466,20789],"囲む":[1,10797255,13432],"かこむ":[1,10797255,13432],"重ねる":[1,10810687,28324],"かさねる":[1,10810687,28324],"数える":[1,10839011,21988],"かぞえる":[1,10839011,21988],"固まる":[1,10860999,32768],"かたまる":[1,10860999,32768],"傾く":[1,10893767,25483],"かたむく":[1,10893767,25483],"がっかりする":[1,10919250,36989],"かむ":[1,10956239,9738],"通う":[1,10965977,17956],"かよう":[1,10965977,17956],"枯れる":[1,10983933,38500],"かれる":[1,10983933,38500],"かわいがる":[1,11022433,26596],"乾かす":[1,11049029,32171],"かわかす":[1,11049029,32171],"感じる":[1,11081200,34660],"かんじる":[1,11081200,34660],"効く":[1,11115860,16804],"きく":[1,11115860,16804],"気に入る":[1,11132664,20836],"きにいる":[1,11132664,20836],"切れる":[1,11153500,35208],"きれる":[1,11153500,35208],"気をつける":[1,11188708,23716],"きをつける":[1,11188708,23716],"腐る":[1,11212424,22042],"くさる":[1,11212424,22042],"崩れる":[1,11234466,22976],"くずれる":[1,11234466,22976],"配る":[1,11257442,13081],"くばる":[1,11257442,13081],"暮らす":[1,11270523,37540],"くらす":[1,11270523,37540],"比べる":[1,11308063,23140],"くらべる":[1,11308063,23140],"繰り返す":[1,11331203,50020],"くりかえす":[1,11331203,50020],"苦しむ":[1,11381223,26020],"くるしむ":[1,11381223,26020],"加える":[1,11407243,19684],"くわえる":[1,11407243,19684],"削る":[1,11426927,21304],"けずる":[1,11426927,21304],"蹴る":[1,11448231,16384],"ける":[1,11448231,16384],"越える":[1,11464615,31979],"こえる":[1,11464615,31979],"凍る":[1,11496594,23811],"こおる":[1,11496594,23811],"焦げる":[1,11520405,23811],"こげる":[1,11520405,23811],"断る":[1,11544216,45220],"ことわる":[1,11544216,45220],"こぼれる":[1,11589436,32932],"転がる":[1,11622368,15589],"ころがる":[1,11622368,15589],"殺す":[1,11637957,14686],"ころす":[1,11637957,14686],"転ぶ":[1,11652643,12178],"ころぶ":[1,11652643,12178],"叫ぶ":[1,11664821,19684],"さけぶ":[1,11664821,19684],"刺す":[1,11684505,24576],"さす":[1,11684505,24576],"指す":[1,11709081,24576],"差す":[1,11733657,24576],"誘う":[1,11758233,42340],"さそう":[1,11758233,42340],"覚める":[1,11800573,30309],"さめる":[1,11800573,30309],"冷める":[1,11830882,26624],"敷く":[1,11857506,24464],"しく":[1,11857506,24464],"沈む":[1,11881970,26020],"しずむ":[1,11881970,26020],"縛る":[1,11907990,25177],"しばる":[1,11907990,25177],"信じる":[1,11933167,38692],"しんじる":[1,11933167,38692],"過ぎる":[1,11971859,30820],"すぎる":[1,11971859,30820],"過ごす":[1,12002679,32171],"すごす":[1,12002679,32171],"進む":[1,12034850,16007],"すすむ":[1,12034850,16007],"勧める":[1,12050857,21412],"すすめる":[1,12050857,21412],"滑る":[1,12072269,21412],"すべる":[1,12072269,21412],"済む":[1,12093681,28900],"すむ":[1,12093681,28900],"育てる":[1,12122581,20836],"そだてる":[1,12122581,20836],"備える":[1,12143417,22564],"そなえる":[1,12143417,22564],"染める":[1,12165981,39460],"そめる":[1,12165981,39460],"倒す":[1,12205441,32652],"たおす":[1,12205441,32652],"炊く":[1,12238093,26624],"たく":[1,12238093,26624],"抱く":[1,12264717,16228],"だく":[1,12264717,16228],"確かめる":[1,12280945,28900],"たしかめる":[1,12280945,28900],"足す":[1,12309845,21304],"たす":[1,12309845,21304],"助ける":[1,12331149,18532],"たすける":[1,12331149,18532],"訪ねる":[1,12349681,39494],"たずねる":[1,12349681,39494],"尋ねる":[1,12389175,46180],"戦う":[1,12435355,18532],"たたかう":[1,12435355,18532],"立ち上がる":[1,12453887,36989],"たちあがる":[1,12453887,36989],"楽しむ":[1,12490876,14335],"たのしむ":[1,12490876,14335],"黙る":[1,12505211,39460],"だまる":[1,12505211,39460],"足りる":[1,12544671,15652],"たりる":[1,12544671,15652],"近づく":[1,12560323,33649],"ちかづく":[1,12560323,33649],"近寄る":[1,12593972,30052],"ちかよる":[1,12593972,30052],"散る":[1,12624024,17960],"ちる":[1,12624024,17960],"捕まる":[1,12641984,48100],"つかまる":[1,12641984,48100],"つかむ":[1,12690084,16228],"つきあう":[1,12706312,31979],"つく":[1,12738291,11760],"着ける":[1,12750051,22794],"つける":[1,12750051,22794],"伝わる":[1,12772845,28312],"つたわる":[1,12772845,28312],"潰れる":[1,12801157,27172],"つぶれる":[1,12801157,27172],"積む":[1,12828329,15076],"つむ":[1,12828329,15076],"詰める":[1,12843405,20789],"つめる":[1,12843405,20789],"積もる":[1,12864194,17654],"つもる":[1,12864194,17654],"でき上がる":[1,12881848,17256],"できあがる":[1,12881848,17256],"どく":[1,12899104,20836],"溶ける":[1,12919940,42340],"とける":[1,12919940,42340],"閉じる":[1,12962280,20468],"とじる":[1,12962280,20468],"飛び込む":[1,12982748,38970],"とびこむ":[1,12982748,38970],"取り消す":[1,13021718,23140],"とりけす":[1,13021718,23140],"取り出す":[1,13044858,33649],"とりだす":[1,13044858,33649],"捕る":[1,13078507,16384],"とる":[1,13078507,16384],"取れる":[1,13094891,28939],"とれる":[1,13094891,28939],"流れる":[1,13123830,39460],"ながれる":[1,13123830,39460],"殴る":[1,13163290,22528],"なぐる":[1,13163290,22528],"悩む":[1,13185818,44260],"なやむ":[1,13185818,44260],"なる":[1,13230078,22528],"似合う":[1,13252606,23140],"にあう":[1,13252606,23140],"握る":[1,13275746,25483],"にぎる":[1,13275746,25483],"煮る":[1,13301229,22528],"にる":[1,13301229,22528],"抜く":[1,13323757,15652],"ぬく":[1,13323757,15652],"ぬれる":[1,13339409,37540],"願う":[1,13376949,33700],"ねがう":[1,13376949,33700],"残す":[1,13410649,27155],"のこす":[1,13410649,27155],"載せる":[1,13437804,39460],"のせる":[1,13437804,39460],"伸びる":[1,13477264,30309],"のびる":[1,13477264,30309],"延びる":[1,13507573,30309],"昇る":[1,13537882,37540],"のぼる":[1,13537882,37540],"生える":[1,13575422,20260],"はえる":[1,13575422,20260],"掃く":[1,13595682,15076],"はく":[1,13595682,15076],"吐く":[1,13610758,20480],"外す":[1,13631238,19108],"はずす":[1,13631238,19108],"外れる":[1,13650346,32768],"はずれる":[1,13650346,32768],"話しかける":[1,13683114,30628],"はなしかける":[1,13683114,30628],"離れる":[1,13713742,21412],"はなれる":[1,13713742,21412],"はやる":[1,13735154,15076],"払い戻す":[1,13750230,33007],"はらいもどす":[1,13750230,33007],"腫れる":[1,13783237,27058],"はれる":[1,13783237,27058],"引き受ける":[1,13810295,50020],"ひきうける":[1,13810295,50020],"引く":[1,13860315,23923],"ひく":[1,13860315,23923],"引っ繰り返す":[1,13884238,34084],"ひっくりかえす":[1,13884238,34084],"冷やす":[1,13918322,17956],"ひやす":[1,13918322,17956],"拭く":[1,13936278,22528],"ふく":[1,13936278,22528],"防ぐ":[1,13958806,15652],"ふせぐ":[1,13958806,15652],"ぶつかる":[1,13974458,24868],"増やす":[1,13999326,28827],"ふやす":[1,13999326,28827],"振る":[1,14028153,21959],"ふる":[1,14028153,21959],"減る":[1,14050112,23629],"へる":[1,14050112,23629],"ほえる":[1,14073741,12772],"干す":[1,14086513,24292],"ほす":[1,14086513,24292],"掘る":[1,14110805,25060],"ほる":[1,14110805,25060],"曲げる":[1,14135865,15584],"まげる":[1,14135865,15584],"混ぜる":[1,14151449,24868],"まぜる":[1,14151449,24868],"まとめる":[1,14176317,33649],"学ぶ":[1,14209966,27748],"まなぶ":[1,14209966,27748],"守る":[1,14237714,27804],"まもる":[1,14237714,27804],"回す":[1,14265518,21412],"まわす":[1,14265518,21412],"見送る":[1,14286930,13499],"みおくる":[1,14286930,13499],"見直す":[1,14300429,20260],"みなおす":[1,14300429,20260],"診る":[1,14320689,22528],"みる":[1,14320689,22528],"向かう":[1,14343217,29474],"むかう":[1,14343217,29474],"向く":[1,14372691,28672],"むく":[1,14372691,28672],"蒸す":[1,14401363,26624],"むす":[1,14401363,26624],"目指す":[1,14427987,31979],"めざす":[1,14427987,31979],"申し込む":[1,14459966,26319],"もうしこむ":[1,14459966,26319],"戻す":[1,14486285,22976],"もどす":[1,14486285,22976],"燃やす":[1,14509261,26319],"もやす":[1,14509261,26319],"訳す":[1,14535580,22564],"やくす":[1,14535580,22564],"役に立つ":[1,14558144,31204],"やくにたつ":[1,14558144,31204],"雇う":[1,14589348,27172],"やとう":[1,14589348,27172],"破れる":[1,14616520,36462],"やぶれる":[1,14616520,36462],"譲る":[1,14652982,37540],"ゆずる":[1,14652982,37540],"ゆでる":[1,14690522,28672],"許す":[1,14719194,33700],"ゆるす":[1,14719194,33700],"揺れる":[1,14752894,16804],"ゆれる":[1,14752894,16804],"酔う":[1,14769698,33954],"よう":[1,14769698,33954],"汚す":[1,14803652,49060],"よごす":[1,14803652,49060],"分ける":[1,14852712,13518],"わける":[1,14852712,13518],"割る":[1,14866230,18796],"わる":[1,14866230,18796],"浅い":[1,14885026,16804],"あさい":[1,14885026,16804],"偉い":[1,14901830,15652],"えらい":[1,14901830,15652],"おかしい①":[1,14917482,21988],"おかしい":[1,14917482,21988],"おかしい②":[1,14939470,21988],"おかしい２":[1,14939470,21988],"恐ろしい":[1,14961458,28827],"おそろしい":[1,14961458,28827],"おとなしい":[1,14990285,25444],"かゆい":[1,15015729,24576],"厳しい":[1,15040305,26319],"きびしい":[1,15040305,26319],"臭い":[1,15066624,38500],"くさい":[1,15066624,38500],"悔しい":[1,15105124,48100],"くやしい":[1,15105124,48100],"苦しい":[1,15153224,42104],"くるしい":[1,15153224,42104],"詳しい":[1,15195328,25444],"くわしい":[1,15195328,25444],"濃い":[1,15220772,19108],"こい":[1,15220772,19108],"細かい":[1,15239880,23716],"こまかい":[1,15239880,23716],"塩辛い":[1,15263596,26020],"しおからい":[1,15263596,26020],"しかた（が）ない":[1,15289616,13518],"酸っぱい":[1,15303134,22564],"すっぱい":[1,15303134,22564],"懐かしい":[1,15325698,27172],"なつかしい":[1,15325698,27172],"ひどい":[1,15352870,34660],"貧しい":[1,15387530,52900],"まずしい":[1,15387530,52900],"蒸し暑い":[1,15440430,24292],"むしあつい":[1,15440430,24292],"珍しい":[1,15464722,50980],"めずらしい":[1,15464722,50980],"申し訳ない":[1,15515702,40420],"もうしわけない":[1,15515702,40420],"もったいない":[1,15556122,35812],"意外":[1,15591934,30309],"いがい":[1,15591934,30309],"異常":[1,15622243,18532],"いじょう":[1,15622243,18532],"一般的":[1,15640775,53860],"いっぱんてき":[1,15640775,53860],"穏やか":[1,15694635,27155],"おだやか":[1,15694635,27155],"勝手":[1,15721790,20260],"かって":[1,15721790,20260],"可能":[1,15742050,20260],"かのう":[1,15742050,20260],"かわいそう":[1,15762310,52900],"頑固":[1,15815210,42340],"がんこ":[1,15815210,42340],"完全":[1,15857550,15522],"かんぜん":[1,15857550,15522],"具体的":[1,15873072,23716],"ぐたいてき":[1,15873072,23716],"経済的":[1,15896788,31335],"けいざいてき":[1,15896788,31335],"幸福":[1,15928123,18532],"こうふく":[1,15928123,18532],"盛ん":[1,15946655,17654],"さかん":[1,15946655,17654],"さまざま":[1,15964309,17612],"幸せ":[1,15981921,45220],"しあわせ":[1,15981921,45220],"地味":[1,16027141,42340],"じみ":[1,16027141,42340],"重大":[1,16069481,24576],"じゅうだい":[1,16069481,24576],"重要":[1,16094057,18097],"じゅうよう":[1,16094057,18097],"消極的":[1,16112154,26596],"しょうきょくてき":[1,16112154,26596],"新鮮":[1,16138750,51940],"しんせん":[1,16138750,51940],"素敵":[1,16190690,20260],"すてき":[1,16190690,20260],"正確":[1,16210950,52900],"ぜいたく":[1,16263850,42104],"積極的":[1,16305954,28900],"せっきょくてき":[1,16305954,28900],"そっくり":[1,16334854,46180],"ソフト":[1,16381034,50980],"退屈":[1,16432014,30628],"たいくつ":[1,16432014,30628],"確か":[1,16462642,31335],"たしか":[1,16462642,31335],"単純":[1,16493977,20836],"たんじゅん":[1,16493977,20836],"適当":[1,16514813,47140],"てきとう":[1,16514813,47140],"得意":[1,16561953,37540],"とくい":[1,16561953,37540],"苦手":[1,16599493,31204],"にがて":[1,16599493,31204],"派手":[1,16630697,38500],"はで":[1,16630697,38500],"貧乏":[1,16669197,39597],"びんぼう":[1,16669197,39597],"不安":[1,16708794,13924],"ふあん":[1,16708794,13924],"複雑":[1,16722718,48100],"ふくざつ":[1,16722718,48100],"不幸":[1,16770818,34581],"ふこう":[1,16770818,34581],"無事":[1,16805399,21304],"ぶじ":[1,16805399,21304],"不思議":[1,16826703,47140],"ふしぎ":[1,16826703,47140],"不満":[1,16873843,22794],"ふまん":[1,16873843,22794],"平和":[1,16896637,20260],"へいわ":[1,16896637,20260],"真っ赤":[1,16916897,21412],"まっか":[1,16916897,21412],"真っ暗":[1,16938309,22564],"まっくら":[1,16938309,22564],"満足":[1,16960873,32814],"まんぞく":[1,16960873,32814],"無駄":[1,16993687,15652],"むだ":[1,16993687,15652],"迷惑":[1,17009339,45220],"めいわく":[1,17009339,45220],"面倒":[1,17054559,49060],"めんどう":[1,17054559,49060],"優秀":[1,17103619,27058],"ゆうしゅう":[1,17103619,27058],"豊か":[1,17130677,18532],"ゆたか":[1,17130677,18532],"楽":[1,17149209,12298],"らく":[1,17149209,12298],"わがまま":[1,17161507,22564],"一時":[1,17184071,32768],"いちじ":[1,17184071,32768],"いつか":[1,17216839,24576],"いつの間にか":[1,17241415,59620],"いつのまにか":[1,17241415,59620],"うっかり":[1,17301035,17380],"かえって":[1,17318415,32932],"かなり":[1,17351347,23811],"きちんと":[1,17375158,20836],"偶然":[1,17395994,45220],"ぐうぜん":[1,17395994,45220],"ぐずぐず":[1,17441214,29476],"結局":[1,17470690,53860],"けっきょく":[1,17470690,53860],"じっと":[1,17524550,45220],"少々":[1,17569770,21988],"しょうしょう":[1,17569770,21988],"全て":[1,17591758,15045],"すべて":[1,17591758,15045],"せっかく":[1,17606803,48100],"絶対":[1,17654903,45220],"ぜったい":[1,17654903,45220],"そろそろ":[1,17700123,21412],"たとえ":[1,17721535,35620],"たびたび":[1,17757155,22564],"たまに":[1,17779719,16228],"ちゃんと":[1,17795947,19108],"直接":[1,17815055,21988],"ちょくせつ":[1,17815055,21988],"次々":[1,17837043,20836],"つぎつぎ":[1,17837043,20836],"どうか":[1,17857879,13850],"どきどき":[1,17871729,20260],"突然":[1,17891989,43300],"とつぜん":[1,17891989,43300],"どんなに":[1,17935289,20162],"にこにこ":[1,17955451,21988],"年中":[1,17977439,14354],"ねんじゅう":[1,17977439,14354],"のんびり":[1,17991793,32814],"ばらばら":[1,18024607,20260],"ぴかぴか":[1,18044867,21412],"ぺこぺこ":[1,18066279,21988],"ぺらぺら":[1,18088267,18532],"ぼんやり":[1,18106799,39460],"まあまあ":[1,18146259,31780],"全く":[1,18178039,33327],"まったく":[1,18178039,33327],"間もなく":[1,18211366,48100],"まもなく":[1,18211366,48100],"最も":[1,18259466,16425],"もっとも":[1,18259466,16425],"ある":[1,18275891,16384],"それで":[1,18292275,21988],"それに":[1,18314263,20836],"つまり":[1,18335099,29566],"召し上がる":[1,18364665,53860],"めしあがる":[1,18364665,53860],"いたす":[1,18418525,40420],"頂く":[1,18458945,49060],"いただく①":[1,18458945,49060],"いただく②":[1,18508005,49060],"伺う":[1,18557065,21415],"うかがう①":[1,18557065,21415],"うかがう②":[1,18578480,21415],"お目にかかる":[1,18599895,46180],"おめにかかる":[1,18599895,46180],"ご覧にいれる":[1,18646075,18796],"ごらんにいれる":[1,18646075,18796],"参る":[1,18664871,24292],"まいる":[1,18664871,24292],"お上がりください":[1,18689163,17960],"おあがりください①":[1,18689163,17960],"おあがりください②":[1,18707123,17960],"お構いなく":[1,18725083,31335],"おかまいなく":[1,18725083,31335],"お疲れ様（でした）":[1,18756418,38858],"おつかれさま（でした）":[1,18756418,38858],"かまいません":[1,18795276,24292],"ご遠慮なく":[1,18819568,8085],"ごえんりょなく":[1,18819568,8085],"ごめん":[1,18827653,18796],"すまない":[1,18846449,17956],"申し訳ありません":[1,18864405,67300],"もうしわけありません":[1,18864405,67300],"よくいらっしゃいました":[1,18931705,26319],"万歳":[1,18958024,22976],"ばんざい":[1,18958024,22976]};
+
+// ================= v10: KANJI MỞ RỘNG · BỘ THỦ · 1800 TỪ · NGỮ PHÁP · TRÒ CHƠI =================
+// Dữ liệu lớn nằm ở data/kx-data.js (2.230 kanji N5→N1, 214 bộ thủ, 1800 từ N3 tiếng Việt, 139 mẫu ngữ pháp N3)
+// và data/kx-strokes.js (thứ tự nét), chỉ tải khi cần. Âm thanh 1800 từ: audio/tango-1.bin, tango-2.bin (16 byte đầu là nhãn, sau đó là các file mp3 nối liền) (lấy từng đoạn).
+const KX_VER="10a";
+const KX={p:null,ready:false};
+const KX_LV={5:"N5",4:"N4",3:"N3",2:"N2",1:"N1"};
+function kxScript(src){return new Promise((res,rej)=>{const s=document.createElement("script");s.src=src+"?v="+KX_VER;s.onload=()=>res();s.onerror=()=>{s.remove();rej(new Error("load "+src))};document.head.appendChild(s)})}
+function kxLoad(){
+  if(KX.ready) return Promise.resolve();
+  if(!KX.p) KX.p=(window.KXD?Promise.resolve():kxScript("data/kx-data.js")).then(kxIndex).catch(e=>{KX.p=null;throw e});
+  return KX.p;
+}
+function kxIndex(){
+  const d=window.KXD; if(!d) throw new Error("no data");
+  KX.K=d.K.map(r=>{const o={};d.KK.forEach((k,i)=>o[k]=r[i]);return o});
+  KX.BY={}; KX.K.forEach(e=>{KX.BY[e.k]=e});
+  KX.R=d.R; KX.RN={}; KX.RC={};
+  d.R.forEach(r=>{KX.RN[r.no]=r; KX.RC[r.c]=r}); d.R.forEach(r=>(r.var||[]).forEach(v=>{if(!KX.RC[v]) KX.RC[v]=r}));
+  KX.T=d.T.map(x=>({i:x[0],w:x[1],r:x[2],hv:x[3],vi:x[4],ex:x[5],exv:x[6],ant:x[7],a:x[8]}));
+  KX.TB={}; KX.T.forEach(t=>{if(!KX.TB[t.w]) KX.TB[t.w]=t});
+  KX.G=d.G.map((g,i)=>Object.assign({i},g));
+  const ph={}; KX.K.forEach(e=>e.p.forEach(p=>{if(p[2]&2&&p[0]!==e.k)(ph[p[0]]=ph[p[0]]||[]).push(e.k)}));
+  KX.PH=Object.entries(ph).map(([c,ks])=>({c,ks:ks.sort((a,b)=>KX.BY[b].lv-KX.BY[a].lv||KX.BY[a].fq-KX.BY[b].fq),n3:ks.filter(k=>KX.BY[k].lv>=3).length}))
+    .filter(f=>f.ks.length>=3&&f.n3>=1).sort((a,b)=>b.n3-a.n3||b.ks.length-a.ks.length);
+  KX.ready=true;
+}
+const kxIsKj=ch=>/[一-鿿㐀-䶿々]/.test(ch);
+function kxHvOf(c){const e=KX.ready&&KX.BY[c]; if(e&&e.hv) return e.hv; const h=kjHv(c)||(typeof KJD!=="undefined"&&KJD[c]?KJD[c][0]:""); return (h||"").toUpperCase()}
+function kxViOf(c){const e=KX.ready&&KX.BY[c]; if(e) return e.vi; return kjM(c)||""}
+function kxShort(s,n){s=String(s||"").split(/[;；]/)[0].split(/[,、]/)[0].trim(); return s.length>n?s.slice(0,n-1)+"…":s}
+
+// ---------- âm thanh 1800 từ (giọng người thật), lấy từng đoạn trong 2 file gộp ----------
+const KX_AC="sln3-tango-v1"; const KX_BUF={}; let KX_CTX=null, KX_SRC=null;
+function kxAudKey(t){t=String(t||"").trim(); if(KX_AUD[t]) return t; const t2=t.replace(/[（(].*?[)）]/g,"").replace(/[〜～]/g,"").trim(); return KX_AUD[t2]?t2:null}
+async function kxAudioBuf(key){
+  const a=KX_AUD[key]; if(!a) return null; const id=a.join(":"); if(KX_BUF[id]) return KX_BUF[id];
+  const url="audio/tango-"+(a[0]+1)+".bin"; let ab=null;
+  try{ if(window.caches){const c=await caches.open(KX_AC); const r=await c.match(url); if(r){const b=await r.blob(); ab=await b.slice(a[1],a[1]+a[2]).arrayBuffer()}} }catch(e){}
+  if(!ab){
+    if(location.protocol==="file:") return null;
+    const r=await fetch(url,{headers:{Range:`bytes=${a[1]}-${a[1]+a[2]-1}`}});
+    if(r.status===206) ab=await r.arrayBuffer();
+    else if(r.ok){const b=await r.blob(); try{const c=await caches.open(KX_AC); await c.put(url,new Response(b,{headers:{"Content-Type":"audio/mpeg"}}))}catch(e){} ab=await b.slice(a[1],a[1]+a[2]).arrayBuffer()}
+    else return null;
+  }
+  KX_BUF[id]=ab; return ab;
+}
+function kxUnlock(){ try{ if(!KX_CTX){const AC=window.AudioContext||window.webkitAudioContext; if(AC) KX_CTX=new AC()} if(KX_CTX&&KX_CTX.state==="suspended") KX_CTX.resume() }catch(e){} }
+async function kxPlay(t){
+  const key=kxAudKey(t); if(!key) return false;
+  try{
+    const ab=await kxAudioBuf(key); if(!ab) return false;
+    try{speechSynthesis.cancel()}catch(e){}
+    if(KX_CTX){ const buf=await KX_CTX.decodeAudioData(ab.slice(0)); if(KX_SRC){try{KX_SRC.stop()}catch(e){}} const s=KX_CTX.createBufferSource(); s.buffer=buf; s.connect(KX_CTX.destination); s.start(); KX_SRC=s; return true }
+    const u=URL.createObjectURL(new Blob([ab],{type:"audio/mpeg"})); const au=new Audio(u); au.onended=()=>URL.revokeObjectURL(u); await au.play(); return true;
+  }catch(e){return false}
+}
+const _kxSay0=lkSay;
+lkSay=function(t){ kxUnlock(); if(kxAudKey(t)) kxPlay(t).then(ok=>{if(!ok)_kxSay0(t)}); else _kxSay0(t) };
+async function kxAudioOffline(btn){
+  if(!window.caches||location.protocol==="file:"){toast("Chỉ tải được khi mở bản web (GitHub Pages)");return}
+  const c=await caches.open(KX_AC); let n=0;
+  for(const i of [1,2]){ const url="audio/tango-"+i+".bin"; if(await c.match(url)){n++;continue}
+    if(btn) btn.textContent=`Đang tải phần ${i}/2…`;
+    try{const r=await fetch(url); if(!r.ok) throw 0; await c.put(url,r); n++}catch(e){toast("Tải âm thanh chưa xong — thử lại khi có mạng ổn định"); break} }
+  if(btn) btn.textContent=n===2?"Đã có âm thanh offline ✓":"Tải âm thanh để nghe offline (38 MB)";
+  if(n===2) toast("Đã lưu âm thanh 1800 từ — nghe được cả khi không có mạng");
+}
+async function kxAudioState(){try{if(!window.caches) return 0; const c=await caches.open(KX_AC); let n=0; for(const i of [1,2]) if(await c.match("audio/tango-"+i+".bin")) n++; return n}catch(e){return 0}}
+
+// ---------- thứ tự nét ----------
+let KXS_P=null;
+function kxStrokes(){ if(window.KXS) return Promise.resolve(window.KXS); if(!KXS_P) KXS_P=kxScript("data/kx-strokes.js").then(()=>window.KXS).catch(e=>{KXS_P=null;throw e}); return KXS_P }
+function kxStrokeSVG(paths){
+  return `<svg viewBox="0 0 109 109" class="kxsvg" role="img" aria-label="Thứ tự nét"><path class="kxgrid" d="M54.5 0V109M0 54.5H109"/><g class="kxghost">${paths.map(p=>`<path d="${p}"/>`).join("")}</g><g class="kxdraw">${paths.map(p=>`<path d="${p}"/>`).join("")}</g><g class="kxnum"></g></svg>`;
+}
+function kxAnimate(svg,speed){
+  const ps=[...svg.querySelectorAll(".kxdraw path")]; let t=0; const sp=speed||1;
+  ps.forEach(p=>{const L=p.getTotalLength(); p.style.transition="none"; p.style.strokeDasharray=L+" "+L; p.style.strokeDashoffset=L;});
+  svg.getBoundingClientRect();
+  ps.forEach(p=>{const L=p.getTotalLength(); const dur=Math.max(.22,L/85)/sp; p.style.transition=`stroke-dashoffset ${dur}s linear ${t}s`; p.style.strokeDashoffset=0; t+=dur+.15/sp});
+  svg.querySelector(".kxnum").innerHTML=ps.map((p,i)=>{const a=p.getPointAtLength(0); return `<text x="${(a.x-2.5).toFixed(1)}" y="${(a.y-2).toFixed(1)}">${i+1}</text>`}).join("");
+}
+function kxStrokeBox(box,c,paths){
+  if(!paths||!paths.length){box.innerHTML=`<div class="small muted">Chưa có dữ liệu nét cho chữ ${esc(c)}.</div>`;return}
+  box.innerHTML=`<div class="kxstroke">${kxStrokeSVG(paths)}<div class="col"><div class="small"><b>${paths.length} nét</b> · số nhỏ = nét thứ mấy, bắt đầu ở đâu</div>
+    <div class="row" style="gap:6px;margin-top:6px"><button class="btn small" data-ks="play">▶ Chạy lại</button><button class="btn ghost small" data-ks="slow">Chậm</button></div>
+    <p class="small muted" style="margin:8px 0 0">Quy tắc: trên → dưới, trái → phải, ngang trước sổ sau, phẩy trước mác sau, khung ngoài trước – nét đóng khung sau.</p></div></div>`;
+  const svg=box.querySelector("svg"); requestAnimationFrame(()=>kxAnimate(svg));
+  box.querySelector('[data-ks="play"]').onclick=()=>kxAnimate(svg);
+  box.querySelector('[data-ks="slow"]').onclick=()=>kxAnimate(svg,.45);
+}
+
+// ---------- trạng thái nhớ từ trò chơi (đồng bộ cùng tiến độ) ----------
+function kgMark(id,ok){ S.kg=S.kg||{}; const v=S.kg[id]||{ok:0,ng:0,s:0,t:0}; if(ok){v.ok++;v.s=(v.s||0)+1}else{v.ng++;v.s=0} v.t=Date.now(); S.kg[id]=v; }
+function kgState(id){const v=(S.kg||{})[id]; if(!v) return "new"; if(v.s>=3&&v.ok>=3) return "known"; if(v.ng>v.ok||v.s===0) return "weak"; return "learning"}
+const KG_TXT={new:"chưa gặp trong trò chơi",known:"nhớ tốt",weak:"hay sai",learning:"đang nhớ"};
+const _kxMerge0=mergeState;
+mergeState=function(inc){
+  const r=_kxMerge0(inc);
+  S.kg=S.kg||{}; Object.entries((inc&&inc.kg)||{}).forEach(([k,v])=>{const c=S.kg[k]; if(!c||(v.t||0)>(c.t||0)) S.kg[k]=v});
+  if(inc&&inc.gm){ const a=S.gm||{}, b=inc.gm; const o={}; ["pk","cd","fl"].forEach(g=>{const x=a[g]||{}, y=b[g]||{}; o[g]={}; new Set(Object.keys(x).concat(Object.keys(y))).forEach(k=>o[g][k]=Math.max(x[k]||0,y[k]||0))});
+    o.d=Object.assign({},b.d||{}); Object.entries(a.d||{}).forEach(([d,n])=>o.d[d]=Math.max(n,o.d[d]||0)); S.gm=o; }
+  return r;
+};
+
+// ---------- hộp thoại thẻ chữ (dùng ở mọi tab) ----------
+function kxModal(html,cls){
+  kxClose(); const w=document.createElement("div"); w.className="kxmodal"; w.id="kxmodal";
+  w.innerHTML=`<div class="kxdlg sheet ${cls||""}" role="dialog" aria-modal="true"><button class="btn ghost small kxx" data-kxclose aria-label="Đóng">✕ Đóng</button><div class="kxbody">${html}</div></div>`;
+  document.body.appendChild(w); document.body.classList.add("kxlock");
+  w.addEventListener("click",e=>{ if(e.target===w||e.target.closest("[data-kxclose]")) kxClose(); });
+  return w.querySelector(".kxbody");
+}
+function kxClose(){const w=document.getElementById("kxmodal"); if(w) w.remove(); document.body.classList.remove("kxlock")}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElementById("kxmodal")) kxClose()});
+function kxOpen(c){
+  kxLoad().then(()=>{
+    const e=KX.BY[c];
+    if(!e){ const r=KX.RC[c]; if(r) return kxOpenRad(r.no); toast(`${c}: ${kxHvOf(c)} · ${kxViOf(c)}`); return }
+    const b=kxModal(kxCardHTML(e)); kxWireCard(b,e);
+  }).catch(()=>toast("Chưa tải được dữ liệu kanji — kiểm tra mạng rồi thử lại"));
+}
+function kxPartsHTML(e){
+  return e.p.map(([c,vi,f])=>`<button class="kxpart" data-kxopen="${esc(c)}"><span class="jp">${esc(c)}</span><span class="small">${esc(vi)}</span>${f&1?`<span class="chip ok">bộ · nghĩa</span>`:""}${f&2?`<span class="chip warn">phần âm</span>`:""}</button>`).join("");
+}
+function kxCardHTML(e){
+  const r=KX.RN[e.r]; const core=KJ_BY[e.k]; const st=kgState(e.k);
+  const fam=e.p.filter(p=>p[2]&2).map(p=>KX.PH.find(f=>f.c===p[0])).filter(Boolean)[0];
+  const same=r?KX.K.filter(x=>x.r===e.r&&x.k!==e.k&&x.lv>=2).slice(0,14):[];
+  const stories=[]; if(core) stories.push(["Sổ luyện",core.mn]); e.mv.forEach(m=>stories.push(["Cộng đồng (Mazii)",m])); if(e.me) stories.push(["Gợi ý (EN)",e.me]);
+  return `<div class="kxcard">
+    <div class="kxhead"><div class="kxbig jp">${esc(e.k)}</div><div style="min-width:0">
+      <div class="kjhv">${esc(e.hv||"")}</div><div class="kxvi">${esc(e.vi)}</div>
+      <div class="small muted">On: <span class="jp">${esc(e.on.join("、")||"—")}</span> · Kun: <span class="jp">${esc(e.kun.join("、")||"—")}</span></div>
+      <div class="row" style="gap:6px;margin-top:4px"><span class="chip lv${e.lv}">${KX_LV[e.lv]}</span><span class="chip plain">${e.n} nét</span>${e.cl?`<span class="chip plain">${esc(e.cl)}</span>`:""}<span class="chip ${st==="known"?"ok":st==="weak"?"bad":st==="learning"?"warn":"plain"}">${KG_TXT[st]}</span></div></div></div>
+    <div class="row" style="gap:6px"><button class="btn small" data-kxs="stroke">▶ Thứ tự nét</button><button class="btn ghost small" data-kxs="write">✍ Viết thử</button></div>
+    <div class="kxslot"></div>
+    ${r?`<div class="kxsec"><div class="eyebrow">Bộ thủ</div><button class="kxradline" data-kxrad="${r.no}"><span class="jp">${esc(r.c)}</span>${r.var.length?`<span class="jp small muted">(${esc(r.var.join(" "))})</span>`:""} <b>bộ ${esc(r.hv)}</b> — ${esc(r.vi)} <span class="small muted">· số ${r.no} · xem các chữ cùng bộ →</span></button></div>`:""}
+    ${e.p.length>1||(e.p[0]&&e.p[0][0]!==e.k)?`<div class="kxsec"><div class="eyebrow">Cấu tạo — tách chữ để nhớ</div><div class="kxparts">${kxPartsHTML(e)}</div>
+      ${e.p.some(p=>p[2]&2)?`<p class="small muted" style="margin:6px 0 0">Chữ hình thanh: <b>bộ</b> gợi nghĩa, <b>phần âm</b> gợi cách đọc On → gặp chữ lạ có phần này thì đoán được âm.</p>`:""}</div>`:""}
+    ${stories.length?`<div class="kxsec"><div class="eyebrow">Câu chuyện nhớ</div>${stories.map(([s,t])=>`<div class="kbtip"><b>${esc(s)}</b> ${esc(t)}</div>`).join("")}
+      <p class="small muted" style="margin:6px 0 0">Mẹo: tự đặt câu chuyện của riêng bạn bằng các bộ phận ở trên — càng lạ, càng buồn cười càng nhớ lâu.</p></div>`:""}
+    ${e.o?`<details class="kxsec"><summary class="small">Nguồn gốc chữ (tiếng Anh)</summary><p class="small muted" style="margin:4px 0 0">${esc(e.o)}</p></details>`:""}
+    ${e.v.length?`<div class="kxsec"><div class="eyebrow">Từ có chữ này</div><div class="kxwords">${e.v.map(([w,rd,m,hv])=>`<div class="kxw"><button class="lkbtn" data-kxsay="${esc(w)}" data-r="${esc(rd)}" aria-label="Nghe">🔊</button><span class="jp kxww">${esc(w)}</span> <span class="jp small">${esc(rd)}</span> · <span>${esc(m)}</span>${hv?` <span class="small muted">· ${esc(hv)}</span>`:""}</div>`).join("")}</div></div>`:""}
+    ${fam?`<div class="kxsec"><div class="eyebrow">Họ chữ cùng phần âm ${esc(fam.c)}</div><div class="kjchips">${fam.ks.slice(0,16).map(k=>kxChip(k)).join("")}</div></div>`:""}
+    ${same.length?`<div class="kxsec"><div class="eyebrow">Cùng bộ ${esc(r.c)} (${esc(r.hv)})</div><div class="kjchips">${same.map(x=>kxChip(x.k)).join("")}</div></div>`:""}
+    <div class="row" style="gap:6px;margin-top:6px"><button class="btn small" data-kxgame="fl" data-src="${r?"rad:"+r.no:"N3"}">Chơi Kanji rơi với bộ ${esc(r?r.c:"")}</button><button class="btn small" data-kxgame="pk" data-src="${r?"rad:"+r.no:"N3"}">Pikachu bộ này</button></div>
+  </div>`;
+}
+function kxChip(k){const e=KX.BY[k]; const st=kgState(k); return `<button class="kjchip ${st==="known"?"known":st==="weak"?"weakc":st==="learning"?"learning":""}" data-kxopen="${esc(k)}" title="${esc(e?e.hv+": "+e.vi:"")}"><span class="jp">${esc(k)}</span><small>${esc(e?kxShort(e.hv,9):"")}</small>${e?`<i class="lvdot lv${e.lv}"></i>`:""}</button>`}
+function kxWireCard(b,e){
+  b.querySelector('[data-kxs="stroke"]').onclick=()=>{const slot=b.querySelector(".kxslot"); slot.innerHTML=`<div class="small muted">Đang tải nét…</div>`; kxStrokes().then(S2=>kxStrokeBox(slot,e.k,S2[e.k])).catch(()=>slot.innerHTML=`<div class="small muted">Chưa tải được dữ liệu nét (cần mạng lần đầu).</div>`)};
+  b.querySelector('[data-kxs="write"]').onclick=()=>{const slot=b.querySelector(".kxslot"); slot.innerHTML=`<div class="kjcanvas"></div>`; kjCanvas(slot.firstChild,e.k)};
+}
+function kxRadHTML(r){
+  const ks=KX.K.filter(x=>x.r===r.no); const by={}; ks.forEach(x=>(by[x.lv]=by[x.lv]||[]).push(x.k));
+  return `<div class="kxcard">
+    <div class="kxhead"><div class="kxbig jp">${esc(r.c)}</div><div style="min-width:0"><div class="kjhv">bộ ${esc(r.hv)}</div><div class="kxvi">${esc(r.vi)}</div>
+      <div class="small muted">Tên gọi: <span class="jp">${esc(r.rd)}</span> · ${r.n} nét · bộ số ${r.no}</div>
+      ${r.var.length?`<div class="small">Biến thể khi đứng trong chữ: <span class="jp kxvar">${esc(r.var.join("  "))}</span></div>`:""}</div></div>
+    <div class="row" style="gap:6px"><button class="btn small" data-kxs="rstroke">▶ Thứ tự nét</button></div><div class="kxslot"></div>
+    <div class="kxsec"><div class="eyebrow">${ks.length} chữ N5 → N1 có bộ này</div>
+      ${[5,4,3,2,1].filter(l=>by[l]).map(l=>`<div class="kxlvrow"><span class="chip lv${l}">${KX_LV[l]}</span><div class="kjchips">${by[l].slice(0,40).map(k=>kxChip(k)).join("")}${by[l].length>40?`<span class="small muted">+${by[l].length-40}</span>`:""}</div></div>`).join("")||`<p class="small muted">Bộ này ít gặp trong kanji JLPT.</p>`}</div>
+    ${r.ex.length?`<div class="kxsec"><div class="eyebrow">Ví dụ (từ bộ dữ liệu bộ thủ)</div><div class="small">${r.ex.map(([c,hv,vi])=>`<span class="jp">${esc(c)}</span> ${esc(hv)} (${esc(vi)})`).join(" · ")}</div></div>`:""}
+    ${ks.length>=3?`<div class="row" style="gap:6px;margin-top:6px"><button class="btn primary small" data-kxgame="cd" data-src="rad:${r.no}">Candy với bộ ${esc(r.c)}</button><button class="btn small" data-kxgame="pk" data-src="rad:${r.no}">Pikachu</button><button class="btn small" data-kxgame="fl" data-src="rad:${r.no}">Kanji rơi</button></div>`:""}
+  </div>`;
+}
+function kxOpenRad(no){
+  kxLoad().then(()=>{const r=KX.RN[no]; if(!r) return; const b=kxModal(kxRadHTML(r));
+    b.querySelector('[data-kxs="rstroke"]').onclick=()=>kxStrokeBox(b.querySelector(".kxslot"),r.c,r.s);});
+}
+document.addEventListener("click",e=>{
+  const o=e.target.closest("[data-kxopen]"); if(o){e.preventDefault(); kxOpen(o.dataset.kxopen); return}
+  const r=e.target.closest("[data-kxrad]"); if(r){e.preventDefault(); kxOpenRad(+r.dataset.kxrad); return}
+  const s=e.target.closest("[data-kxsay]"); if(s){lkSay(kxAudKey(s.dataset.kxsay)?s.dataset.kxsay:(s.dataset.r||s.dataset.kxsay)); return}
+  const g=e.target.closest("[data-kxgame]"); if(g){kxClose(); gmLaunch(g.dataset.kxgame,g.dataset.src,g.dataset.mode); return}
+});
+
+// ---------- tab Kanji: thêm Bộ thủ · Họ chữ theo âm · Tra 2.230 chữ ----------
+const KX_POS=`<div class="kxpos">
+<div><span class="jp">偏</span><b>へん · bên trái</b><span>亻 người → 休 体 作; 氵 nước → 海 洗 泳; 言 lời → 話 語 読</span></div>
+<div><span class="jp">旁</span><b>つくり · bên phải</b><span>刂 dao → 別 判 利; 頁 đầu → 頭 顔 題; 力 sức → 動 助</span></div>
+<div><span class="jp">冠</span><b>かんむり · trên</b><span>艹 cỏ → 花 茶 薬; 宀 mái nhà → 家 安 室; 雨 mưa → 雪 雲 電</span></div>
+<div><span class="jp">脚</span><b>あし · dưới</b><span>心 tim → 思 意 感; 灬 lửa → 熱 点 無; 儿 chân người → 元 先</span></div>
+<div><span class="jp">垂</span><b>たれ · trên-trái</b><span>广 mái hiên → 店 広 庭; 疒 bệnh → 病 痛; 厂 sườn núi → 原</span></div>
+<div><span class="jp">繞</span><b>にょう · dưới-trái</b><span>辶 bước đi → 近 道 送 週; 走 chạy → 起 越</span></div>
+<div><span class="jp">構</span><b>かまえ · bao quanh</b><span>口 vây → 国 図 回; 門 cổng → 間 聞 開; 気 khí → 気</span></div></div>`;
+const KXV={rad:"hot",q:"",lv:"all",phAll:false};
+const _kxRenderKanji0=renderKanji;
+renderKanji=function(m){
+  _kxRenderKanji0(m);
+  const v=m.querySelector("#kjview"); if(!v) return;
+  const famSec=v.querySelector("#kjfams"); const anchor=famSec?famSec.closest("section"):null;
+  const html=`<section class="sheet kxplay"><div class="row" style="justify-content:space-between;gap:10px"><div><div class="eyebrow">Chơi & nhớ</div><div class="small muted">Học vào đầu bằng trò chơi: nối, xếp, phản xạ. Chữ sai sẽ được đưa lại nhiều hơn.</div></div>
+      <div class="row" style="gap:6px"><button class="btn small" data-kxgame="pk">Pikachu nối chữ</button><button class="btn small" data-kxgame="cd">Candy bộ thủ</button><button class="btn small" data-kxgame="fl">Kanji rơi</button></div></div></section>
+    <section class="sheet" id="kxRadSec"><div class="eyebrow">Bộ thủ — chìa khóa để nhớ kanji</div><div class="kxload small muted">Đang tải 214 bộ thủ…</div></section>
+    <section class="sheet" id="kxPhSec"><div class="eyebrow">Họ chữ cùng phần âm (tự động)</div><div class="kxload small muted">Đang tải…</div></section>
+    <section class="sheet" id="kxDicSec"><div class="eyebrow">Tra kanji N5 → N1</div><div class="kxload small muted">Đang tải 2.230 chữ…</div></section>`;
+  if(anchor) anchor.insertAdjacentHTML("beforebegin",html); else v.insertAdjacentHTML("beforeend",html);
+  kxLoad().then(()=>{ if(!document.body.contains(v)) return; kxPaintRad(v); kxPaintPh(v); kxPaintDic(v); })
+    .catch(()=>v.querySelectorAll(".kxload").forEach(x=>x.textContent="Chưa tải được dữ liệu (data/kx-data.js). Kiểm tra mạng rồi mở lại tab."));
+};
+function kxPaintRad(v){
+  const sec=v.querySelector("#kxRadSec"); if(!sec) return;
+  const list=KXV.rad==="hot"?KX.R.filter(r=>r.f3>=2).sort((a,b)=>b.f3-a.f3):KX.R.slice();
+  const groups={}; if(KXV.rad==="all") list.forEach(r=>(groups[r.n]=groups[r.n]||[]).push(r));
+  const chip=r=>`<button class="kxrchip" data-kxrad="${r.no}" title="bộ ${esc(r.hv)}: ${esc(r.vi)}"><span class="jp">${esc(r.c)}</span>${r.var.length?`<span class="jp kxrv">${esc(r.var[0])}</span>`:""}<small>${esc(r.hv)}</small><small class="muted">${esc(kxShort(r.vi,12))}</small>${KXV.rad==="hot"?`<i>${r.f3}</i>`:""}</button>`;
+  sec.innerHTML=`<div class="eyebrow">Bộ thủ — chìa khóa để nhớ kanji</div>
+    <h2 style="font-size:17px;margin:4px 0 6px">Nhìn bộ → đoán nghĩa. Nhìn phần còn lại → đoán âm.</h2>
+    <p class="small muted" style="margin:0 0 8px">Khoảng 80% kanji là chữ <b>hình thanh</b> = bộ (nghĩa) + phần âm. Thuộc ~40 bộ hay gặp là bạn tách được hầu hết chữ N3 thành 2–3 mảnh quen, thay vì nhớ từng nét. Bấm một bộ để xem nghĩa, cách viết và tất cả chữ có bộ đó.</p>
+    <details class="kxsec"><summary style="font-weight:600">7 vị trí của bộ thủ trong chữ</summary>${KX_POS}</details>
+    <div class="row" style="gap:6px;margin:10px 0"><button class="btn small ${KXV.rad==="hot"?"primary":""}" data-kxr="hot">Bộ hay gặp N5–N3 (${KX.R.filter(r=>r.f3>=2).length})</button><button class="btn small ${KXV.rad==="all"?"primary":""}" data-kxr="all">Đủ 214 bộ theo số nét</button></div>
+    ${KXV.rad==="hot"?`<p class="small muted" style="margin:0 0 6px">Số nhỏ ở góc = số chữ N5–N3 có bộ đó. Học từ trái sang phải.</p><div class="kxrgrid">${list.map(chip).join("")}</div>`
+      :Object.keys(groups).map(n=>`<div class="kxlvrow"><span class="chip plain">${n} nét</span><div class="kxrgrid">${groups[n].map(chip).join("")}</div></div>`).join("")}`;
+  sec.querySelectorAll("[data-kxr]").forEach(b=>b.onclick=()=>{KXV.rad=b.dataset.kxr; kxPaintRad(v)});
+}
+function kxPaintPh(v){
+  const sec=v.querySelector("#kxPhSec"); if(!sec) return;
+  const fams=KXV.phAll?KX.PH:KX.PH.slice(0,24);
+  sec.innerHTML=`<div class="eyebrow">Họ chữ cùng phần âm (tự động)</div>
+    <p class="small muted" style="margin:4px 0 8px">Các chữ chung một “phần âm” thường đọc On giống hoặc gần giống nhau: 寺 → 時 持 待 特 (じ/たい/とく). Học cả họ một lúc, nhớ âm nhanh gấp mấy lần.</p>
+    <div class="kxph">${fams.map(f=>{const ons={}; f.ks.forEach(k=>{const o=KX.BY[k].on[0]; if(o) ons[o]=(ons[o]||0)+1}); const top=Object.entries(ons).sort((a,b)=>b[1]-a[1])[0];
+      return `<details class="kbcard"><summary><span class="jp kjbig3">${esc(f.c)}</span><span class="kbtitle"><span class="jp">${esc(f.ks.slice(0,8).join(" "))}</span>${top&&top[1]>1?` <span class="small muted">· hay đọc <span class="jp">${esc(top[0])}</span></span>`:""}</span><span class="kbsrc">${f.ks.length} chữ</span></summary>
+        <div class="kbbody"><div class="kxphlist">${f.ks.map(k=>{const e=KX.BY[k]; return `<button class="kxphrow" data-kxopen="${esc(k)}"><span class="jp">${esc(k)}</span><b>${esc(e.hv)}</b><span class="jp small">${esc(e.on.join("、"))}</span><span class="small muted">${esc(kxShort(e.vi,22))}</span><i class="lvdot lv${e.lv}"></i></button>`}).join("")}</div></div></details>`}).join("")}</div>
+    ${KX.PH.length>24?`<button class="btn ghost small" id="kxPhMore">${KXV.phAll?"Thu gọn":"Xem tất cả "+KX.PH.length+" họ"}</button>`:""}`;
+  const mb=sec.querySelector("#kxPhMore"); if(mb) mb.onclick=()=>{KXV.phAll=!KXV.phAll; kxPaintPh(v)};
+}
+function kxPaintDic(v){
+  const sec=v.querySelector("#kxDicSec"); if(!sec) return;
+  const cnt=l=>KX.K.filter(e=>e.lv===l).length;
+  sec.innerHTML=`<div class="eyebrow">Tra kanji N5 → N1 · ${KX.K.length} chữ</div>
+    <p class="small muted" style="margin:4px 0 8px">Mỗi thẻ có: Hán Việt, nghĩa, bộ thủ, cấu tạo, câu chuyện nhớ tiếng Việt, thứ tự nét động, viết thử, từ vựng kèm âm thanh.</p>
+    <div class="field" style="margin-bottom:8px"><input id="kxq" type="search" placeholder="Tìm: 待 / đãi / chờ / まつ / タイ / wait" value="${esc(KXV.q)}"></div>
+    <div class="row" style="gap:6px;margin-bottom:8px">${[["all","Tất cả"],[5,"N5"],[4,"N4"],[3,"N3"],[2,"N2"],[1,"N1"]].map(([l,t])=>`<button class="btn small ${String(KXV.lv)===String(l)?"primary":""}" data-kxl="${l}">${t}${l!=="all"?` <span class="small">${cnt(l)}</span>`:""}</button>`).join("")}</div>
+    <div id="kxres"></div>`;
+  const paint=()=>{
+    const t=KXV.q.trim().toLowerCase(); const lv=KXV.lv;
+    let r=KX.K.filter(e=>lv==="all"||e.lv===+lv);
+    if(t) r=r.filter(e=>e.k===t||(e.hv||"").toLowerCase().split(/[ ,]+/).includes(t)||(e.vi||"").toLowerCase().includes(t)||(e.en||"").toLowerCase()===t||e.on.some(o=>o===t||o===kxKata(t))||e.kun.some(k=>k.replace(/\./,"").startsWith(t)||k.split(".")[0]===t)||(t.length>1&&e.k.includes(t))||(t.length>1&&[...t].includes(e.k)));
+    const shown=r.slice(0,lv==="all"&&!t?120:400);
+    sec.querySelector("#kxres").innerHTML=r.length?`<div class="kjchips">${shown.map(e=>kxChip(e.k)).join("")}</div>${r.length>shown.length?`<p class="small muted">Hiện ${shown.length}/${r.length} chữ — gõ để lọc hoặc chọn cấp.</p>`:""}`:`<div class="empty">Không tìm thấy.</div>`;
+  };
+  paint();
+  sec.querySelector("#kxq").oninput=e=>{KXV.q=e.target.value; paint()};
+  sec.querySelectorAll("[data-kxl]").forEach(b=>b.onclick=()=>{KXV.lv=b.dataset.kxl; kxPaintDic(v)});
+}
+function kxKata(s){return String(s).replace(/[ぁ-ゖ]/g,ch=>String.fromCharCode(ch.charCodeAt(0)+96))}
+
+// ---------- tab Từ vựng: 1800 từ N3 Tango (tiếng Việt, ví dụ, âm thanh thật) ----------
+const KXT={q:"",page:0};
+const _kxCard0=cardData;
+cardData=function(w){const c=_kxCard0(w); const t=KX.ready&&KX.TB[w]; if(t){ if(!c.vi) c.vi=t.vi; if(!c.ex){c.ex=t.ex; c.exv=t.exv} else if(c.ex===t.ex) c.exv=t.exv } return c};
+const _kxEx0=exHTML;
+exHTML=function(c){const h=_kxEx0(c); return h&&c.exv?h.replace(/<\/div>$/,`<div class="small muted" style="font-family:var(--font-ui)">${esc(c.exv)}</div></div>`):h};
+const _kxRenderVocab0=renderVocab;
+renderVocab=function(m){
+  _kxRenderVocab0(m);
+  if(typeof VS!=="undefined"&&VS&&VS.q) return; // đang làm bài thì không chèn
+  m.insertAdjacentHTML("beforeend",`<section class="sheet" id="kxTango"><div class="eyebrow">1800 từ N3 (bộ Tango tiếng Việt)</div><div class="small muted">Đang tải…</div></section>`);
+  kxLoad().then(()=>kxPaintTango(m)).catch(()=>{const s=m.querySelector("#kxTango"); if(s) s.querySelector(".small").textContent="Chưa tải được dữ liệu."});
+};
+function kxPaintTango(m){
+  const sec=m.querySelector("#kxTango"); if(!sec) return;
+  sec.innerHTML=`<div class="eyebrow">1800 từ N3 · Tango tiếng Việt</div>
+    <p class="small muted" style="margin:4px 0 8px">Mỗi từ có Hán Việt, nghĩa, câu ví dụ + dịch, ${Object.keys(KX_AUD).length?"phát âm giọng người thật (🔊)":""}. Từ này cũng tự bổ sung nghĩa/ví dụ cho thẻ ở trên.</p>
+    <div class="row" style="gap:6px;margin-bottom:8px"><button class="btn small" data-kxgame="pk" data-src="tango" data-mode="vi">Pikachu từ vựng</button><button class="btn small" data-kxgame="fl" data-src="tango" data-mode="vi">Từ rơi (phản xạ nghĩa)</button><button class="btn ghost small" id="kxAud">Tải âm thanh để nghe offline (38 MB)</button></div>
+    <div class="field" style="margin-bottom:8px"><input id="kxtq" type="search" placeholder="Tìm: 家事 / かじ / việc nhà / gia sự" value="${esc(KXT.q)}"></div><div id="kxtl"></div>`;
+  kxAudioState().then(n=>{const b=sec.querySelector("#kxAud"); if(b&&n===2) b.textContent="Đã có âm thanh offline ✓"});
+  sec.querySelector("#kxAud").onclick=e=>kxAudioOffline(e.currentTarget);
+  const paint=()=>{
+    const t=KXT.q.trim().toLowerCase();
+    const r=t?KX.T.filter(x=>x.w.includes(t)||x.r.includes(t)||x.vi.toLowerCase().includes(t)||x.hv.toLowerCase().includes(t)):KX.T;
+    const per=30, pages=Math.max(1,Math.ceil(r.length/per)); if(KXT.page>=pages) KXT.page=0;
+    const sl=r.slice(KXT.page*per,KXT.page*per+per);
+    sec.querySelector("#kxtl").innerHTML=(sl.length?sl.map(x=>`<details class="kxtw"><summary><button class="lkbtn" data-kxsay="${esc(x.w)}" data-r="${esc(x.r)}" aria-label="Nghe">🔊</button><span class="jp kxww">${esc(x.w)}</span>${x.r!==x.w?` <span class="jp small">${esc(x.r)}</span>`:""} · <span>${esc(x.vi)}</span>${x.hv?` <span class="small muted">· ${esc(x.hv)}</span>`:""}</summary>
+      <div class="kxtex"><div class="jp">${esc(x.ex)}</div><div class="small muted">${esc(x.exv)}</div>${x.ant?`<div class="small">Liên quan / trái nghĩa: <span class="jp">${esc(x.ant)}</span></div>`:""}
+      <div class="kjchips">${[...x.w].filter(kxIsKj).map(k=>KX.BY[k]?kxChip(k):"").join("")}</div></div></details>`).join(""):`<div class="empty">Không tìm thấy.</div>`)
+      +(pages>1?`<div class="row" style="justify-content:space-between;margin-top:8px"><button class="btn small" data-tp="-1" ${KXT.page?"":"disabled"}>← Trước</button><span class="small muted">Trang ${KXT.page+1}/${pages} · ${r.length} từ</span><button class="btn small" data-tp="1" ${KXT.page<pages-1?"":"disabled"}>Sau →</button></div>`:"");
+    sec.querySelectorAll("[data-tp]").forEach(b=>b.onclick=()=>{KXT.page+=+b.dataset.tp; paint(); sec.scrollIntoView({block:"start"})});
+  };
+  paint();
+  sec.querySelector("#kxtq").oninput=e=>{KXT.q=e.target.value; KXT.page=0; paint()};
+  sec.querySelector("#kxtl").addEventListener("click",e=>{if(e.target.closest("[data-kxsay]")) e.preventDefault()});
+}
+
+// ---------- tab Kiến thức: 139 mẫu ngữ pháp N3 ----------
+const KX_GCAT={dieukien:"Điều kiện",dieukiennhuongbo:"Điều kiện nhượng bộ","tuongphan.doilap":"Tương phản – đối lập",phamvi:"Phạm vi",nhanmanh:"Nhấn mạnh",nhanmanhcamtinh:"Nhấn mạnh cảm xúc","mucdo.sosanh":"Mức độ – so sánh",sosanh:"So sánh","nguyennhan.lydo":"Nguyên nhân – lý do","thoigian.diadiem":"Thời gian – địa điểm",menhdebosung:"Bổ sung","quyetdinh.ketluan":"Quyết định – kết luận",trattuthoigian:"Trình tự thời gian","suyluan.suydoan":"Suy luận – suy đoán",trichdan:"Trích dẫn – truyền đạt",doituong:"Đối tượng",quanhetuongquan:"Quan hệ tương quan","tieuchuan.coso":"Tiêu chuẩn – cơ sở",moiquanhehoung:"Quan hệ hô ứng",khanang:"Khả năng","yeucau.nhova":"Yêu cầu – nhờ vả",chude:"Chủ đề",phuongphap:"Phương pháp",diemnhin:"Lập trường – điểm nhìn",phudinhmotphan:"Phủ định một phần",phudinh:"Phủ định",danhgia:"Đánh giá","batdau.ketthuchanhdong.cochuy":"Bắt đầu – kết thúc hành động","hinhdang.trangthai":"Hình dạng – trạng thái","khuynhhuong.xuhuong":"Khuynh hướng",dudinh:"Dự định",trangthaisonghanh:"Song hành",moiquanheloaitru:"Loại trừ",duaviditieubieu:"Nêu ví dụ tiêu biểu",chuoihanhdong:"Chuỗi hành động",mucdich:"Mục đích",loikhuyen:"Lời khuyên",camdoan:"Cấm đoán",saikhien:"Sai khiến",bidong:"Bị động",danglichsu:"Dạng lịch sự",tientrinh:"Tiến trình",hanhdongcamxuckhongthetranhduoc:"Cảm xúc không kìm được",diendatcamxucmanhme:"Cảm xúc mạnh"};
+const KXG={q:"",c:"all"};
+const _kxRenderKB0=renderKB;
+renderKB=function(m){
+  _kxRenderKB0(m);
+  m.insertAdjacentHTML("beforeend",`<section class="sheet" id="kxGram"><div class="eyebrow">Tổng hợp ngữ pháp N3 · 139 mẫu</div><div class="small muted">Đang tải…</div></section>`);
+  kxLoad().then(()=>kxPaintGram(m)).catch(()=>{});
+};
+function kxPaintGram(m){
+  const sec=m.querySelector("#kxGram"); if(!sec) return;
+  const cats=[...new Set(KX.G.map(g=>g.g))].sort((a,b)=>(KX_GCAT[a]||a).localeCompare(KX_GCAT[b]||b,"vi"));
+  sec.innerHTML=`<div class="eyebrow">Tổng hợp ngữ pháp N3 · ${KX.G.length} mẫu (bộ Anki của bạn)</div>
+    <p class="small muted" style="margin:4px 0 8px">Xếp theo chức năng. Mẹo nhớ: học theo nhóm nghĩa (các mẫu “lý do”, “so sánh”…) và so sánh mẫu gần nghĩa với nhau.</p>
+    <div class="formgrid" style="grid-template-columns:minmax(0,2fr) minmax(0,1fr);margin-bottom:8px"><div class="field"><input id="kxgq" type="search" placeholder="Tìm: ところ, lý do, so với…" value="${esc(KXG.q)}"></div>
+      <div class="field"><select id="kxgc"><option value="all">Mọi nhóm</option>${cats.map(c=>`<option value="${esc(c)}" ${KXG.c===c?"selected":""}>${esc(KX_GCAT[c]||c)} (${KX.G.filter(g=>g.g===c).length})</option>`).join("")}</select></div></div>
+    <div class="row" style="gap:6px;margin-bottom:8px"><button class="btn small" data-kxgame="fl" data-src="gram">Luyện phản xạ ngữ pháp (trò Rơi)</button></div><div id="kxgl"></div>`;
+  const paint=()=>{const t=KXG.q.trim().toLowerCase();
+    const r=KX.G.filter(g=>(KXG.c==="all"||g.g===KXG.c)&&(!t||g.t.toLowerCase().includes(t)||g.vi.toLowerCase().includes(t)||g.d.toLowerCase().includes(t)));
+    sec.querySelector("#kxgl").innerHTML=r.map(g=>`<details class="kbcard"><summary><span class="kbtitle"><span class="jp">${esc(g.t)}</span> — ${esc(g.vi)}</span><span class="kbsrc">${esc(KX_GCAT[g.g]||g.g)}</span></summary><div class="kbbody">
+      ${g.d?`<div class="kxgd">${esc(g.d).replace(/\n/g,"<br>")}</div>`:""}${g.ex.map(([jp,vi])=>`<div class="kxgex"><div class="jp">${esc(jp)}</div>${vi?`<div class="small muted">${esc(vi)}</div>`:""}</div>`).join("")}</div></details>`).join("")||`<div class="empty">Không tìm thấy.</div>`};
+  paint();
+  sec.querySelector("#kxgq").oninput=e=>{KXG.q=e.target.value; paint()};
+  sec.querySelector("#kxgc").onchange=e=>{KXG.c=e.target.value; paint()};
+}
+setTimeout(()=>{ try{ kxLoad().catch(()=>{}) }catch(e){} },2500);
+
+
+// ================= TAB "CHƠI & NHỚ": Pikachu nối chữ · Candy bộ thủ · Kanji rơi =================
+const GMC_LS="so-luyen-n3-game";
+let GMC=(()=>{const d={src:"N3",mode:"hv",cdHard:false}; try{return Object.assign(d,JSON.parse(localStorage.getItem(GMC_LS)||"{}"))}catch(e){return d}})();
+function gmcSave(){try{localStorage.setItem(GMC_LS,JSON.stringify(GMC))}catch(e){}}
+const GM_SRC=[["N5","Kanji N5"],["N4","Kanji N4"],["N3","Kanji N3"],["N54","Kanji N5 + N4"],["N543","Kanji N5 → N3"],["N2","Kanji N2"],["N1","Kanji N1"],["core","115 chữ cốt lõi (tab Kanji)"],["weak","Chữ hay sai"],["tango","1800 từ vựng N3"],["gram","Ngữ pháp N3 (chỉ Kanji rơi)"]];
+const GM_MODE=[["hv","Hán Việt"],["vi","Nghĩa tiếng Việt"],["rd","Cách đọc"]];
+let GV={g:null}; // trò đang chơi
+function gmModeName(){ if(GMC.src==="gram") return "chọn nghĩa"; if(GMC.src==="tango"&&GMC.mode==="hv") return "Nghĩa tiếng Việt"; return GM_MODE.find(x=>x[0]===GMC.mode)[1] }
+function gmSrcName(src){ if(src&&src.startsWith("rad:")){const r=KX.RN[+src.slice(4)]; return r?`Bộ ${r.c} (${r.hv})`:"Bộ thủ"} const x=GM_SRC.find(s=>s[0]===src); return x?x[1]:src }
+function gmWeak(){
+  const kg=S.kg||{}; const a=Object.entries(kg).filter(([c,v])=>KX.BY[c]&&v.ng>0&&(v.s||0)<2).sort((x,y)=>(y[1].ng-y[1].ok*.5)-(x[1].ng-x[1].ok*.5)).map(([c])=>c);
+  try{Object.entries(kjWrongCounts()).sort((a,b)=>b[1]-a[1]).forEach(([c])=>{if(KX.BY[c]&&!a.includes(c)) a.push(c)})}catch(e){}
+  return a;
+}
+function gmKanjiPool(src){
+  if(src&&src.startsWith("rad:")){const no=+src.slice(4); return KX.K.filter(e=>e.r===no)}
+  const lv={N5:[5],N4:[4],N3:[3],N2:[2],N1:[1],N54:[5,4],N543:[5,4,3]}[src];
+  if(lv) return KX.K.filter(e=>lv.includes(e.lv));
+  if(src==="core") return KJ.map(k=>KX.BY[k.k]).filter(Boolean);
+  if(src==="weak") return gmWeak().map(c=>KX.BY[c]);
+  return KX.K.filter(e=>e.lv===3);
+}
+function gmItemK(e,mode){
+  let b;
+  if(mode==="vi") b=kxShort(e.vi,18);
+  else if(mode==="rd") b=e.on[0]||(e.kun[0]||"").split(".")[0];
+  else b=(e.hv||"").split(/[,、]/)[0].trim();
+  return {id:e.k,a:e.k,b,bj:mode==="rd",kind:"k",e};
+}
+function gmItems(src,mode){
+  if(src==="tango") return KX.T.filter(t=>t.vi&&(mode!=="rd"||t.r!==t.w)).map(t=>({id:"t"+t.i,a:t.w,b:mode==="rd"?t.r:kxShort(t.vi,20),bj:mode==="rd",kind:"t",t}));
+  if(src==="gram") return KX.G.filter(g=>g.vi&&g.t).map(g=>({id:"g"+g.i,a:g.t.replace(/<[^>]*>/g,""),b:g.vi,kind:"g",g}));
+  return gmKanjiPool(src).map(e=>gmItemK(e,mode)).filter(x=>x.b);
+}
+function gmScore(it){const v=(S.kg||{})[it.id]; let w=Math.random()*1.2; if(!v) w+=1; else {w+=v.ng*.9-(v.s||0)*.45; if(Date.now()-(v.t||0)>3*864e5) w+=.6} return w}
+function gmPick(items,n,avoid){
+  const seenA=new Set(), seenB=new Set(), out=[]; const av=avoid||new Set();
+  const ord=items.map(it=>[gmScore(it)-(av.has(it.id)?3:0),it]).sort((a,b)=>b[0]-a[0]).map(x=>x[1]);
+  for(const it of ord){ if(out.length>=n) break; const kb=it.b.toLowerCase(); if(seenA.has(it.a)||seenB.has(kb)) continue; seenA.add(it.a); seenB.add(kb); out.push(it) }
+  return out;
+}
+function gmInfo(it){
+  if(it.kind==="k"){const e=it.e; const r=KX.RN[e.r]; const w=e.v[0]; return `<span class="jp gmi-c">${esc(e.k)}</span><b>${esc(e.hv)}</b> ${esc(kxShort(e.vi,30))} · <span class="jp">${esc((e.on[0]||"")+(e.kun[0]?"・"+e.kun[0]:""))}</span>${r?` · bộ <span class="jp">${esc(r.c)}</span> ${esc(r.hv)}`:""}${w?` · <span class="jp">${esc(w[0])}</span> ${esc(w[1])} ${esc(kxShort(w[2],20))}`:""}`}
+  if(it.kind==="t"){const t=it.t; return `<span class="jp gmi-c">${esc(t.w)}</span> <span class="jp">${esc(t.r)}</span> · <b>${esc(t.vi)}</b>${t.hv?` · ${esc(t.hv)}`:""}<div class="jp small muted">${esc(t.ex)}</div>`}
+  return `<span class="jp gmi-c">${esc(it.a)}</span> <b>${esc(it.g.vi)}</b>${it.g.ex[0]?`<div class="jp small muted">${esc(it.g.ex[0][0])}</div>`:""}`;
+}
+function gmStat(g,k,v,max){S.gm=S.gm||{}; S.gm[g]=S.gm[g]||{}; S.gm[g][k]=max?Math.max(S.gm[g][k]||0,v):(S.gm[g][k]||0)+v}
+function gmPlayed(){S.gm=S.gm||{}; S.gm.d=S.gm.d||{}; const d=ymd(); S.gm.d[d]=(S.gm.d[d]||0)+1}
+function gmLaunch(game,src,mode){ if(src) GMC.src=src; if(mode) GMC.mode=mode; if(game==="cd"&&(GMC.src==="tango"||GMC.src==="gram")) GMC.src="N543"; if(game==="pk"&&GMC.src==="gram") GMC.src="N3"; gmcSave(); GV={g:game,start:true}; if(view!=="games") go("games"); else render() }
+function gmStop(){ if(PK) PK.dead=true; if(FL) FL.dead=true; if(CD) CD.dead=true; PK=null; FL=null; CD=null; GV={g:null} }
+
+function renderGames(m){
+  m.innerHTML=`<section class="sheet"><div class="small muted">Đang tải dữ liệu kanji…</div></section>`;
+  kxLoad().then(()=>{ if(view!=="games") return;
+    if(GV.g&&GV.start){GV.start=false; if(GV.g==="pk") return pkStart(m,1); if(GV.g==="cd") return cdStart(m,1); if(GV.g==="fl") return flStart(m)}
+    if(GV.g==="pk"&&PK&&!PK.dead) return pkRender(m);
+    if(GV.g==="cd"&&CD&&!CD.dead) return cdMount(m);
+    if(GV.g==="fl"&&FL&&!FL.dead){FL.dead=true; FL=null}
+    gmHub(m);
+  }).catch(()=>{m.innerHTML=`<section class="sheet"><div class="empty">Chưa tải được dữ liệu trò chơi (data/kx-data.js). Kiểm tra mạng rồi bấm lại tab.</div></section>`});
+}
+function gmHub(m){
+  gmStop();
+  const kg=S.kg||{}; const ids=Object.keys(kg); const kj=ids.filter(k=>KX.BY[k]);
+  const known=kj.filter(k=>kgState(k)==="known").length, weak=gmWeak().slice(0,16);
+  const g=S.gm||{}; const today=(g.d||{})[ymd()]||0;
+  const radOpts=KX.R.filter(r=>r.f3>=3).sort((a,b)=>b.f3-a.f3).map(r=>[`rad:${r.no}`,`Bộ ${r.c} ${r.hv} (${r.vi.split(/[,;]/)[0]}) · ${r.f3}`]);
+  const optHTML=(list,sel)=>list.map(([v,t])=>`<option value="${esc(v)}" ${v===sel?"selected":""}>${esc(t)}</option>`).join("");
+  m.innerHTML=`<section class="sheet gmhero"><div class="eyebrow">Chơi & nhớ</div>
+    <h2 style="font-size:19px;margin:4px 0 6px">Học kanji mà như chơi — mỗi nước đi là một lần ôn</h2>
+    <p class="small muted" style="margin:0">Trò chơi tự ưu tiên chữ bạn chưa gặp và chữ bạn hay sai. Nối/trả lời đúng 3 lần liên tiếp → “nhớ tốt”. Sau mỗi lần nối, đọc dòng gợi nhớ phía dưới bảng.</p>
+    <div class="formgrid gmcfg"><div class="field"><label for="gmsrc">Học chữ nào</label><select id="gmsrc"><optgroup label="Theo cấp / danh sách">${optHTML(GM_SRC,GMC.src)}</optgroup><optgroup label="Theo bộ thủ">${optHTML(radOpts,GMC.src)}</optgroup></select></div>
+      <div class="field"><label for="gmmode">Nối / hỏi theo</label><select id="gmmode">${optHTML(GM_MODE,GMC.mode)}</select></div></div>
+    <div class="small muted" id="gmcnt"></div></section>
+  <div class="gmcards">
+    <section class="sheet gmcard"><div class="gmico jp">連</div><h3>Pikachu nối chữ</h3><p class="small muted">Nối chữ Hán với Hán Việt / nghĩa / cách đọc. Đường nối không quá 2 góc. Màn sau có “trọng lực” làm các ô trượt.</p>
+      <div class="small">Kỷ lục: <b>${(g.pk||{}).best||0}</b> điểm · màn cao nhất ${(g.pk||{}).lv||0}</div><div class="row" style="gap:6px;margin-top:8px"><button class="btn primary" data-gm="pk">Chơi</button></div></section>
+    <section class="sheet gmcard"><div class="gmico jp">氵</div><h3>Candy bộ thủ</h3><p class="small muted">Đổi chỗ 2 ô để xếp 3 chữ <b>cùng bộ thủ</b> thành hàng. Xếp 4 → ô sọc, 5 → ô nổ cả bộ. Câu hỏi thưởng thêm lượt.</p>
+      <div class="small">Kỷ lục: <b>${(g.cd||{}).best||0}</b> điểm · màn cao nhất ${(g.cd||{}).lv||0}</div>
+      <label class="small row" style="gap:6px;margin-top:6px"><input type="checkbox" id="gmhard" ${GMC.cdHard?"checked":""}> Ẩn màu (chỉ nhìn bộ — khó)</label>
+      <div class="row" style="gap:6px;margin-top:8px"><button class="btn primary" data-gm="cd">Chơi</button></div></section>
+    <section class="sheet gmcard"><div class="gmico jp">落</div><h3>Kanji rơi</h3><p class="small muted">Chữ rơi từ trên xuống, chọn đáp án đúng trước khi chạm đất. Càng đúng càng rơi nhanh. Bàn phím 1–4.</p>
+      <div class="small">Kỷ lục: <b>${(g.fl||{}).best||0}</b> điểm</div><div class="row" style="gap:6px;margin-top:8px"><button class="btn primary" data-gm="fl">Chơi</button></div></section>
+  </div>
+  <section class="sheet"><div class="eyebrow">Tiến độ trong trò chơi</div>
+    <div class="row" style="gap:16px;margin:6px 0"><div><b class="num">${kj.length}</b> <span class="small muted">chữ đã gặp</span></div><div><b class="num">${known}</b> <span class="small muted">nhớ tốt</span></div><div><b class="num">${today}</b> <span class="small muted">ván hôm nay</span></div></div>
+    ${weak.length?`<div class="small muted" style="margin:6px 0 4px">Chữ hay sai — bấm để xem thẻ, hoặc chọn “Chữ hay sai” ở trên để chơi riêng:</div><div class="kjchips">${weak.map(k=>kxChip(k)).join("")}</div>`:`<p class="small muted" style="margin:0">Chơi vài ván để Sổ luyện biết chữ nào bạn hay nhầm.</p>`}</section>`;
+  const cnt=()=>{const n=gmItems(GMC.src,GMC.mode).length; m.querySelector("#gmcnt").textContent=`${gmSrcName(GMC.src)}: ${n} ${GMC.src==="tango"?"từ":GMC.src==="gram"?"mẫu":"chữ"}${n<6?" — hơi ít, nên chọn nhóm lớn hơn":""}`};
+  cnt();
+  m.querySelector("#gmsrc").onchange=e=>{GMC.src=e.target.value; gmcSave(); cnt()};
+  m.querySelector("#gmmode").onchange=e=>{GMC.mode=e.target.value; gmcSave(); cnt()};
+  m.querySelector("#gmhard").onchange=e=>{GMC.cdHard=e.target.checked; gmcSave()};
+  m.querySelectorAll("[data-gm]").forEach(b=>b.onclick=()=>gmLaunch(b.dataset.gm));
+}
+function gmTop(title,right){return `<div class="gmtop"><button class="btn ghost small" data-gmexit>← Thoát</button><div class="gmtitle">${title}</div><div class="gmright">${right||""}</div></div>`}
+function gmWireExit(m){m.querySelectorAll("[data-gmexit]").forEach(b=>b.onclick=()=>{markDirty(); gmStop(); gmHub(m); window.scrollTo({top:0})})}
+
+// =============== PIKACHU (Onet) ===============
+let PK=null;
+const PK_GRAV=["none","none","down","left","up","right","down","left"];
+function pkStart(m,level){
+  const items0=gmItems(GMC.src,GMC.mode); if(items0.length<4){toast("Nhóm này ít chữ quá — chọn nhóm lớn hơn"); GV={g:null}; return gmHub(m)}
+  const w=Math.min(m.clientWidth||360,860)-36; const C=w<470?6:w<640?8:10;
+  const Rw=[6,6,7,8,8,8][Math.min(level-1,5)]; let pairs=Math.floor(C*Rw/2);
+  const items=gmPick(items0,pairs); pairs=items.length; const R=Math.ceil(pairs*2/C);
+  let tiles=[]; items.forEach((it,i)=>{tiles.push({p:i,s:0},{p:i,s:1})}); tiles=shuffle(tiles);
+  const b=[]; for(let r=0;r<R+2;r++){b.push(new Array(C+2).fill(null))}
+  let k=0; for(let r=1;r<=R;r++) for(let c=1;c<=C;c++){ if(k<tiles.length) b[r][c]=tiles[k++] }
+  const lim=Math.round(pairs*Math.max(4.2,7.5-(level-1)*.6)+25);
+  PK={m,level,C,R,b,items,sel:null,score:PK&&PK.level&&level>1?PK.score:0,hints:3,shuf:2,lim,left:pairs,combo:0,last:0,miss:{},t0:Date.now(),paused:0,pauseAt:0,grav:PK_GRAV[(level-1)%PK_GRAV.length],dead:false,info:"",n:0,ok:0};
+  if(!pkAnyMove()) pkShuffle(true);
+  pkRender(m); pkTick();
+}
+function pkRemain(){if(!PK) return 0; const now=PK.pauseAt||Date.now(); return Math.max(0,PK.lim-(now-PK.t0-PK.paused)/1000)}
+function pkRender(m){
+  m=m||PK.m; PK.m=m; const {C,R,b,items}=PK;
+  const W=Math.min(m.clientWidth||360,860)-28; const pad=10; const cs=Math.max(40,Math.min(64,Math.floor((W-pad*2)/C)));
+  PK.cs=cs; PK.pad=pad;
+  const cell=(r,c)=>{const t=b[r][c]; if(!t) return `<div class="pkc empty"></div>`; const it=items[t.p]; const txt=t.s?it.b:it.a; const L=[...txt].length;
+    const fs=t.s?(it.bj?(L<=2?15:L<=4?12.5:10.5):(L<=4?12.5:L<=8?11:L<=12?10:9)):(L<=1?Math.round(cs*.56):L<=2?Math.round(cs*.36):L<=3?Math.round(cs*.27):Math.round(cs*.22));
+    return `<button class="pkc pkt ${t.s?"pkb":"pka"} ${PK.sel&&PK.sel[0]===r&&PK.sel[1]===c?"sel":""}" data-r="${r}" data-c="${c}" style="font-size:${fs}px"><span class="${t.s&&!it.bj?"":"jp"}">${esc(txt)}</span></button>`};
+  let html=""; for(let r=1;r<=R;r++) for(let c=1;c<=C;c++) html+=cell(r,c);
+  m.innerHTML=`<section class="sheet gmplay">${gmTop(`Pikachu · màn ${PK.level}`,`<span class="num"><b>${PK.score}</b> điểm</span>`)}
+    <div class="pkbar"><div class="pktime"><i id="pkTime"></i></div><span class="small num" id="pkSec"></span></div>
+    <div class="row small muted" style="justify-content:space-between;gap:6px;margin:4px 0 8px"><span>${esc(gmSrcName(GMC.src))} · ${gmModeName()}${PK.grav!=="none"?` · ô trượt ${({down:"xuống",left:"sang trái",up:"lên",right:"sang phải"})[PK.grav]}`:""}</span><span>còn ${PK.left} cặp</span></div>
+    <div class="pkwrap" id="pkWrap" style="--cs:${cs}px;padding:${pad}px;width:${cs*C+pad*2}px"><div class="pkgrid" style="grid-template-columns:repeat(${C},var(--cs))">${html}</div><svg class="pksvg" id="pkSvg" width="${cs*C+pad*2}" height="${cs*R+pad*2}"></svg>
+      ${PK.pauseAt?`<div class="pkpause"><button class="btn primary" id="pkResume">▶ Chơi tiếp</button></div>`:""}</div>
+    <div class="gminfo" id="pkInfo">${PK.info||`<span class="muted small">Chọn 1 ô chữ Hán rồi chọn ô ${GMC.mode==="hv"?"Hán Việt":GMC.mode==="vi"?"nghĩa":"cách đọc"} tương ứng (màu nhạt). Nối sai bị trừ 5 giây.</span>`}</div>
+    <div class="row" style="gap:6px;justify-content:center;margin-top:8px"><button class="btn small" id="pkHint" ${PK.hints?"":"disabled"}>💡 Gợi ý (${PK.hints})</button><button class="btn small" id="pkShuf" ${PK.shuf?"":"disabled"}>🔀 Đổi bàn (${PK.shuf})</button><button class="btn ghost small" id="pkPause">${PK.pauseAt?"▶":"⏸"} ${PK.pauseAt?"Tiếp":"Tạm dừng"}</button></div>
+  </section>`;
+  gmWireExit(m);
+  const wrap=m.querySelector("#pkWrap");
+  wrap.addEventListener("click",e=>{const t=e.target.closest(".pkt"); if(t) pkTap(+t.dataset.r,+t.dataset.c)});
+  m.querySelector("#pkHint").onclick=pkHint;
+  m.querySelector("#pkShuf").onclick=()=>{if(!PK.shuf) return; PK.shuf--; pkShuffle(); PK.sel=null; pkRender()};
+  const pz=()=>{if(PK.pauseAt){PK.paused+=Date.now()-PK.pauseAt; PK.pauseAt=0; pkRender(); pkTick()} else {PK.pauseAt=Date.now(); pkRender()}};
+  m.querySelector("#pkPause").onclick=pz; const rs=m.querySelector("#pkResume"); if(rs) rs.onclick=pz;
+  if(PK.pauseAt) wrap.querySelector(".pkgrid").style.visibility="hidden";
+  pkPaintTime();
+}
+function pkPaintTime(){const t=pkRemain(); const el=document.getElementById("pkTime"), s=document.getElementById("pkSec"); if(el){el.style.width=(100*t/PK.lim)+"%"; el.className=t<15?"low":""} if(s) s.textContent=Math.ceil(t)+"s"}
+function pkTick(){
+  const me=PK; const step=()=>{ if(PK!==me||me.dead||me.pauseAt) return; if(view!=="games"||!document.getElementById("pkWrap")){me.pauseAt=Date.now(); return} pkPaintTime(); if(pkRemain()<=0){pkEnd(false);return} setTimeout(step,250) }; setTimeout(step,250);
+}
+function pkCenter(r,c){const {cs,pad,C,R}=PK; const x=c===0?pad/2:c===C+1?pad+C*cs+pad/2:pad+(c-1)*cs+cs/2; const y=r===0?pad/2:r===R+1?pad+R*cs+pad/2:pad+(r-1)*cs+cs/2; return [x,y]}
+function pkPath(a,z){
+  const b=PK.b, R2=PK.R+2, C2=PK.C+2;
+  const pass=(r,c)=>(r===a[0]&&c===a[1])||(r===z[0]&&c===z[1])||!b[r][c];
+  const seg=(p,q)=>{ if(p[0]===q[0]){const r=p[0]; for(let c=Math.min(p[1],q[1]);c<=Math.max(p[1],q[1]);c++) if(!pass(r,c)) return false; return true}
+    if(p[1]===q[1]){const c=p[1]; for(let r=Math.min(p[0],q[0]);r<=Math.max(p[0],q[0]);r++) if(!pass(r,c)) return false; return true} return false };
+  let best=null; const len=(...ps)=>{let s=0; for(let i=1;i<ps.length;i++) s+=Math.abs(ps[i][0]-ps[i-1][0])+Math.abs(ps[i][1]-ps[i-1][1]); return s};
+  const tryP=(X,Y)=>{ if(seg(a,X)&&seg(X,Y)&&seg(Y,z)){const L=len(a,X,Y,z)+((X[0]!==a[0]||X[1]!==a[1])?0:0); if(!best||L<best.L) best={L,pts:[a,X,Y,z]}} };
+  for(let c=0;c<C2;c++) tryP([a[0],c],[z[0],c]);
+  for(let r=0;r<R2;r++) tryP([r,a[1]],[r,z[1]]);
+  return best&&best.pts;
+}
+function pkPairs(){const pos={}; for(let r=1;r<=PK.R;r++) for(let c=1;c<=PK.C;c++){const t=PK.b[r][c]; if(t)(pos[t.p]=pos[t.p]||[])[t.s]=[r,c]} return pos}
+function pkAnyMove(){const pos=pkPairs(); for(const p in pos){const [x,y]=pos[p]; if(x&&y&&pkPath(x,y)) return [x,y]} return null}
+function pkShuffle(free){
+  for(let k=0;k<30;k++){ const cells=[], ts=[]; for(let r=1;r<=PK.R;r++) for(let c=1;c<=PK.C;c++) if(PK.b[r][c]){cells.push([r,c]); ts.push(PK.b[r][c])}
+    const sh=shuffle(ts); cells.forEach(([r,c],i)=>PK.b[r][c]=sh[i]); if(pkAnyMove()) break; }
+  if(!free) toast("Đã đổi bàn");
+}
+function pkGravity(){
+  const {b,R,C,grav}=PK; if(grav==="none") return;
+  if(grav==="down"||grav==="up") for(let c=1;c<=C;c++){ const col=[]; for(let r=1;r<=R;r++) if(b[r][c]) col.push(b[r][c]); for(let r=1;r<=R;r++) b[r][c]=null;
+    if(grav==="down") col.reverse().forEach((t,i)=>b[R-i][c]=t); else col.forEach((t,i)=>b[1+i][c]=t) }
+  else for(let r=1;r<=R;r++){ const row=[]; for(let c=1;c<=C;c++) if(b[r][c]) row.push(b[r][c]); for(let c=1;c<=C;c++) b[r][c]=null;
+    if(grav==="left") row.forEach((t,i)=>b[r][1+i]=t); else row.reverse().forEach((t,i)=>b[r][C-i]=t) }
+}
+function pkTap(r,c){
+  if(!PK||PK.pauseAt||PK.busy) return; const t=PK.b[r][c]; if(!t) return;
+  const el=PK.m.querySelector(`.pkt[data-r="${r}"][data-c="${c}"]`);
+  if(!PK.sel){PK.sel=[r,c]; el.classList.add("sel"); if(!t.s&&PK.items[t.p].kind==="k"&&GMC.mode!=="hv"){} return}
+  const [r0,c0]=PK.sel; const el0=PK.m.querySelector(`.pkt[data-r="${r0}"][data-c="${c0}"]`);
+  if(r0===r&&c0===c){PK.sel=null; el.classList.remove("sel"); return}
+  const t0=PK.b[r0][c0];
+  if(t0.s===t.s){ el0&&el0.classList.remove("sel"); PK.sel=[r,c]; el.classList.add("sel"); return }
+  PK.n++;
+  if(t0.p!==t.p){ // nối sai
+    const kt=t0.s?t:t0, bt=t0.s?t0:t; const it=PK.items[kt.p], wrongIt=PK.items[bt.p];
+    kgMark(it.id,false); PK.miss[it.id]=(PK.miss[it.id]||0)+1; PK.combo=0; PK.t0-=5000;
+    [el,el0].forEach(x=>x&&x.classList.add("shake")); setTimeout(()=>[el,el0].forEach(x=>x&&x.classList.remove("shake","sel")),380);
+    PK.sel=null;
+    PK.info=`<span class="chip bad">Chưa đúng −5s</span> <span class="jp">${esc(it.a)}</span> ≠ <span class="${wrongIt.bj?"jp":""}">${esc(wrongIt.b)}</span> (của <span class="jp">${esc(wrongIt.a)}</span>). <span class="jp">${esc(it.a)}</span> là <b class="${it.bj?"jp":""}">${esc(it.b)}</b>.`;
+    const inf=PK.m.querySelector("#pkInfo"); if(inf) inf.innerHTML=PK.info; pkPaintTime(); return;
+  }
+  const path=pkPath([r0,c0],[r,c]);
+  if(!path){ [el,el0].forEach(x=>x&&x.classList.add("shake")); setTimeout(()=>{[el,el0].forEach(x=>x&&x.classList.remove("shake"))},380); el0&&el0.classList.remove("sel"); PK.sel=null;
+    const inf=PK.m.querySelector("#pkInfo"); if(inf) inf.innerHTML=`<span class="chip warn">Đúng cặp</span> nhưng đường nối phải ≤ 2 góc và không đi qua ô khác — dọn đường trước đã.`; return }
+  // nối đúng
+  const it=PK.items[t.p]; const now=Date.now(); PK.combo=(now-PK.last<4000)?PK.combo+1:1; PK.last=now;
+  const gain=10+(PK.combo>1?PK.combo*2:0); PK.score+=gain; PK.ok++; PK.left--;
+  if(!PK.miss[it.id]) kgMark(it.id,true);
+  PK.info=`<span class="chip ok">+${gain}${PK.combo>1?" · combo ×"+PK.combo:""}</span> ${gmInfo(it)}`;
+  const svg=PK.m.querySelector("#pkSvg"); svg.innerHTML=`<polyline points="${path.map(p=>pkCenter(p[0],p[1]).join(",")).join(" ")}" />`;
+  el.classList.add("gone"); el0&&el0.classList.add("gone"); PK.busy=true;
+  setTimeout(()=>{ if(!PK) return; PK.busy=false; PK.b[r0][c0]=null; PK.b[r][c]=null; PK.sel=null; pkGravity();
+    if(PK.left===0){ pkEnd(true); return }
+    if(!pkAnyMove()) {pkShuffle(true); toast("Hết đường nối — tự đổi bàn")}
+    pkRender(); },260);
+}
+function pkHint(){ if(!PK.hints) return; const mv=pkAnyMove(); if(!mv) return; PK.hints--; const b=PK.m.querySelector("#pkHint"); if(b){b.textContent=`💡 Gợi ý (${PK.hints})`; if(!PK.hints) b.disabled=true}
+  mv.forEach(([r,c])=>{const el=PK.m.querySelector(`.pkt[data-r="${r}"][data-c="${c}"]`); if(el){el.classList.add("hint"); setTimeout(()=>el.classList.remove("hint"),2200)}}) }
+function pkEnd(win){
+  const m=PK.m; const P=PK; P.dead=true; const rem=Math.round(pkRemain()); const bonus=win?rem*2:0; P.score+=bonus;
+  gmStat("pk","best",P.score,true); gmStat("pk","lv",win?P.level:P.level-1,true); gmStat("pk","n",1); gmPlayed(); markDirty();
+  const missed=Object.keys(P.miss).map(id=>P.items.find(x=>x.id===id)).filter(Boolean);
+  const left=[]; for(let r=1;r<=P.R;r++) for(let c=1;c<=P.C;c++){const t=P.b[r][c]; if(t&&!t.s) left.push(P.items[t.p])}
+  m.innerHTML=`<section class="sheet gmplay">${gmTop(`Pikachu · màn ${P.level}`)}
+    <div class="gmend"><div class="gmbig">${win?"🎉 Qua màn!":"⏰ Hết giờ"}</div><div class="num" style="font-size:22px"><b>${P.score}</b> điểm${bonus?` <span class="small muted">(+${bonus} thời gian còn lại)</span>`:""}</div>
+      <div class="small muted">Nối đúng ${P.ok} cặp · nối nhầm ${Object.values(P.miss).reduce((a,b)=>a+b,0)} lần</div></div>
+    ${missed.length?`<div class="kxsec"><div class="eyebrow">Chữ bạn nối nhầm — đọc lại kỹ</div>${missed.map(it=>`<div class="gmrow">${gmInfo(it)}</div>`).join("")}</div>`:""}
+    ${!win&&left.length?`<div class="kxsec"><div class="eyebrow">Chưa kịp nối</div>${left.slice(0,10).map(it=>`<div class="gmrow">${gmInfo(it)}</div>`).join("")}</div>`:""}
+    <div class="kxsec"><div class="eyebrow">Ôn nhanh cả màn</div><div class="kjchips">${P.items.filter(x=>x.kind==="k").map(x=>kxChip(x.a)).join("")}</div></div>
+    <div class="row" style="gap:8px;justify-content:center;margin-top:12px">${win?`<button class="btn primary" id="pkNext">Màn ${P.level+1} →</button>`:`<button class="btn primary" id="pkAgain">Chơi lại màn ${P.level}</button>`}<button class="btn" data-gmexit>Về trang trò chơi</button></div></section>`;
+  gmWireExit(m);
+  const n=m.querySelector("#pkNext"); if(n) n.onclick=()=>{PK={level:P.level,score:P.score}; pkStart(m,P.level+1)};
+  const a=m.querySelector("#pkAgain"); if(a) a.onclick=()=>{PK=null; pkStart(m,P.level)};
+}
+
+// =============== KANJI RƠI ===============
+let FL=null;
+function flStart(m,only){
+  const items=only||gmItems(GMC.src,GMC.mode); if(items.length<4){toast("Nhóm này ít chữ quá — chọn nhóm lớn hơn"); GV={g:null}; return gmHub(m)}
+  FL={m,items,score:0,lives:3,lv:1,ok:0,n:0,combo:0,dur:only?9000:8500,cur:null,missed:[],recent:[],dead:false,lock:false,only:!!only};
+  m.innerHTML=`<section class="sheet gmplay">${gmTop("Kanji rơi",`<span class="num"><b id="flScore">0</b> điểm</span>`)}
+    <div class="row small muted" style="justify-content:space-between"><span>${esc(only?"Luyện lại chữ sai":gmSrcName(GMC.src))} · ${gmModeName()}</span><span id="flLives"></span></div>
+    <div class="flfield" id="flField"><div class="flitem" id="flItem"></div><div class="flpop" id="flPop"></div><div class="flground"></div></div>
+    <div class="opts flopts" id="flOpts"></div>
+    <div class="gminfo" id="flInfo"><span class="small muted">Chọn đáp án đúng trước khi chữ chạm đất. Đúng nhanh được thêm điểm.</span></div></section>`;
+  gmWireExit(m);
+  m.querySelector("#flOpts").addEventListener("click",e=>{const b=e.target.closest("[data-fo]"); if(b) flAnswer(+b.dataset.fo)});
+  flNext();
+}
+function flLivesPaint(){const el=document.getElementById("flLives"); if(el) el.textContent="❤".repeat(FL.lives)+"♡".repeat(Math.max(0,3-FL.lives))+` · cấp ${FL.lv}`}
+function flDistract(it,pool){
+  let cands=[];
+  if(it.kind==="k"){ const same=pool.filter(x=>x.kind==="k"&&x.e.r===it.e.r&&x.id!==it.id); const sameP=pool.filter(x=>x.kind==="k"&&x.id!==it.id&&x.e.p.some(p=>it.e.p.some(q=>q[0]===p[0]))); cands=shuffle(same).slice(0,1).concat(shuffle(sameP).slice(0,1)); }
+  const rest=shuffle(pool.filter(x=>x.id!==it.id)); const out=[]; const seen=new Set([it.b.toLowerCase()]);
+  for(const x of cands.concat(rest)){ if(out.length>=3) break; if(!x.b) continue; const k=x.b.toLowerCase(); if(seen.has(k)) continue; seen.add(k); out.push(x.b) }
+  if(out.length<3){ const extra=(it.kind==="k"?KX.K.map(e=>gmItemK(e,GMC.mode)):[]).filter(x=>x.b&&!seen.has(x.b.toLowerCase())); shuffle(extra).slice(0,3-out.length).forEach(x=>out.push(x.b)) }
+  return out;
+}
+function flNext(){
+  if(!FL||FL.dead) return;
+  const av=new Set(FL.recent.slice(-Math.min(6,FL.items.length-2)));
+  const it=gmPick(FL.items,1,av)[0]||FL.items[0];
+  FL.recent.push(it.id);
+  const opts=shuffle([it.b].concat(flDistract(it,FL.items))); FL.cur={it,opts,right:opts.indexOf(it.b),t0:performance.now(),x:8+Math.random()*60};
+  FL.lock=false; FL.n++;
+  const el=document.getElementById("flItem"); if(!el) return;
+  const L=[...it.a].length; el.className="flitem"+(it.kind==="g"?" flg":""); el.style.left=FL.cur.x+"%"; el.style.top="0px";
+  el.innerHTML=`<span class="jp" style="font-size:${it.kind==="g"?(L>10?14:17):L<=1?44:L<=2?32:L<=3?24:19}px">${esc(it.a)}</span>`;
+  document.getElementById("flOpts").innerHTML=opts.map((o,k)=>`<button class="opt" data-fo="${k}"><span class="bub">${k+1}</span><span class="${it.bj?"jp":""}">${esc(o)}</span></button>`).join("");
+  flLivesPaint();
+  const me=FL, cur=FL.cur;
+  const loop=()=>{ if(FL!==me||me.dead||me.cur!==cur||me.lock) return; if(view!=="games"||!document.body.contains(el)){me.dead=true;return}
+    const f=document.getElementById("flField"); const H=f.clientHeight-el.offsetHeight-6; const p=(performance.now()-cur.t0)/me.dur;
+    el.style.top=Math.max(0,Math.min(1,p)*H)+"px"; if(p>=1){flAnswer(-1);return} requestAnimationFrame(loop) };
+  requestAnimationFrame(loop);
+}
+function flAnswer(k){
+  if(!FL||FL.lock||!FL.cur) return; FL.lock=true; const cur=FL.cur, it=cur.it; const ok=k===cur.right;
+  const p=Math.min(1,(performance.now()-cur.t0)/FL.dur);
+  document.querySelectorAll("#flOpts [data-fo]").forEach((b,i)=>{b.disabled=true; if(i===cur.right) b.classList.add("right"); else if(i===k) b.classList.add("wrong")});
+  const el=document.getElementById("flItem"), pop=document.getElementById("flPop"), info=document.getElementById("flInfo");
+  if(ok){ FL.ok++; FL.combo++; const gain=Math.round((10+(1-p)*15)*(1+(FL.lv-1)*.2))+(FL.combo>=5?5:0); FL.score+=gain; kgMark(it.id,true);
+    FL.dur=Math.max(2300,FL.dur*.955); if(FL.ok%8===0) FL.lv++;
+    el.classList.add("hit"); pop.textContent="+"+gain+(FL.combo>=3?" · chuỗi "+FL.combo:""); pop.className="flpop show"; pop.style.left=cur.x+"%"; pop.style.top=el.style.top;
+    info.innerHTML=gmInfo(it); document.getElementById("flScore").textContent=FL.score;
+    setTimeout(()=>{if(FL&&!FL.dead){pop.className="flpop"; flNext()}},it.kind==="k"?650:900);
+  } else { FL.lives--; FL.combo=0; kgMark(it.id,false); if(!FL.missed.includes(it)) FL.missed.push(it);
+    el.classList.add("miss"); info.innerHTML=`<span class="chip bad">${k<0?"Chạm đất":"Sai"}</span> ${gmInfo(it)}`; flLivesPaint();
+    setTimeout(()=>{ if(!FL||FL.dead) return; if(FL.lives<=0) flEnd(); else flNext() },1600);
+  }
+  if(FL.n%10===0) markDirty();
+}
+function flEnd(){
+  const F=FL; F.dead=true; const m=F.m; gmStat("fl","best",F.score,true); gmStat("fl","n",1); gmPlayed(); markDirty();
+  const best=(S.gm.fl||{}).best||0;
+  m.innerHTML=`<section class="sheet gmplay">${gmTop("Kanji rơi")}
+    <div class="gmend"><div class="gmbig">${F.score>=best&&F.score>0?"🏆 Kỷ lục mới!":"Hết lượt"}</div><div class="num" style="font-size:22px"><b>${F.score}</b> điểm · cấp ${F.lv}</div><div class="small muted">Đúng ${F.ok}/${F.n} · kỷ lục ${best}</div></div>
+    ${F.missed.length?`<div class="kxsec"><div class="eyebrow">Cần nhớ lại (${F.missed.length})</div>${F.missed.map(it=>`<div class="gmrow">${gmInfo(it)} ${it.kind==="k"?`<button class="lkbtn" data-kxopen="${esc(it.a)}">thẻ</button>`:""}</div>`).join("")}</div>`:""}
+    <div class="row" style="gap:8px;justify-content:center;margin-top:12px"><button class="btn primary" id="flAgain">Chơi lại</button>${F.missed.length>=2?`<button class="btn" id="flMiss">Chỉ luyện ${F.missed.length} chữ sai</button>`:""}<button class="btn" data-gmexit>Về trang trò chơi</button></div></section>`;
+  gmWireExit(m);
+  m.querySelector("#flAgain").onclick=()=>flStart(m,F.only?F.items:null);
+  const ms=m.querySelector("#flMiss"); if(ms) ms.onclick=()=>{const it=F.missed.slice(); while(it.length<4){const x=F.items[Math.floor(Math.random()*F.items.length)]; if(!it.includes(x)) it.push(x)} flStart(m,it)};
+}
+document.addEventListener("keydown",e=>{ if(view!=="games"||!FL||FL.dead||FL.lock) return; if(e.target.closest&&e.target.closest("select,input,textarea")) return; if(e.key>="1"&&e.key<="4"){e.preventDefault(); flAnswer(+e.key-1)} });
+
+// =============== CANDY BỘ THỦ (xếp 3) ===============
+let CD=null;
+function cdTypes(level){
+  const want=level<=2?5:6;
+  let pool=gmKanjiPool(GMC.src==="tango"||GMC.src==="gram"?"N543":GMC.src);
+  const fixed=GMC.src.startsWith("rad:")?+GMC.src.slice(4):null;
+  const base=fixed?KX.K.filter(e=>e.lv>=3):pool;
+  const by={}; base.forEach(e=>(by[e.r]=by[e.r]||[]).push(e.k));
+  if(fixed) by[fixed]=KX.K.filter(e=>e.r===fixed&&e.lv>=2).map(e=>e.k);
+  let rs=Object.entries(by).filter(([r,ks])=>ks.length>=3).map(([r,ks])=>({no:+r,ks}));
+  if(rs.length<want){ const all={}; KX.K.filter(e=>e.lv>=3).forEach(e=>(all[e.r]=all[e.r]||[]).push(e.k)); Object.entries(all).forEach(([r,ks])=>{if(ks.length>=3&&!rs.some(x=>x.no===+r)) rs.push({no:+r,ks})}) }
+  rs=shuffle(rs).sort((a,b)=>(b.no===fixed)-(a.no===fixed)||((b.ks.length>=4)-(a.ks.length>=4)));
+  const pick=[]; const used=new Set();
+  for(const x of rs){ if(pick.length>=want) break; const ks=x.ks.filter(k=>!used.has(k)); if(ks.length<3) continue; ks.forEach(k=>used.add(k)); pick.push({no:x.no,r:KX.RN[x.no],ks:ks.slice(0,12)}) }
+  return pick;
+}
+let CD_ID=0;
+function cdStart(m,level){
+  const types=cdTypes(level); if(types.length<4){toast("Không đủ bộ thủ cho trò này — chọn nhóm lớn hơn"); GV={g:null}; return gmHub(m)}
+  const w=Math.min(m.clientWidth||360,860)-30; const N=w<420?7:8; const cs=Math.min(56,Math.floor(w/N));
+  const ng=level<=2?2:3; const gl=shuffle(types.map((t,i)=>i)).slice(0,ng);
+  const goals={}; gl.forEach(i=>goals[i]=8+level*3);
+  CD={m,level,N,cs,types,b:[],sel:null,score:CD&&CD.level&&level>1?CD.score:0,moves:Math.max(14,22-level),goals,got:{},busy:false,dead:false,mv:0,quizEvery:3,cleared:[],info:"",hard:GMC.cdHard};
+  do{ for(let y=0;y<N;y++){CD.b[y]=[]; for(let x=0;x<N;x++){ let t; do{t=Math.floor(Math.random()*types.length)}while((x>=2&&CD.b[y][x-1].t===t&&CD.b[y][x-2].t===t)||(y>=2&&CD.b[y-1][x].t===t&&CD.b[y-2][x].t===t)); CD.b[y][x]=cdTile(t) } } }while(!cdFindMove());
+  cdMount(m);
+}
+function cdTile(t){const ks=CD.types[t].ks; return {id:++CD_ID,t,k:ks[Math.floor(Math.random()*ks.length)],sp:null}}
+function cdMount(m){
+  m=m||CD.m; CD.m=m; const {N,cs,types}=CD;
+  m.innerHTML=`<section class="sheet gmplay">${gmTop(`Candy bộ thủ · màn ${CD.level}`,`<span class="num"><b id="cdScore">${CD.score}</b> điểm</span>`)}
+    <div class="cdgoal" id="cdGoal"></div>
+    <div class="cdlegend">${types.map((t,i)=>`<button class="cdleg cd${i}" data-kxrad="${t.no}" title="Xem bộ"><span class="jp">${esc(t.r.c)}${t.r.var[0]?`<small> ${esc(t.r.var[0])}</small>`:""}</span><small>${esc(t.r.hv)}</small><small class="muted">${esc(kxShort(t.r.vi,10))}</small></button>`).join("")}</div>
+    <div class="cdboard ${CD.hard?"hard":""}" id="cdBoard" style="width:${N*cs}px;height:${N*cs}px;--cs:${cs}px"></div>
+    <div class="gminfo" id="cdInfo">${CD.info||`<span class="small muted">Đổi chỗ 2 ô cạnh nhau (vuốt hoặc chạm lần lượt) để có 3 chữ <b>cùng bộ</b> thẳng hàng. Chạm 1 ô để xem chữ đó.</span>`}</div>
+    <div id="cdQuiz"></div></section>`;
+  gmWireExit(m); cdGoalPaint(); cdDraw(true); cdWireInput();
+}
+function cdGoalPaint(){const el=document.getElementById("cdGoal"); if(!el) return;
+  el.innerHTML=`<span class="cdmoves"><b class="num">${CD.moves}</b> lượt</span>`+Object.entries(CD.goals).map(([i,n])=>{const g=CD.got[i]||0; const t=CD.types[i]; return `<span class="cdg cd${i} ${g>=n?"done":""}"><span class="jp">${esc(t.r.c)}</span> ${esc(t.r.hv)} <b class="num">${Math.min(g,n)}/${n}</b></span>`}).join("")}
+function cdDraw(fresh){
+  const B=document.getElementById("cdBoard"); if(!B) return; const {N,cs}=CD; const keep=new Set();
+  for(let y=0;y<N;y++) for(let x=0;x<N;x++){ const t=CD.b[y][x]; if(!t) continue; keep.add(String(t.id));
+    let el=B.querySelector(`[data-id="${t.id}"]`);
+    if(!el){ el=document.createElement("div"); el.dataset.id=t.id; el.className=`cdt cd${t.t}`; el.innerHTML=`<span class="jp">${esc(t.k)}</span>`;
+      el.style.transform=`translate(${x*cs}px,${fresh?y*cs:(-1-(t.drop||0))*cs}px)`; B.appendChild(el); }
+    el.className=`cdt cd${t.t}${t.sp?" sp-"+t.sp:""}${CD.sel&&CD.sel[0]===x&&CD.sel[1]===y?" sel":""}`;
+    el.dataset.x=x; el.dataset.y=y; }
+  B.getBoundingClientRect();
+  B.querySelectorAll(".cdt").forEach(el=>{ if(!keep.has(el.dataset.id)){ if(!el.classList.contains("pop")) el.remove(); return } el.style.transform=`translate(${el.dataset.x*cs}px,${el.dataset.y*cs}px)` });
+}
+function cdWireInput(){
+  const B=document.getElementById("cdBoard"); let st=null;
+  const cellOf=ev=>{const r=B.getBoundingClientRect(); return [Math.floor((ev.clientX-r.left)/CD.cs),Math.floor((ev.clientY-r.top)/CD.cs)]};
+  B.addEventListener("pointerdown",ev=>{ if(CD.busy) return; const [x,y]=cellOf(ev); if(x<0||y<0||x>=CD.N||y>=CD.N) return; st={x,y,cx:ev.clientX,cy:ev.clientY}; B.setPointerCapture(ev.pointerId) });
+  B.addEventListener("pointerup",ev=>{ if(!st||CD.busy){st=null;return} const dx=ev.clientX-st.cx, dy=ev.clientY-st.cy; const s=st; st=null;
+    if(Math.max(Math.abs(dx),Math.abs(dy))>CD.cs*.35){ const [nx,ny]=Math.abs(dx)>Math.abs(dy)?[s.x+Math.sign(dx),s.y]:[s.x,s.y+Math.sign(dy)]; CD.sel=null; cdSwap(s.x,s.y,nx,ny); return }
+    cdTapCell(s.x,s.y) });
+  B.addEventListener("pointercancel",()=>{st=null});
+}
+function cdTapCell(x,y){
+  const t=CD.b[y][x]; const e=KX.BY[t.k]; const r=CD.types[t.t].r;
+  const inf=document.getElementById("cdInfo"); if(inf&&e) inf.innerHTML=`<span class="jp gmi-c">${esc(t.k)}</span><b>${esc(e.hv)}</b> ${esc(kxShort(e.vi,28))} · bộ <span class="jp">${esc(r.c)}</span> ${esc(r.hv)} (${esc(kxShort(r.vi,14))})${e.on[0]?` · <span class="jp">${esc(e.on[0])}</span>`:""}`;
+  if(CD.sel){ const [sx,sy]=CD.sel; if(Math.abs(sx-x)+Math.abs(sy-y)===1){CD.sel=null; cdSwap(sx,sy,x,y); return} if(sx===x&&sy===y){CD.sel=null; cdDraw(); return} }
+  CD.sel=[x,y]; cdDraw();
+}
+function cdRuns(){
+  const {N,b}=CD; const runs=[];
+  for(let y=0;y<N;y++){let x=0; while(x<N){let e=x; while(e+1<N&&b[y][e+1]&&b[y][x]&&b[y][e+1].t===b[y][x].t) e++; if(e-x>=2) runs.push({cells:Array.from({length:e-x+1},(_,i)=>[x+i,y]),dir:"h",t:b[y][x].t}); x=e+1}}
+  for(let x=0;x<N;x++){let y=0; while(y<N){let e=y; while(e+1<N&&b[e+1][x]&&b[y][x]&&b[e+1][x].t===b[y][x].t) e++; if(e-y>=2) runs.push({cells:Array.from({length:e-y+1},(_,i)=>[x,y+i]),dir:"v",t:b[y][x].t}); y=e+1}}
+  return runs;
+}
+function cdFindMove(){
+  const {N,b}=CD; const sw=(x1,y1,x2,y2)=>{const t=b[y1][x1]; b[y1][x1]=b[y2][x2]; b[y2][x2]=t};
+  for(let y=0;y<N;y++) for(let x=0;x<N;x++) for(const [dx,dy] of [[1,0],[0,1]]){ const x2=x+dx,y2=y+dy; if(x2>=N||y2>=N) continue;
+    if(b[y][x].sp==="bomb"||b[y2][x2].sp==="bomb") return [[x,y],[x2,y2]];
+    sw(x,y,x2,y2); const ok=cdRuns().length>0; sw(x,y,x2,y2); if(ok) return [[x,y],[x2,y2]] }
+  return null;
+}
+const cdWait=ms=>new Promise(r=>setTimeout(r,ms));
+async function cdSwap(x1,y1,x2,y2){
+  if(CD.busy||x2<0||y2<0||x2>=CD.N||y2>=CD.N||CD.moves<=0) return; CD.busy=true; clearTimeout(CD.hintT);
+  const b=CD.b; const A=b[y1][x1], Bt=b[y2][x2]; b[y1][x1]=Bt; b[y2][x2]=A; cdDraw(); await cdWait(170);
+  let forced=null;
+  if(A.sp==="bomb"||Bt.sp==="bomb"){ const other=A.sp==="bomb"?Bt:A; const bomb=A.sp==="bomb"?A:Bt; bomb.used=true; forced=new Set([bomb.id]); for(let y=0;y<CD.N;y++) for(let x=0;x<CD.N;x++) if(b[y][x].t===other.t) forced.add(b[y][x].id) }
+  if(!forced&&!cdRuns().length){ b[y1][x1]=A; b[y2][x2]=Bt; cdDraw(); await cdWait(170); CD.busy=false; const inf=document.getElementById("cdInfo"); if(inf) inf.innerHTML=`<span class="chip warn">Không tạo được hàng 3 chữ cùng bộ</span> — nhìn kỹ phần bộ thủ của từng chữ.`; return }
+  CD.moves--; CD.mv++; await cdResolve([x2,y2],forced); CD.busy=false;
+  if(CD.dead) return; cdGoalPaint();
+  const done=Object.entries(CD.goals).every(([i,n])=>(CD.got[i]||0)>=n);
+  if(done) return cdEnd(true);
+  if(CD.moves<=0) return cdEnd(false);
+  if(CD.mv%CD.quizEvery===0&&CD.cleared.length) cdQuiz();
+  cdHintLater();
+}
+async function cdResolve(swapPos,forced){
+  let chain=0;
+  while(true){
+    if(CD.dead) return;
+    const runs=forced?[]:cdRuns(); if(!runs.length&&!forced) break; chain++;
+    const b=CD.b, N=CD.N; const kill=new Set(); const make=[];
+    if(forced){ for(let y=0;y<N;y++) for(let x=0;x<N;x++) if(forced.has(b[y][x].id)) kill.add(x+","+y); forced=null }
+    runs.forEach(r=>{ r.cells.forEach(([x,y])=>kill.add(x+","+y));
+      if(r.cells.length>=4){ const at=r.cells.find(([x,y])=>swapPos&&x===swapPos[0]&&y===swapPos[1])||r.cells[Math.floor(r.cells.length/2)]; make.push({at,t:r.t,sp:r.cells.length>=5?"bomb":(r.dir==="h"?"col":"row")}) } });
+    // kích hoạt ô đặc biệt
+    let grew=true; while(grew){ grew=false; [...kill].forEach(s=>{const [x,y]=s.split(",").map(Number); const t=b[y][x]; if(!t||!t.sp||t.used) return; t.used=true;
+      const add=(xx,yy)=>{const k=xx+","+yy; if(!kill.has(k)){kill.add(k); grew=true}};
+      if(t.sp==="row") for(let i=0;i<N;i++) add(i,y); else if(t.sp==="col") for(let i=0;i<N;i++) add(x,i); else if(t.sp==="bomb"){ for(let yy=0;yy<N;yy++) for(let xx=0;xx<N;xx++) if(b[yy][xx].t===t.t) add(xx,yy) } }) }
+    make.forEach(mk=>kill.delete(mk.at[0]+","+mk.at[1]));
+    // ghi nhận + thông tin học
+    const byT={}; kill.forEach(s=>{const [x,y]=s.split(",").map(Number); const t=b[y][x]; (byT[t.t]=byT[t.t]||[]).push(t.k); CD.got[t.t]=(CD.got[t.t]||0)+1});
+    make.forEach(mk=>{const t=b[mk.at[1]][mk.at[0]]; CD.got[mk.t]=(CD.got[mk.t]||0)+1; (byT[mk.t]=byT[mk.t]||[]).push(t.k)});
+    const gain=(kill.size+make.length)*10*chain; CD.score+=gain;
+    const top=Object.entries(byT).sort((a,b)=>b[1].length-a[1].length)[0];
+    if(top){ const r=CD.types[top[0]].r; const ks=[...new Set(top[1])]; ks.forEach(k=>{if(!CD.cleared.includes(k)) CD.cleared.push(k)}); CD.cleared=CD.cleared.slice(-12);
+      CD.info=`<span class="chip ok">+${gain}${chain>1?" · liên hoàn ×"+chain:""}</span> Bộ <span class="jp">${esc(r.c)}</span> <b>${esc(r.hv)}</b> (${esc(kxShort(r.vi,14))}): ${ks.slice(0,5).map(k=>{const e=KX.BY[k]; return `<span class="jp">${esc(k)}</span> ${esc(e?kxShort(e.hv,8):"")} <span class="muted">${esc(e?kxShort(e.vi,12):"")}</span>`}).join(" · ")}`;
+      const inf=document.getElementById("cdInfo"); if(inf) inf.innerHTML=CD.info; }
+    const sc=document.getElementById("cdScore"); if(sc) sc.textContent=CD.score; cdGoalPaint();
+    // nổ
+    const Bd=document.getElementById("cdBoard");
+    kill.forEach(s=>{const [x,y]=s.split(",").map(Number); const t=b[y][x]; const el=Bd&&Bd.querySelector(`[data-id="${t.id}"]`); if(el){el.classList.add("pop"); setTimeout(()=>el.remove(),260)} b[y][x]=null});
+    make.forEach(mk=>{const t=b[mk.at[1]][mk.at[0]]; t.t=mk.t; t.sp=mk.sp; t.used=false});
+    cdDraw(); await cdWait(240);
+    // rơi xuống + ô mới
+    for(let x=0;x<N;x++){ const col=[]; for(let y=N-1;y>=0;y--) if(b[y][x]) col.push(b[y][x]); let nn=0;
+      for(let y=N-1;y>=0;y--){ const t=col.shift(); if(t) b[y][x]=t; else { const nt=cdTile(Math.floor(Math.random()*CD.types.length)); nt.drop=nn++; b[y][x]=nt } } }
+    cdDraw(); await cdWait(230); swapPos=null;
+  }
+  if(!cdFindMove()){ for(let k=0;k<20;k++){ const all=[]; CD.b.forEach(row=>row.forEach(t=>all.push(t))); const sh=shuffle(all); let i=0; for(let y=0;y<CD.N;y++) for(let x=0;x<CD.N;x++) CD.b[y][x]=sh[i++]; if(cdFindMove()&&!cdRuns().length) break }
+    toast("Hết nước đi — đã xáo bàn"); cdDraw(); }
+}
+function cdHintLater(){ clearTimeout(CD.hintT); const me=CD; CD.hintT=setTimeout(()=>{ if(CD!==me||CD.busy||CD.dead||view!=="games") return; const mv=cdFindMove(); if(!mv) return;
+  mv.forEach(([x,y])=>{const el=document.querySelector(`#cdBoard [data-id="${CD.b[y][x].id}"]`); if(el){el.classList.add("hint"); setTimeout(()=>el.classList.remove("hint"),2400)}}) },9000) }
+function cdQuiz(){
+  const k=CD.cleared[Math.floor(Math.random()*CD.cleared.length)]; const e=KX.BY[k]; if(!e||!e.hv) return;
+  const it=gmItemK(e,"hv"); const pool=KX.K.filter(x=>x.lv>=2).map(x=>gmItemK(x,"hv")).filter(x=>x.b);
+  const opts=shuffle([it.b].concat(flDistract(it,pool).slice(0,2))); const right=opts.indexOf(it.b);
+  const q=document.getElementById("cdQuiz"); if(!q) return; CD.busy=true;
+  q.innerHTML=`<div class="cdquiz"><div class="eyebrow">Câu hỏi thưởng · đúng được +2 lượt</div><div class="row" style="gap:12px;align-items:center"><span class="jp" style="font-size:40px;line-height:1">${esc(k)}</span><span>đọc Hán Việt là?</span></div>
+    <div class="opts" style="margin-top:8px">${opts.map((o,i)=>`<button class="opt" data-cq="${i}"><span class="bub">${i+1}</span><span>${esc(o)}</span></button>`).join("")}</div></div>`;
+  q.querySelectorAll("[data-cq]").forEach(btn=>btn.onclick=()=>{ const i=+btn.dataset.cq; const ok=i===right; kgMark(k,ok);
+    q.querySelectorAll("[data-cq]").forEach((x,j)=>{x.disabled=true; if(j===right) x.classList.add("right"); else if(j===i) x.classList.add("wrong")});
+    if(ok){CD.moves+=2; cdGoalPaint()}
+    q.querySelector(".cdquiz").insertAdjacentHTML("beforeend",`<div class="small" style="margin-top:6px">${ok?'<span class="chip ok">Đúng · +2 lượt</span>':'<span class="chip bad">Chưa đúng</span>'} <span class="jp">${esc(k)}</span> <b>${esc(e.hv)}</b> — ${esc(e.vi)}</div>`);
+    setTimeout(()=>{q.innerHTML=""; CD.busy=false},ok?900:2000); });
+}
+function cdEnd(win){
+  const C=CD; C.dead=true; clearTimeout(C.hintT); const m=C.m; const bonus=win?C.moves*15:0; C.score+=bonus;
+  gmStat("cd","best",C.score,true); gmStat("cd","lv",win?C.level:C.level-1,true); gmStat("cd","n",1); gmPlayed(); markDirty();
+  m.innerHTML=`<section class="sheet gmplay">${gmTop(`Candy bộ thủ · màn ${C.level}`)}
+    <div class="gmend"><div class="gmbig">${win?"🎉 Hoàn thành!":"Hết lượt"}</div><div class="num" style="font-size:22px"><b>${C.score}</b> điểm${bonus?` <span class="small muted">(+${bonus} lượt còn dư)</span>`:""}</div></div>
+    <div class="kxsec"><div class="eyebrow">Các bộ trong màn — đọc to tên bộ và nghĩa</div>${C.types.map((t,i)=>`<div class="gmrow"><button class="cdleg cd${i}" data-kxrad="${t.no}"><span class="jp">${esc(t.r.c)}</span></button> <b>bộ ${esc(t.r.hv)}</b> — ${esc(t.r.vi)}${t.r.var.length?` <span class="jp muted">(${esc(t.r.var.join(" "))})</span>`:""}<div class="kjchips">${t.ks.map(k=>kxChip(k)).join("")}</div></div>`).join("")}</div>
+    <div class="row" style="gap:8px;justify-content:center;margin-top:12px">${win?`<button class="btn primary" id="cdNext">Màn ${C.level+1} →</button>`:`<button class="btn primary" id="cdAgain">Chơi lại</button>`}<button class="btn" data-gmexit>Về trang trò chơi</button></div></section>`;
+  gmWireExit(m);
+  const n=m.querySelector("#cdNext"); if(n) n.onclick=()=>{CD={level:C.level,score:C.score}; cdStart(m,C.level+1)};
+  const a=m.querySelector("#cdAgain"); if(a) a.onclick=()=>{CD=null; cdStart(m,C.level)};
+}
+
+
 boot();
 </script>
 

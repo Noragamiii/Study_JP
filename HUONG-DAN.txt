@@ -1,0 +1,25 @@
+SO LUYEN JLPT N3 - BAN WEB v10 (Mac / iPhone / iPad / may cong ty)
+
+1. Dung ngay tren Mac: chuot phai index.html -> Mo bang -> Google Chrome.
+   Giu nguyen thu muc: index.html phai nam canh thu muc data (chua 2 file
+   kx-data.js va kx-strokes.js). Ban mo tu file khong co file am thanh:
+   phan Nghe va phat am 1800 tu dung giong doc cua trinh duyet.
+
+2. Dua len GitHub Pages de dung tren iPhone (lam 1 lan):
+   - github.com -> tao tai khoan bang email ca nhan.
+   - Dau + -> New repository -> ten: so-luyen-n3 -> Public ->
+     tich Add a README file -> Create repository.
+   - Add file -> Upload files -> keo 5 file: index.html, sw.js,
+     manifest.webmanifest, icon-180.png, icon-512.png VA thu muc data
+     (keo ca thu muc data) -> Commit changes.
+   - Settings -> Pages -> Branch: main, / (root) -> Save. Doi 1-2 phut:
+     https://ten-cua-ban.github.io/so-luyen-n3/
+   - iPhone: mo dia chi do bang Safari -> Chia se -> Them vao MH chinh.
+
+3. Dong bo tien do giua cac may: trong so, tab Hom nay -> Sao luu tien do
+   -> Dong bo qua GitHub -> tao token (chi quyen gist) -> dan -> Ket noi.
+   May nao dan cung token la dung chung tien do (ca tien do tro choi).
+
+4. Ban moi: tai lai index.html, sw.js va thu muc data len repo.
+   (Giong am nguoi that cua 1800 tu khong nam trong goi nay vi qua nang
+   38 MB; neu can, xin file audio/tango-1.bin va tango-2.bin rieng.)
