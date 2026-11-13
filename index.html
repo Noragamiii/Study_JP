@@ -1,8 +1,8 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#2C4A8E"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Sổ N3"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-180.png"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><script>if("serviceWorker" in navigator&&location.protocol==="https:"||location.hostname==="localhost")navigator.serviceWorker&&navigator.serviceWorker.register("sw.js").catch(function(){});</script></head><body><title>Sổ luyện JLPT N3</title>
+<!doctype html><html lang="vi" class="v12"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#F3F8EE"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="apple-mobile-web-app-title" content="Sổ N3"><link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icon-180.png"><link rel="icon" href="icon-180.png"><style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style><script>try{var r=document.documentElement;if(localStorage.getItem("so-luyen-n3-ui")==="v11")r.classList.remove("v12");else{var t=JSON.parse(localStorage.getItem("so-luyen-n3-buddy")||"{}").theme;if(t==="light"||t==="dark")r.setAttribute("data-theme",t)}}catch(e){}</script><script>if("serviceWorker" in navigator&&location.protocol==="https:"||location.hostname==="localhost")navigator.serviceWorker&&navigator.serviceWorker.register("sw.js").catch(function(){});</script></head><body><title>Sổ luyện JLPT N3</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPMincho:wght@400;700&family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=BIZ+UDPMincho:wght@400;700&family=Be+Vietnam+Pro:wght@400;500;600;700&family=Nunito:wght@700;800;900&display=swap">
 <style>
 /* Layout: an exam answer sheet (マークシート). Narrow single column of "sheets"; options are numbered mark bubbles; ★ and progress in indigo ink. */
 :root{
@@ -557,10 +557,11 @@ body.kxlock{overflow:hidden}
 .cdquiz{margin-top:10px;border:2px solid var(--warn);border-radius:10px;padding:10px;background:var(--warn-soft)}
 .flopts .opt span:not(.jp):not(.bub),.cdquiz .opt span:not(.jp):not(.bub){font-family:var(--font-ui)}
 </style>
+<link rel="stylesheet" href="data/v12.css?v=12e">
 
 <div class="wrap">
 <header>
-  <div class="brand"><h1>Sổ luyện N3<span class="jp">合格</span></h1><span class="sync" id="sync">Đang mở sổ…</span></div>
+  <div class="brand"><h1>Sổ luyện N3<span class="jp">合格</span></h1><span class="sync" id="sync">Đang mở sổ…</span><div class="v12-stats v12-only" id="v12stats"></div><button class="btn small v11-only" type="button" onclick="try{localStorage.removeItem('so-luyen-n3-ui')}catch(e){}location.reload()">Giao diện mới</button></div>
   <nav role="tablist" id="tabs">
     <button role="tab" data-v="today" aria-selected="true">Hôm nay</button>
     <button role="tab" data-v="coach" aria-selected="false">Huấn luyện</button>
@@ -575,9 +576,14 @@ body.kxlock{overflow:hidden}
     <button role="tab" data-v="exam" aria-selected="false">Thi thử</button>
     <button role="tab" data-v="plan" aria-selected="false">Lộ trình</button>
   </nav>
+  <div class="v12-sub v12-only" id="v12sub" role="tablist" aria-label="Mục con"></div>
 </header>
 <main id="main"></main>
 </div>
+<nav class="v12-nav v12-only" id="v12nav" aria-label="Điều hướng chính"></nav>
+<button class="v12-only" id="v12fab" type="button" data-v12="panel" aria-label="Trò chuyện với bạn đồng hành"></button>
+<div class="v12-only" id="v12say" role="status" aria-live="polite" hidden></div>
+<div class="v12-only" id="v12panel" role="dialog" aria-label="Bạn đồng hành" hidden></div>
 <div class="toast" id="toast" hidden></div>
 
 <script>
@@ -4048,7 +4054,7 @@ function renderQuiz(m){
   m.innerHTML=`
   <section class="sheet">
     <div class="qhead">
-      <div><div class="eyebrow">${esc(s.title)}</div><div class="small muted" style="margin-top:2px">Câu <span class="num">${s.i+1}/${n}</span> · ${SEC[q.sec].vi} · ${q.lv}${q.tag&&!exam&&!read?" · "+esc(q.tag):""}${s.why&&s.why[q.id]?' · <span class="chip warn">'+esc(s.why[q.id])+'</span>':""}${q.exam&&!exam?(q.fx?' · <span class="chip" title="Điểm này đã ra trong đề thật '+esc(q.fx)+' (câu viết mới, không chép đề)">Đã ra '+esc(q.fx)+'</span>':' · <span class="chip">Sát đề</span>'):""}</div></div>
+      <div><div class="eyebrow">${esc(s.title)}</div><div class="small muted" style="margin-top:2px">Câu <span class="num">${s.i+1}/${n}</span> · ${SEC[q.sec].vi} · ${q.lv}${q.tag&&!exam&&!read&&checked?" · "+esc(q.tag):""}${s.why&&s.why[q.id]&&checked?' · <span class="chip warn">'+esc(s.why[q.id])+'</span>':""}${q.exam&&!exam?(q.fx?' · <span class="chip" title="Điểm này đã ra trong đề thật '+esc(q.fx)+' (câu viết mới, không chép đề)">Đã ra '+esc(q.fx)+'</span>':' · <span class="chip">Sát đề</span>'):""}</div></div>
       <div class="row">${exam?`<span class="timer" id="timer">--:--</span>`:""}<button class="btn ghost" id="quit">${exam?"Nộp bài":"Dừng"}</button></div>
     </div>
     <div class="progress"><div style="width:${pct(s.i+(checked||exam&&chosen!=null?1:0),n)}%"></div></div>
@@ -4928,5 +4934,14 @@ function cdEnd(win){
 
 boot();
 </script>
+<script src="data/v11-dict.js?v=11"></script>
+<script src="data/v11-gram.js?v=11"></script>
+<script src="data/v11-kanji.js?v=11"></script>
+<script src="data/shadow-data.js?v=11"></script>
+<script src="data/shadow-ts.js?v=11"></script>
+<script src="data/v11.js?v=11"></script>
+<script src="data/v11b.js?v=11"></script>
+<script src="data/buddy-my.js?v=12e"></script>
+<script src="data/v12.js?v=12e"></script>
 
 </body></html>
