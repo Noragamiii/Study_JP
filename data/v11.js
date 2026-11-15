@@ -292,10 +292,36 @@ function sentenceHTML(text,compact){
   </div>`;
 }
 V.sentenceHTML=sentenceHTML;
+/* v13: vùng bôi đen / câu dán vào có lẫn tiếng Việt (vd. "すごい！ 3 câu đúng liên tiếp") → chỉ giữ phần tiếng Nhật để tra.
+   Chữ Latin / số chỉ được giữ khi dính liền chữ Nhật (ITエンジニア, 20部, Tシャツ); từ tiếng Việt (có dấu, hoặc đứng riêng) bị bỏ. */
+function jpOnly(text){
+  const s=String(text||""); if(!/[A-Za-zÀ-ỹĐđ]/.test(s)) return s.trim();
+  const JP=/[\u3040-\u30ff\u3400-\u9fff々〆]/;
+  const runs=[]; let cur="", num="";
+  const flush=()=>{ num=""; let r=cur.replace(/^[\s0-9０-９.,:;!?()\-–—=→+*\/'"“”‘’]+/,"").replace(/[\s.,:;()\-–—=→+*\/'"“”‘’]+$/,""); if(JP.test(r)) runs.push(r); cur="" };
+  const toks=s.split(/(\s+)/);
+  for(const tk of toks){
+    if(!tk) continue;
+    if(/^\s+$/.test(tk)){ if(cur&&!/\s$/.test(cur)) cur+=" "; continue }
+    if(!JP.test(tk)){ // từ không có chữ Nhật: số đứng giữa câu Nhật thì giữ, còn lại là ranh giới
+      if(/^[0-9０-９.,%％]+$/.test(tk)&&cur&&!num){ num=tk; continue } // số: chỉ giữ nếu ngay sau đó lại là chữ Nhật
+      flush(); continue }
+    if(num){ cur+=num; num="" }
+    // từ có chữ Nhật: bỏ các cụm chữ Latin có dấu tiếng Việt, hoặc cụm Latin dài không dính chữ Nhật
+    let t=tk.replace(/[A-Za-zÀ-ỹĐđ]+/g,(m,off,str)=>{ const vi=/[À-ỹĐđ]/.test(m); const prev=str[off-1]||"", next=str[off+m.length]||""; const adj=JP.test(prev)||JP.test(next)||/[0-9０-９]/.test(prev);
+      return (!vi&&adj&&m.length<=8)?m:"\u0001" });
+    t.split("\u0001").forEach((part,i,arr)=>{ if(i>0) flush(); cur+=part; });
+  }
+  flush();
+  if(!runs.length) return s.trim();
+  return runs.map(r=>r.replace(/\s+/g,"")).filter((r,i,a)=>a.indexOf(r)===i).slice(0,6).join("、").replace(/([、。！？!?])、/g,"$1");
+}
+window.lkJpOnly=jpOnly; V.jpOnly=jpOnly;
 function isSentence(text){ return text.length>=8||/[、。]/.test(text)||tokenize(text).filter(k=>k.ty!=="p").length>=3 }
 // patch lkBuild: câu dài → phân tích
 const _lkBuild=window.lkBuild;
 window.lkBuild=function(text){
+  text=jpOnly(text);
   const whole=lkFind(text.replace(/\s+/g,""));
   if(!whole.length&&isSentence(text)) return sentenceHTML(text,true);
   return _lkBuild(text);
@@ -306,11 +332,12 @@ window.lkOnSel=function(){
   const text=String(sel).trim(); const range=sel.getRangeAt(0);
   if(LK.el&&!LK.el.hidden&&LK.el.contains(range.commonAncestorContainer)) return;
   if(!text||text.length>400||!isJp(text)){ if(!LK.pin&&!text) lkHide(); return }
-  if(text===LK.sel&&LK.el&&!LK.el.hidden) return;
+  if(jpOnly(text)===LK.sel&&LK.el&&!LK.el.hidden) return;
   const node=range.commonAncestorContainer.nodeType===1?range.commonAncestorContainer:range.commonAncestorContainer.parentElement;
   if(node&&node.closest("input,textarea,select,#lkpop,.v11-sent")) return;
   LK.sel=text; LK.pin=false; LK.ctx=lkContext(range);
-  lkShow(text,range.getBoundingClientRect(),lkBlocked(range));
+  const jp=jpOnly(text); LK.sel=jp; // chỉ tra phần tiếng Nhật (bỏ chữ Việt lẫn trong vùng bôi đen)
+  lkShow(jp,range.getBoundingClientRect(),lkBlocked(range));
 };
 document.addEventListener("click",e=>{
   const tk=e.target.closest("[data-v11tok]"); if(tk){ const box=tk.closest(".v11-sent"); const det=box&&box.querySelector("#v11det, .v11-det"); const k=(V._lastToks||[])[+tk.dataset.v11tok]; if(det&&k){ const on=tk.classList.contains("on"); $$(".v11-tok.on",box).forEach(b=>b.classList.remove("on")); if(on){det.hidden=true; return} tk.classList.add("on"); det.hidden=false; det.innerHTML=tokDetail(k) } return }
@@ -318,9 +345,9 @@ document.addEventListener("click",e=>{
   const a=b.dataset.v11;
   if(a==="say"){ try{ speechSynthesis.cancel(); const u=new SpeechSynthesisUtterance(b.dataset.t); u.lang="ja-JP"; if(typeof JA_VOICES!=="undefined"&&JA_VOICES[0]) u.voice=JA_VOICES[0]; u.rate=0.9; speechSynthesis.speak(u) }catch(x){ toast("Trình duyệt này không đọc được tiếng Nhật") } return }
   if(a==="expand"){ lkHide(); openSentence(b.dataset.t); return }
-  if(a==="analyze"){ const ta=$("#v11sentIn"); const t=(ta&&ta.value||"").trim(); if(!t||!isJp(t)){toast("Dán một câu tiếng Nhật vào ô trên");return} const out=$("#v11sentOut"); if(out){ out.innerHTML=sentenceHTML(t,false); out.hidden=false } return }
+  if(a==="analyze"){ const ta=$("#v11sentIn"); const t=jpOnly((ta&&ta.value||"").trim()); if(!t||!isJp(t)){toast("Dán một câu tiếng Nhật vào ô trên");return} const out=$("#v11sentOut"); if(out){ out.innerHTML=sentenceHTML(t,false); out.hidden=false } return }
 });
-function openSentence(text){ lkHide(); const b=kxModal(`<div class="eyebrow">Phân tích câu</div><div class="jp" style="font-size:18px;margin:4px 0 10px">${esc(text)}</div>${sentenceHTML(text,false)}`); b.addEventListener("click",e=>{const x=e.target.closest("button"); if(!x) return; if(x.dataset.lksay){lkSay(x.dataset.lksay)} else if(x.dataset.lksave){lkSaveWord(x.dataset.lksave); x.textContent=S.words[x.dataset.lksave]?"✓ đã lưu":"+ Lưu"} else if(x.dataset.lkcard){const slot=x.nextElementSibling; slot.innerHTML=slot.innerHTML?"":kbCardHTML(KB_BY[x.dataset.lkcard],true)} else if(x.dataset.kxopen){kxOpen(x.dataset.kxopen)}}) }
+function openSentence(text){ text=jpOnly(text); lkHide(); const b=kxModal(`<div class="eyebrow">Phân tích câu</div><div class="jp" style="font-size:18px;margin:4px 0 10px">${esc(text)}</div>${sentenceHTML(text,false)}`); b.addEventListener("click",e=>{const x=e.target.closest("button"); if(!x) return; if(x.dataset.lksay){lkSay(x.dataset.lksay)} else if(x.dataset.lksave){lkSaveWord(x.dataset.lksave); x.textContent=S.words[x.dataset.lksave]?"✓ đã lưu":"+ Lưu"} else if(x.dataset.lkcard){const slot=x.nextElementSibling; slot.innerHTML=slot.innerHTML?"":kbCardHTML(KB_BY[x.dataset.lkcard],true)} else if(x.dataset.kxopen){kxOpen(x.dataset.kxopen)}}) }
 V.openSentence=openSentence;
 function dictToolHTML(){
   return `<section class="sheet v11-dict" id="v11dict"><div class="eyebrow">Dịch & phân tích câu (offline)</div>

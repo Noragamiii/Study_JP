@@ -359,6 +359,22 @@ html.v12[data-theme="dark"]{
 /* v12.2: nhân vật ảnh của người dùng — chuyển động theo cảm xúc */
 .bd-myskin{overflow:visible}
 .bd-myskin .bd-my{transform-box:view-box;transform-origin:100px 280px}
+/* v13: chân dung (bust) — khung vuông, cắt gọn trong khung, xoay/nhún quanh tâm khuôn mặt để mặt luôn cân giữa */
+.bd-myskin.bd-bust{overflow:hidden;aspect-ratio:1/1}
+.bd-myskin.bd-bust .bd-my{transform-origin:100px 128px}
+.bd-myskin.bd-bust.bd-think .bd-my,.bd-myskin.bd-bust.bd-explain .bd-my{transform:rotate(-3deg)}
+.bd-myskin.bd-bust.bd-sad .bd-my{transform:rotate(4deg) translateY(3px)}
+.bd-myskin.bd-bust.bd-sleepy .bd-my{transform:rotate(5deg)}
+.bd-myskin.bd-bust.bd-happy .bd-my,.bd-myskin.bd-bust.bd-cheer .bd-my{animation-name:bdmyhopb}
+@keyframes bdmyhopb{from{transform:translateY(2px)}to{transform:translateY(-4px)}}
+#v12fab svg.bd-myskin,.v12-lkava svg.bd-myskin{transform:none}
+.v12-fb>svg.bd-myskin,.v12-focus .qfoot .v12-fb>svg.bd-myskin{width:60px;height:60px;margin:-3px 0 -3px 2px;border-radius:50%;background:var(--sheet);box-shadow:0 0 0 2px var(--line-strong)}
+.v12-focus .qfoot .v12-fb>svg.bd-myskin{width:52px;height:52px;margin:0 0 0 2px}
+.v12-phead svg.bd-myskin{width:50px;height:50px;margin:0 0 0 4px;border-radius:50%;background:var(--sheet);box-shadow:0 0 0 2px var(--line)}
+.v12-mini svg.bd-myskin{width:30px;height:30px;margin:-5px 0;border-radius:50%;background:var(--accent-soft)}
+/* ảnh toàn thân: không để nút / ô chỉ số che mất tay nhân vật */
+.v12-res>svg.bd-myskin{margin-bottom:-12px}
+@media (max-width:699px){.v12-hero .v12-heroava:has(svg.bd-myskin){margin-bottom:-12px}}
 .bd-myskin.bd-happy .bd-my,.bd-myskin.bd-cheer .bd-my{animation:bdmyhop .7s ease-in-out infinite alternate}
 .bd-myskin.bd-wow .bd-my{animation:bdmywow .45s ease-out 2}
 .bd-myskin.bd-wave .bd-my{animation:bdmysway 1.1s ease-in-out infinite alternate}
@@ -371,3 +387,36 @@ html.v12[data-theme="dark"]{
 @keyframes bdmysway{from{transform:rotate(-3deg)}to{transform:rotate(3deg)}}
 @keyframes bdmyshake{25%{transform:translateX(-5px) rotate(-2deg)}75%{transform:translateX(5px) rotate(2deg)}}
 @media (prefers-reduced-motion:reduce){.bd-myskin .bd-my{animation:none!important}}
+/* v13: 11 biểu cảm mới */
+.bd-myskin.bd-love .bd-my,.bd-myskin.bd-sing .bd-my{animation:bdmysway 1s ease-in-out infinite alternate}
+.bd-myskin.bd-laugh .bd-my,.bd-myskin.bd-fire .bd-my{animation:bdmyhop .32s ease-in-out infinite alternate}
+.bd-myskin.bd-bust.bd-laugh .bd-my,.bd-myskin.bd-bust.bd-fire .bd-my{animation-name:bdmyhopb}
+.bd-myskin.bd-sparkle .bd-my{animation:bdmywow .7s ease-in-out infinite alternate}
+.bd-myskin.bd-proud .bd-my{transform:rotate(-3deg) scale(1.03)}
+.bd-myskin.bd-shy .bd-my{transform:rotate(4deg)}
+.bd-myskin.bd-pout .bd-my{transform:rotate(-5deg)}
+.bd-myskin.bd-shock .bd-my{animation:bdmyshake .4s ease-in-out 3}
+.bd-myskin.bd-cry .bd-my{animation:bdmyshake .9s ease-in-out infinite;filter:saturate(.85)}
+.bd-myskin.bd-dizzy .bd-my{animation:bdmydizzy 1.8s ease-in-out infinite}
+@keyframes bdmydizzy{0%,100%{transform:rotate(-5deg)}50%{transform:rotate(5deg)}}
+.bd .bd-heart{transform-box:fill-box;transform-origin:center;animation:bdheart .9s ease-in-out infinite alternate}
+@keyframes bdheart{from{transform:scale(.8) translateY(2px);opacity:.75}to{transform:scale(1.12) translateY(-3px);opacity:1}}
+.bd .bd-flame{transform-box:fill-box;transform-origin:50% 100%;animation:bdflame .28s ease-in-out infinite alternate}
+@keyframes bdflame{from{transform:scale(.92,.86)}to{transform:scale(1.06,1.14)}}
+.bd .bd-orbit{transform-origin:100px 30px;animation:bdorbit 1.5s linear infinite}
+@keyframes bdorbit{to{transform:rotate(360deg)}}
+.bd .bd-vein{transform-box:fill-box;transform-origin:center;animation:bdspark .5s ease-in-out infinite alternate}
+.bd .bd-puff{animation:bdpuff 1s ease-in-out infinite alternate}
+@keyframes bdpuff{from{opacity:.35}to{opacity:1}}
+.bd .bd-tear{animation:bdpuff .6s ease-in-out infinite alternate}
+.bd .bd-nade{animation:bdnade .5s ease-in-out infinite alternate}
+@keyframes bdnade{from{transform:translateX(-9px)}to{transform:translateX(9px)}}
+.bd .bd-eat{transform-box:fill-box;transform-origin:50% 0;animation:bdeat .35s ease-in-out infinite alternate}
+@keyframes bdeat{to{transform:translateY(2.5px) scale(.97)}}
+.bd-myskin.bd-nade .bd-my,.bd-myskin.bd-eat .bd-my{animation:bdmysway 1.1s ease-in-out infinite alternate}
+.bd-myskin.bd-tehe .bd-my{transform:rotate(5deg)}
+.bd-myskin.bd-stare .bd-my{transform:translateY(2px) scale(1.03)}
+.bd-myskin.bd-menace .bd-my{filter:saturate(.7) brightness(.86)}
+.bd-myskin.bd-please .bd-my{animation:bdmyhop 1s ease-in-out infinite alternate}
+.bd-myskin.bd-bust.bd-please .bd-my{animation-name:bdmyhopb}
+@media (prefers-reduced-motion:reduce){.bd .bd-heart,.bd .bd-flame,.bd .bd-orbit,.bd .bd-vein,.bd .bd-puff,.bd .bd-tear{animation:none!important}}

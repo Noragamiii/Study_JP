@@ -5,9 +5,86 @@
 "use strict";
 if(!document.documentElement.classList.contains("v12")) return;
 /* ===== Momo — bạn đồng hành (nhân vật gốc của Sổ luyện N3, vẽ bằng SVG) ===== */
-const BD_MOODS=["idle","happy","wow","cheer","oops","think","explain","wave","sleepy","sad"];
+const BD_BASE=["idle","happy","wow","cheer","oops","think","explain","wave","sleepy","sad"];
+/* v13: thêm 11 biểu cảm (miễn phí, có sẵn). Với nhân vật vẽ SVG: dùng khuôn mặt gần nhất + hiệu ứng riêng. */
+const BD_MOOD2={love:"happy",shy:"happy",laugh:"happy",proud:"wow",sparkle:"wow",fire:"cheer",pout:"cheer",shock:"oops",dizzy:"oops",cry:"sad",sing:"wave",tehe:"wave",stare:"think",menace:"cheer",nade:"happy",please:"sad",eat:"happy"};
+const BD_MOODS=BD_BASE.concat(Object.keys(BD_MOOD2));
+const BD_MOOD_VI={idle:"Bình thường",happy:"Vui",wow:"Ngạc nhiên",cheer:"Cổ vũ",oops:"Ối!",think:"Suy nghĩ",explain:"Giảng bài",wave:"Chào",sleepy:"Buồn ngủ",sad:"Buồn",love:"Thích quá",shy:"Ngại ngùng",laugh:"Cười to",proud:"Tự hào",sparkle:"Lấp lánh",fire:"Quyết tâm",pout:"Dỗi",shock:"Sốc",dizzy:"Chóng mặt",cry:"Khóc",sing:"Hát",tehe:"Tehe~",stare:"Nhìn chằm chằm",menace:"Sát khí",nade:"Được xoa đầu",please:"Năn nỉ",eat:"Măm măm"};
 let BD_SKIN="imp";
-function buddySVG(mood,opt){ return (BD_SKIN==="my"&&window.BD_MY_IMG?bdMy:BD_SKIN==="momo"?bdMomo:bdImp)(mood,opt) }
+/* v13: khuôn mặt của nhân vật ảnh — che mắt / miệng gốc bằng mảng màu da rồi vẽ mắt, miệng mới (toạ độ theo ảnh 200×285) */
+function bdMyFace(mood){
+  const L=[66.3,137.5], R=[133.8,137.5], INK="#2A1A16", SK="#FDDCC6";
+  const defs=`<defs><radialGradient id="bdsk"><stop offset="0" stop-color="${SK}"/><stop offset=".8" stop-color="${SK}"/><stop offset="1" stop-color="${SK}" stop-opacity="0"/></radialGradient></defs>`;
+  const patch=c=>`<ellipse cx="${c[0]}" cy="${c[1]}" rx="25" ry="23.5" fill="url(#bdsk)"/>`;
+  const st=`fill="none" stroke="${INK}" stroke-width="4.4" stroke-linecap="round" stroke-linejoin="round"`;
+  const up=c=>patch(c)+`<path d="M${c[0]-15},${c[1]+7} Q${c[0]},${c[1]-13} ${c[0]+15},${c[1]+7}" ${st}/>`;
+  const down=c=>patch(c)+`<path d="M${c[0]-15},${c[1]-1} Q${c[0]},${c[1]+12} ${c[0]+15},${c[1]-1}" ${st}/>`;
+  const sq=(c,d)=>patch(c)+`<path d="M${c[0]-12*d},${c[1]-9} L${c[0]+9*d},${c[1]+1} L${c[0]-12*d},${c[1]+11}" ${st}/>`;
+  const heart=c=>patch(c)+`<g transform="translate(${c[0]} ${c[1]-6}) scale(1.55)"><path class="bd-heart" d="M0,0 c-5,-7 -15,-1 -9,7 c2.6,3.4 6,5.6 9,8 c3,-2.4 6.4,-4.6 9,-8 c6,-8 -4,-14 -9,-7z" fill="#FF5C8A"/></g>`;
+  const blank=c=>patch(c)+`<ellipse cx="${c[0]}" cy="${c[1]}" rx="11" ry="12.5" fill="#fff" stroke="${INK}" stroke-width="3"/><circle cx="${c[0]}" cy="${c[1]}" r="2" fill="${INK}"/>`;
+  const swirl=c=>patch(c)+`<path d="M${c[0]},${c[1]} m-1,0 a3,3 0 1 1 5,2 a6,6 0 1 1 -10,-4 a9.500,9.500 0 1 1 16,6 a12.500,12.500 0 0 1 -19,4" fill="none" stroke="${INK}" stroke-width="2.8" stroke-linecap="round"/>`;
+  const lid=c=>`<path d="M${c[0]-24},${c[1]-1} Q${c[0]-24},${c[1]-25} ${c[0]},${c[1]-25} Q${c[0]+24},${c[1]-25} ${c[0]+24},${c[1]-1}Z" fill="${SK}"/><path d="M${c[0]-21},${c[1]-1} H${c[0]+21}" ${st}/>`;
+  const wet=c=>`<ellipse cx="${c[0]}" cy="${c[1]+13}" rx="13" ry="5" fill="#9ADCFF" opacity=".88"/><circle cx="${c[0]-7}" cy="${c[1]-7}" r="5" fill="#fff" opacity=".95"/><circle cx="${c[0]+7}" cy="${c[1]+5}" r="2.6" fill="#fff" opacity=".9"/>`;
+  const star=c=>`<path class="bd-spark" d="M${c[0]},${c[1]-9} q1.600,7.400 9,9 q-7.400,1.600 -9,9 q-1.600,-7.400 -9,-9 q7.400,-1.600 9,-9z" fill="#fff"/>`;
+  const blush=`<ellipse cx="75" cy="165" rx="13.500" ry="6.500" fill="#FF6F91" opacity=".36"/><ellipse cx="128" cy="165" rx="13.500" ry="6.500" fill="#FF6F91" opacity=".36"/>`;
+  const brows=`<path d="M50,113 L80,121 M150,113 L120,121" stroke="${INK}" stroke-width="4" stroke-linecap="round"/>`;
+  const mouthOpen=`<ellipse cx="103" cy="171" rx="14" ry="10.500" fill="url(#bdsk)"/><path d="M92,165 Q103,186 114,165Z" fill="#B8434F" stroke="${INK}" stroke-width="2" stroke-linejoin="round"/><path d="M97,173 Q103,180 109,173 Q103,170 97,173Z" fill="#FF9AA6"/>`;
+  let s="";
+  switch(mood){
+    case "happy": case "sing": s=up(L)+up(R); break;
+    case "laugh": s=up(L)+up(R)+mouthOpen; break;
+    case "nade": s=up(L)+up(R)+blush; break;
+    case "eat": s=up(L)+up(R); break;
+    case "love": s=heart(L)+heart(R)+blush; break;
+    case "shy": s=blush+`<path d="M66,159 l-4,10 M74,159 l-4,10 M82,159 l-4,10 M120,159 l-4,10 M128,159 l-4,10 M136,159 l-4,10" stroke="#F0607A" stroke-width="2.2" stroke-linecap="round"/>`; break;
+    case "oops": s=sq(L,1)+sq(R,-1); break;
+    case "sleepy": case "proud": s=down(L)+down(R); break;
+    case "sad": case "cry": case "please": s=wet(L)+wet(R); break;
+    case "shock": s=blank(L)+blank(R); break;
+    case "dizzy": s=swirl(L)+swirl(R); break;
+    case "stare": s=lid(L)+lid(R); break;
+    case "tehe": s=up(R)+`<path d="M98,170 q5,10 10,0z" fill="#FF8FA3" stroke="#E0607A" stroke-width="1.2" stroke-linejoin="round"/>`+blush; break;
+    case "menace": s=`<path d="M40,104 H160 V150 Q100,160 40,150Z" fill="#161233" opacity=".5"/>`+star(R); break;
+    case "pout": s=brows+blush; break;
+    case "fire": s=brows; break;
+    case "wow": case "sparkle": s=star(L)+star(R); break;
+    default: return "";
+  }
+  return defs+s;
+}
+function bdFx2(mood){
+  const sp=(x,y,r)=>`<path class="bd-spark" d="M${x},${y-r} q${r*.18},${r*.82} ${r},${r} q${-r*.82},${r*.18} ${-r},${r} q${-r*.18},${-r*.82} ${-r},${-r} q${r*.82},${-r*.18} ${r},${-r}z" fill="#FFC93C"/>`;
+  const T=(x,y,t,sz,c,rot)=>`<text x="${x}" y="${y}" font-size="${sz}" fill="${c}" font-family="Nunito,system-ui,sans-serif" font-weight="900" stroke="#fff" stroke-width="3" paint-order="stroke"${rot?` transform="rotate(${rot} ${x} ${y})"`:""}>${t}</text>`;
+  const H=(x,y,s,c)=>`<g transform="translate(${x} ${y}) scale(${s})"><path class="bd-heart" d="M0,0 c-5,-7 -15,-1 -9,7 c2.6,3.4 6,5.6 9,8 c3,-2.4 6.4,-4.6 9,-8 c6,-8 -4,-14 -9,-7z" fill="${c}" stroke="#fff" stroke-width="1.6"/></g>`;
+  const F=(x,y,s)=>`<g transform="translate(${x} ${y}) scale(${s})"><g class="bd-flame"><path d="M0,0 c-11,-10 0,-17 -3,-30 c13,8 18,18 11,30 c-2,3 -6,3 -8,0z" fill="#FF8A1F" stroke="#fff" stroke-width="1.4"/><path d="M1,-1 c-5,-5 0,-9 0,-15 c6,4 8,9 5,15 c-1,2 -4,2 -5,0z" fill="#FFD23F"/></g></g>`;
+  const drop=(x,y)=>`<path d="M${x},${y} c4,6 6,9.5 6,12.5 a6,6 0 0 1 -12,0 c0,-3 2,-6.5 6,-12.5z" fill="#8ED3FF" stroke="#58B4EE" stroke-width="1.4"/>`;
+  switch(mood){
+    case "love": return H(40,86,1.25,"#FF5C8A")+H(158,74,1.55,"#FF7FA8")+H(152,112,.85,"#FF9DBB");
+    case "shy": return drop(160,92)+T(118,66,"えへへ",15,"#FF6FA0",-6);
+    case "laugh": return sp(38,84,9)+sp(164,78,11)+T(118,62,"アハハ",15,"#FF8A3D",-8)+`<path d="M42,126 q-5,5 -2,10 M158,126 q5,5 2,10" stroke="#8ED3FF" stroke-width="3" fill="none" stroke-linecap="round"/>`;
+    case "proud": return sp(36,98,10)+sp(166,90,12)+T(128,64,"ドヤ",17,"#FFB020",-6)+`<path d="M80,177 q-9,2 -11,9 M120,177 q9,2 11,9" stroke="#B9C0D0" stroke-width="2.6" fill="none" stroke-linecap="round"/>`;
+    case "sparkle": return sp(34,74,10)+sp(168,68,12)+sp(160,112,7)+sp(44,114,6)+sp(100,40,8);
+    case "fire": return F(34,124,1.15)+F(170,120,1.3)+F(150,76,.8)+`<path d="M52,112 l24,7 M148,112 l-24,7" stroke="#3A2418" stroke-width="3.4" stroke-linecap="round" opacity=".0"/>`;
+    case "pout": return `<g transform="translate(150 70)"><path class="bd-vein" d="M-9,-3 q6,0 6,-6 M3,-9 q0,6 6,6 M9,3 q-6,0 -6,6 M-3,9 q0,-6 -6,-6" stroke="#F0483A" stroke-width="3.6" fill="none" stroke-linecap="round"/></g><g fill="#fff" stroke="#C9CEDA" stroke-width="1.4" class="bd-puff"><circle cx="34" cy="150" r="7"/><circle cx="25" cy="143" r="4.5"/><circle cx="166" cy="150" r="7"/><circle cx="175" cy="143" r="4.5"/></g>`+T(112,60,"ふんっ",15,"#F0483A",-6);
+    case "shock": return `<path d="M36,88 v22 M46,83 v27 M56,88 v22" stroke="#6B7FB8" stroke-width="3.2" stroke-linecap="round" opacity=".85"/>`+T(128,74,"!?",30,"#FF8A3D");
+    case "dizzy": return `<g class="bd-orbit"><path d="M100,6 l2.400,5.200 5.600,.6 -4.200,3.800 1.200,5.600 -5,-3 -5,3 1.200,-5.600 -4.200,-3.800 5.600,-.6z" fill="#FFC93C"/><path d="M132,34 l2,4.300 4.700,.5 -3.500,3.200 1,4.700 -4.200,-2.500 -4.200,2.500 1,-4.700 -3.500,-3.200 4.700,-.5z" fill="#7FD0F0"/><path d="M68,34 l2,4.300 4.700,.5 -3.500,3.200 1,4.700 -4.200,-2.500 -4.200,2.500 1,-4.700 -3.500,-3.200 4.700,-.5z" fill="#FF9DBB"/></g>`;
+    case "cry": return `<path d="M62,157 q-5,16 -2,30 M138,157 q5,16 2,30" stroke="#8ED3FF" stroke-width="6.5" fill="none" stroke-linecap="round" opacity=".92" class="bd-tear"/>`+drop(56,186)+drop(144,186);
+    case "tehe": return sp(152,100,8)+T(112,64,"てへっ",16,"#FF6FA0",-8);
+    case "stare": return T(114,66,"じーっ",17,"#6B7FB8",-4)+`<path d="M150,128 h16 M150,137 h20 M150,146 h16" stroke="#6B7FB8" stroke-width="2.6" stroke-linecap="round" opacity=".8"/>`;
+    case "menace": return `<g fill="#7C5CE0" font-family="'BIZ UDPMincho',serif" font-weight="700" stroke="#fff" stroke-width="3" paint-order="stroke"><text x="24" y="92" font-size="20">ゴ</text><text x="150" y="80" font-size="24">ゴ</text><text x="158" y="118" font-size="18">ゴ</text></g>`;
+    case "nade": return `<g class="bd-nade"><path d="M70,34 q-6,-20 14,-24 h34 q20,4 14,24 q-2,8 -12,8 h-38 q-10,0 -12,-8z" fill="#FFE6D3" stroke="#E0B79E" stroke-width="2"/><path d="M88,12 v14 M102,10 v16 M116,12 v14" stroke="#E0B79E" stroke-width="1.8" stroke-linecap="round"/></g>`+T(118,74,"なでなで",13,"#FF6FA0",-4)+H(40,90,1,"#FF7FA8");
+    case "please": return sp(38,96,8)+sp(164,92,9)+T(104,66,"おねがい…",14,"#4E9BFF",-4);
+    case "eat": return `<g class="bd-eat"><path d="M84,196 q-4,-22 16,-28 q20,6 16,28 q-16,7 -32,0z" fill="#fff" stroke="#C9CEDA" stroke-width="2" stroke-linejoin="round"/><path d="M90,184 h20 v14 q-10,3 -20,0z" fill="#2B2B3A"/></g>`+T(116,150,"もぐもぐ",13,"#FF8A3D",-6);
+    case "sing": return T(138,68,"♪",26,"#FF6FA0")+T(156,100,"♫",20,"#4E9BFF")+T(34,88,"♪",18,"#FFB020");
+  }
+  return "";
+}
+function buddySVG(mood,opt){
+  const my=BD_SKIN==="my"&&window.BD_MY_IMG; if(my) return bdMy(mood,opt);
+  const base=BD_MOOD2[mood]; let svg=(BD_SKIN==="momo"?bdMomo:bdImp)(base||mood,opt);
+  if(base){ const i=svg.lastIndexOf("</g></svg>"); if(i>0) svg=svg.slice(0,i)+`<g transform="translate(100 95) scale(.66) translate(-100 -133)">${bdFx2(mood)}</g>`+svg.slice(i); svg=svg.replace('<svg class="bd ','<svg class="bd bd-'+mood+' ') }
+  return svg;
+}
 /* v12.2: nhân vật do người dùng thiết kế (ảnh data/buddy-my.js, khung 200×285) */
 function bdMy(mood,opt){
   mood=BD_MOODS.includes(mood)?mood:"idle"; opt=opt||{};
@@ -18,8 +95,19 @@ function bdMy(mood,opt){
     oops:drop(166,70,"#8ED3FF","#58B4EE"),think:T(162,58,"?",30,"#4E9BFF")+`<circle cx="152" cy="74" r="3" fill="#4E9BFF"/>`,explain:sp(176,70,8)+T(150,46,"💡",22,"#000"),
     wave:T(160,52,"♪",24,"#FFB020"),sleepy:`<g fill="#7FB5FF" font-family="Nunito,system-ui,sans-serif" font-weight="900" stroke="#fff" stroke-width="2.5" paint-order="stroke"><text x="156" y="66" font-size="22">z</text><text x="172" y="46" font-size="16">z</text><text x="184" y="30" font-size="12">z</text></g>`,
     sad:drop(146,150,"#8ED3FF","#58B4EE"),idle:""};
-  return `<svg class="bd bd-${mood} bd-myskin${opt.cls?" "+opt.cls:""}" viewBox="${opt.bust?"0 14 200 176":"0 0 200 285"}" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="${opt.label||"Bạn đồng hành"}">
-  <g class="bd-all"><g class="bd-my"><image href="${window.BD_MY_IMG}" xlink:href="${window.BD_MY_IMG}" x="0" y="0" width="200" height="285" preserveAspectRatio="xMidYMid meet"/></g>${FX[mood]||""}</g></svg>`;
+  const acc=bdMyFace(mood)+(window.V13&&V13.accSVG?V13.accSVG("my"):"")+(BD_MOOD2[mood]?bdFx2(mood):"");
+  /* v13: ảnh chân dung (bust) là khung vuông 200×200, cả đầu nằm gọn và cân giữa khung; phần thân bị cắt ngay trong SVG
+     (trước đây khung 200×176 để tràn ra ngoài nên thân đè lên chữ, và mặt lệch khi nhân vật nghiêng quanh chân). */
+  if(opt.bust){
+    const FXB={happy:sp(40,56,8)+sp(160,48,10)+sp(166,98,6),wow:T(146,64,"!",34,"#FF8A3D")+sp(42,58,8),cheer:sp(40,54,9)+sp(162,52,9)+T(140,46,"♪",22,"#FF6FA0"),
+      oops:drop(156,60,"#8ED3FF","#58B4EE"),think:T(146,62,"?",30,"#4E9BFF")+`<circle cx="140" cy="76" r="3" fill="#4E9BFF"/>`,explain:sp(160,74,8)+T(134,52,"💡",22,"#000"),
+      wave:T(146,56,"♪",24,"#FFB020"),sleepy:`<g fill="#7FB5FF" font-family="Nunito,system-ui,sans-serif" font-weight="900" stroke="#fff" stroke-width="2.5" paint-order="stroke"><text x="138" y="70" font-size="22">z</text><text x="152" y="52" font-size="16">z</text><text x="162" y="38" font-size="12">z</text></g>`,
+      sad:drop(138,146,"#8ED3FF","#58B4EE"),idle:""};
+    return `<svg class="bd bd-${mood} bd-myskin bd-bust${opt.cls?" "+opt.cls:""}" viewBox="0 0 200 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="${opt.label||"Bạn đồng hành"}">
+  <g class="bd-all"><g class="bd-my"><g transform="translate(10 11) scale(.9)"><image href="${window.BD_MY_IMG}" xlink:href="${window.BD_MY_IMG}" x="0" y="0" width="200" height="285" preserveAspectRatio="xMidYMid meet"/>${acc}</g></g>${FXB[mood]||""}</g></svg>`;
+  }
+  return `<svg class="bd bd-${mood} bd-myskin${opt.cls?" "+opt.cls:""}" viewBox="0 0 200 285" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="${opt.label||"Bạn đồng hành"}">
+  <g class="bd-all"><g class="bd-my"><image href="${window.BD_MY_IMG}" xlink:href="${window.BD_MY_IMG}" x="0" y="0" width="200" height="285" preserveAspectRatio="xMidYMid meet"/>${acc}</g>${FX[mood]||""}</g></svg>`;
 }
 function bdMomo(mood,opt){
   mood=BD_MOODS.includes(mood)?mood:"idle"; opt=opt||{};
@@ -119,6 +207,7 @@ function bdMomo(mood,opt){
       <path d="M0,-6 C-1,-1 -1,4 0,9" fill="none" stroke="#F0647E" stroke-width="1.6" stroke-linecap="round"/>
       <circle cx="-5" cy="-3" r="2" fill="#fff" opacity=".7"/>
     </g>
+    ${window.V13&&V13.accSVG?V13.accSVG("svg"):""}
     ${front}
     ${fx}
   </g></svg>`;
@@ -216,6 +305,7 @@ function bdImp(mood,opt){
     ${brows}
     <!-- kẹp tóc hình ngôi sao -->
     <path d="M55,50 l2.6,5.8 6.4,.6 -4.8,4.3 1.4,6.3 -5.6,-3.2 -5.6,3.2 1.4,-6.3 -4.8,-4.3 6.4,-.6z" fill="#FFC93C" stroke="#E6A417" stroke-width="1.2" stroke-linejoin="round"/>
+    ${window.V13&&V13.accSVG?V13.accSVG("svg"):""}
     ${front}
     ${fx}
   </g></svg>`;
@@ -223,7 +313,7 @@ function bdImp(mood,opt){
 
 /* ---------- tiện ích ---------- */
 const $=(s,r)=>(r||document).querySelector(s), $$=(s,r)=>[...(r||document).querySelectorAll(s)];
-const V=window.V12={buddySVG,moods:BD_MOODS};
+const V=window.V12={buddySVG,moods:BD_MOODS,moodVi:BD_MOOD_VI};
 const pick=a=>a[Math.floor(Math.random()*a.length)];
 const safe=(f,d)=>{try{const v=f(); return v==null?d:v}catch(e){return d}};
 const LS="so-luyen-n3-buddy";
@@ -262,10 +352,10 @@ const GROUPS=[
   {k:"home",l:"Hôm nay",ic:IC.home,views:["today"]},
   {k:"learn",l:"Học",ic:IC.book,views:["vocab","kanji","kb"]},
   {k:"practice",l:"Luyện",ic:IC.pen,views:["practice","review","listen","exam","coach"]},
-  {k:"play",l:"Chơi",ic:IC.game,views:["games"]},
+  {k:"play",l:"Chơi",ic:IC.game,views:["games","garden"]},
   {k:"me",l:"Tiến độ",ic:IC.chart,views:["stats","plan"]}
 ];
-const VIEW_L={today:"Hôm nay",vocab:"Từ vựng",kanji:"Kanji",kb:"Kiến thức",practice:"Luyện đề",review:"Ôn tập",listen:"Nghe",exam:"Thi thử",coach:"Huấn luyện",games:"Chơi & nhớ",stats:"Phân tích",plan:"Lộ trình"};
+const VIEW_L={today:"Hôm nay",vocab:"Từ vựng",kanji:"Kanji",kb:"Kiến thức",practice:"Luyện đề",review:"Ôn tập",listen:"Nghe",exam:"Thi thử",coach:"Huấn luyện",games:"Chơi & nhớ",garden:"Vườn & cửa hàng",stats:"Phân tích",plan:"Lộ trình"};
 
 /* ---------- lời thoại ---------- */
 const L={
@@ -303,6 +393,7 @@ function tone(fs,dur,type,vol){
 const sfx={ok:()=>tone([659,988],0.085,"sine",0.07),bad:()=>tone([311,247],0.12,"triangle",0.06),done:()=>tone([523,659,784,1047],0.1,"sine",0.07),pop:()=>tone([587],0.05,"sine",0.035)};
 function confetti(n){
   if(window.matchMedia&&matchMedia("(prefers-reduced-motion:reduce)").matches) return;
+  if(window.V13&&V13.confetti&&V13.confetti(n)) return; // v13: kiểu pháo giấy mua ở cửa hàng
   const box=document.createElement("div"); box.className="v12-confetti"; const cols=["#1FA64C","#FFC93C","#FF8A1F","#2488CF","#FF7F9B","#7C5CE0"];
   for(let i=0;i<(n||36);i++){const p=document.createElement("i"); p.style.cssText=`left:${Math.random()*100}%;background:${cols[i%cols.length]};--dx:${(Math.random()*160-80).toFixed(0)}px;--rot:${(Math.random()*900-200).toFixed(0)}deg;--t:${(1.2+Math.random()*1.1).toFixed(2)}s;animation-delay:${(Math.random()*0.35).toFixed(2)}s`; box.appendChild(p)}
   document.body.appendChild(box); setTimeout(()=>box.remove(),2900);
@@ -314,7 +405,10 @@ function applyTheme(){
   const r=document.documentElement; if(B.theme==="light"||B.theme==="dark") r.dataset.theme=B.theme; else delete r.dataset.theme;
   const dark=B.theme==="dark"||(B.theme!=="light"&&window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
   const mt=$('meta[name="theme-color"]'); if(mt) mt.content=dark?"#0F1512":"#F3F8EE";
+  if(dark) r.dataset.v13dark="1"; else delete r.dataset.v13dark;
+  if(window.V13&&V13.applyTheme) V13.applyTheme();
 }
+if(window.matchMedia) try{matchMedia("(prefers-color-scheme: dark)").addEventListener("change",applyTheme)}catch(e){}
 applyTheme();
 
 /* ---------- khung: thanh điều hướng, tab con, chỉ số ---------- */
@@ -380,7 +474,7 @@ window.toast=function(t){
 };
 
 /* ---------- trang Hôm nay ---------- */
-const MIS_IC={due:"復",new:"新",words:"語",listen:"聴",read:"読",weak:"直",scan:"速",rx:"反",conj:"活",write:"書"};
+const MIS_IC={n2:"二",due:"復",new:"新",words:"語",listen:"聴",read:"読",weak:"直",scan:"速",rx:"反",conj:"活",write:"書"};
 function ringSVG(done,total){const p=total?done/total:0, C=2*Math.PI*14; return `<svg class="v12-ring" viewBox="0 0 36 36"><circle cx="18" cy="18" r="14" fill="none" stroke="var(--line)" stroke-width="5"/><circle cx="18" cy="18" r="14" fill="none" stroke="var(--fill)" stroke-width="5" stroke-linecap="round" stroke-dasharray="${(C*p).toFixed(1)} ${C.toFixed(1)}" transform="rotate(-90 18 18)"/>${p>=1?'<path d="M12 18.500l4 4 8-8.500" fill="none" stroke="var(--fill)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>':""}</svg>`}
 function greeting(pr){
   const h=new Date().getHours(), st=streakNow(); let hi, mood="wave", msg;
@@ -456,23 +550,23 @@ function decorateToday(m){
 function makeFb(ok,s,q){
   const o=q._orig||q; const st=safe(()=>q.sec==="conj"?null:S.srs[o.id],null);
   if(ok){
-    RT.combo++; RT.miss=0; let [jp,vi]=pick(LL().ok), sub=pick(LL().okSub), mood="happy";
-    if([3,5,7,10,15,20,30].includes(RT.combo)){ jp="すごい！"; vi=`${RT.combo} câu đúng liên tiếp!`; sub=RT.combo>=10?"天才！ Bạn đang vào phom cực tốt.":"Bạn đang vào nhịp rồi đó, giữ vững nhé!"; mood="wow" }
-    else if(st&&st.w>0) sub="Câu này bạn từng sai, giờ đúng rồi — tiến bộ thật đó!";
+    RT.combo++; RT.miss=0; let [jp,vi]=pick(LL().ok), sub=pick(LL().okSub), mood=pick(["happy","happy","happy","laugh","sing","love","shy"]);
+    if([3,5,7,10,15,20,30].includes(RT.combo)){ jp="すごい！"; vi=`${RT.combo} câu đúng liên tiếp!`; sub=RT.combo>=10?"天才！ Bạn đang vào phom cực tốt.":"Bạn đang vào nhịp rồi đó, giữ vững nhé!"; mood=RT.combo>=10?"sparkle":RT.combo>=5?"fire":"wow" }
+    else if(st&&st.w>0){ sub="Câu này bạn từng sai, giờ đúng rồi — tiến bộ thật đó!"; mood="proud" }
     return {ok,mood,t:`<span class="jp v12-jp">${jp}</span> ${vi}`,s:sub,combo:RT.combo};
   }
-  RT.combo=0; RT.miss++; let [jp,vi]=pick(LL().bad), sub=pick(LL().badSub), mood=RT.miss%2?"oops":"cheer";
-  if(s.prev&&s.prev[s.i]&&s.prev[s.i].same) sub="Lại đúng cái bẫy lần trước rồi. Đọc kỹ phần chẩn đoán bên dưới, lần sau mình tin bạn sẽ qua!";
+  RT.combo=0; RT.miss++; let [jp,vi]=pick(LL().bad), sub=pick(LL().badSub), mood=RT.miss===2?"pout":RT.miss%2?"oops":"cheer";
+  if(s.prev&&s.prev[s.i]&&s.prev[s.i].same){ sub="Lại đúng cái bẫy lần trước rồi. Đọc kỹ phần chẩn đoán bên dưới, lần sau mình tin bạn sẽ qua!"; mood="shock" }
   else if(RT.miss>=3){ jp="ゆっくりでいいよ"; vi="Cứ từ từ thôi"; sub="Hít thở một chút, đọc kỹ từng phương án. Bạn làm được mà!"; mood="cheer" }
   return {ok,mood,t:`<span class="jp v12-jp">${jp}</span> ${vi}`,s:`Đáp án đúng là ${q.a+1}. ${sub}`,combo:0};
 }
 function decorateQuiz(m){
   const s=session; if(!s||s.done) return; const q=s.items[s.i]; if(!q||s.mode==="exam"||!s.checked[s.i]) return;
   s._fb=s._fb||{}; let fresh=false;
-  if(!s._fb[s.i]){ const ok=!!(s.ok&&s.ok[s.i]); s._fb[s.i]=makeFb(ok,s,q); fresh=true }
+  if(!s._fb[s.i]){ const ok=!!(s.ok&&s.ok[s.i]); s._fb[s.i]=makeFb(ok,s,q); fresh=true; s._fb[s.i].coin=safe(()=>V13.onAnswer(s._fb[s.i],q,s),0) }
   const fb=s._fb[s.i]; const v=$(".explain .verdict",m); if(!v) return;
   const d=document.createElement("div"); d.className="v12-fb "+(fb.ok?"ok":"bad"); d.setAttribute("role","status");
-  d.innerHTML=`${buddySVG(fb.mood,{bust:1})}<div><b>${fb.t}${fb.combo>=3?`<span class="v12-combo">${IC.flame.replace("<svg",'<svg width="13" height="13"')}×${fb.combo}</span>`:""}</b><span>${esc(fb.s)}</span></div>`;
+  d.innerHTML=`${buddySVG(fb.mood,{bust:1})}<div><b>${fb.t}${fb.combo>=3?`<span class="v12-combo">${IC.flame.replace("<svg",'<svg width="13" height="13"')}×${fb.combo}</span>`:""}${fb.coin?`<span class="v13-plus">+${fb.coin} xu</span>`:""}${fb.dmg?`<span class="v13-dmg">⚔ −${fb.dmg} HP</span>`:""}</b><span>${esc(fb.s)}</span></div>`;
   if(!fresh) d.style.animation="none";
   const foot=$(".qfoot",m);
   if(foot&&window.innerWidth<980){ v.remove(); foot.prepend(d); foot.classList.add(fb.ok?"v12-ok":"v12-bad") } else v.replaceWith(d);
@@ -484,8 +578,8 @@ function decorateResult(m){
   const rows=s.items.map((q,k)=>({ok:s.ans[k]===q.a,done:exam||s.checked[k]})).filter(r=>r.done); const n=rows.length, r=rows.filter(x=>x.ok).length, p=n?r/n:0;
   const pr=mission(); const next=pr.list.find(x=>!x.done); let mood,t,msg;
   if(!n){mood="idle"; t="Chưa làm câu nào"; msg="Không sao, lúc nào sẵn sàng thì mình làm lại nhé."}
-  else if(p>=0.9){mood="wow"; t=J("最高！")+" Xuất sắc!"; msg=`Đúng ${r}/${n} câu. Phong độ này mà đi thi thì yên tâm rồi!`}
-  else if(p>=0.7){mood="happy"; t=J("よくできました！")+" Tốt lắm!"; msg=`Đúng ${r}/${n} câu. Xem lại ${n-r} câu sai bên dưới là trọn vẹn.`}
+  else if(p>=0.9){mood="sparkle"; t=J("最高！")+" Xuất sắc!"; msg=`Đúng ${r}/${n} câu. Phong độ này mà đi thi thì yên tâm rồi!`}
+  else if(p>=0.7){mood="proud"; t=J("よくできました！")+" Tốt lắm!"; msg=`Đúng ${r}/${n} câu. Xem lại ${n-r} câu sai bên dưới là trọn vẹn.`}
   else if(p>=0.5){mood="cheer"; t=J("いい調子！")+" Đang tiến bộ!"; msg=`Đúng ${r}/${n} câu. Các câu sai đã vào danh sách Ôn tập, mai mình gặp lại chúng nhé.`}
   else {mood="cheer"; t=J("大丈夫！")+" Không sao cả!"; msg=`Đúng ${r}/${n} câu — bài này khó thật. Đọc lời giải từng câu sai, rồi làm lại là lên ngay. Mình tin bạn!`}
   let tail="";
@@ -495,6 +589,8 @@ function decorateResult(m){
   sec.innerHTML=`${buddySVG(mood)}<div>${n?starsHTML(p>=0.9?3:p>=0.7?2:p>=0.5?1:0):""}<h2>${t}</h2><p>${msg}${tail}</p></div>
     <div class="row">${next?`<button class="btn primary" data-co="mis" data-arg="${esc(next.t.k)}">Học tiếp: ${esc(next.t.t)}</button>`:""}${pr.total&&pr.all?`<button type="button" class="btn" data-v12="bye">Nghỉ thôi, tạm biệt ${nm()}</button>`:""}</div>`;
   m.prepend(sec);
+  if(!s._v12done){ const cg=safe(()=>V13.onResult(s,{n,r,p,exam}),0); if(cg) s._v13coin=cg }
+  if(s._v13coin){ const pp=$("p",sec); if(pp) pp.insertAdjacentHTML("beforeend",` <span class="v13-plus">+${s._v13coin} xu thưởng</span>`) }
   if(!s._v12done){ s._v12done=1; RT.combo=0; RT.miss=0; if(n){ sfx.done(); if(p>=0.8||(pr.total&&pr.all)) confetti(p>=0.9?48:30) } }
 }
 function decorateVocab(m){
@@ -539,7 +635,14 @@ function afterRender(){
   clamp(m);
 }
 const _render=window.render;
-window.render=function(){ const r=_render.apply(this,arguments); try{afterRender()}catch(e){console.error("[v12]",e)} return r };
+window.render=function(){
+  let r;
+  if(view==="garden"&&!(window.V13&&V13.renderGarden)) view="games";
+  if(view==="garden"){ try{ if(typeof lkHide==="function") lkHide(); setTabs(); V13.renderGarden(document.getElementById("main")) }catch(e){console.error("[v13]",e)} }
+  else r=_render.apply(this,arguments);
+  try{afterRender()}catch(e){console.error("[v12]",e)}
+  try{ if(window.V13&&V13.afterRender) V13.afterRender() }catch(e){console.error("[v13]",e)}
+  return r };
 // chọn đáp án bài nghe không gọi render() → vẫn cần cập nhật khung
 if(elNav) elNav.addEventListener("click",e=>{const b=e.target.closest("button[data-v12g]"); if(!b) return; const g=GROUPS.find(x=>x.k===b.dataset.v12g); if(!g) return; closePanel(); const cur=groupOf(curView()); go(cur===g&&!inFocus()?g.views[0]:(RT.last[g.k]||g.views[0]))});
 if(elSub) elSub.addEventListener("click",e=>{const b=e.target.closest("button[data-v12v]"); if(b) go(b.dataset.v12v)});
@@ -571,7 +674,7 @@ window.lkHide=function(){ const was=LK.el&&!LK.el.hidden; _lkHide(); document.do
 /* ---------- bảng trò chuyện ---------- */
 function buildPanel(){
   if(panel.dataset.built) return; panel.dataset.built="1";
-  panel.innerHTML=`<div class="v12-phead"><span id="v12pava">${buddySVG("wave",{bust:1})}</span><div><b id="v12pname">${nm()}</b><small>Tra từ · giải đáp · nhắc học</small></div><button type="button" class="x" data-v12="panel-close" aria-label="Đóng">✕</button></div>
+  panel.innerHTML=`<div class="v12-phead"><span id="v12pava">${buddySVG("wave",{bust:1})}</span><div><b id="v12pname">${nm()}</b><small id="v12psub">Tra từ · giải đáp · nhắc học</small></div><button type="button" class="x" data-v12="panel-close" aria-label="Đóng">✕</button></div>
     <div class="v12-plog" id="v12log" aria-live="polite"></div>
     <div class="v12-quick" id="v12quick" style="padding:0 12px 10px"></div>
     <form class="v12-pin" id="v12form"><input id="v12in" type="text" autocomplete="off" aria-label="Hỏi ${nm()}" placeholder="Gõ từ tiếng Nhật, tiếng Việt hoặc câu hỏi…"><button class="btn primary" type="submit" aria-label="Gửi">Gửi</button></form>`;
@@ -587,7 +690,7 @@ function buildPanel(){
 }
 function quickBar(){
   const pr=mission(); const next=pr.list.find(x=>!x.done); const due=safe(()=>dueList().length,0); const q=$("#v12quick",panel); if(!q) return;
-  q.innerHTML=`${next?`<button type="button" class="go" data-v12="next">▶ ${pr.done?"Học tiếp":"Bắt đầu"}: ${esc(next.t.t)}</button>`:""}${due?`<button type="button" data-v12="due">Ôn ${due} câu đến hạn</button>`:""}<button type="button" data-v12="tip">Mẹo hôm nay</button><button type="button" data-v12="weak">Điểm yếu của mình</button><button type="button" data-v12="howto">Cách tra từ</button>${safe(()=>aiSource(),null)?`<button type="button" data-v12="aichat">Trò chuyện dài với AI</button>`:""}<button type="button" data-v12="settings">Cài đặt</button><button type="button" data-v12="bye">Nghỉ thôi 👋</button>`;
+  q.innerHTML=`${next?`<button type="button" class="go" data-v12="next">▶ ${pr.done?"Học tiếp":"Bắt đầu"}: ${esc(next.t.t)}</button>`:""}${due?`<button type="button" data-v12="due">Ôn ${due} câu đến hạn</button>`:""}<button type="button" data-v13="tipmsg">Mẹo thi JLPT</button><button type="button" data-v13="planmsg">Kế hoạch để đỗ</button><button type="button" data-v13="nugmsg">Dạy mình 1 điều</button><button type="button" data-v12="tip">Mẹo hôm nay</button><button type="button" data-v12="weak">Điểm yếu của mình</button><button type="button" data-v12="howto">Cách tra từ</button>${safe(()=>aiSource(),null)?`<button type="button" data-v12="aichat">Trò chuyện dài với AI</button>`:""}<button type="button" data-v13="garden">Vườn & cửa hàng</button><button type="button" data-v12="settings">Cài đặt</button><button type="button" data-v12="bye">Nghỉ thôi 👋</button>`;
 }
 function msg(who,html,mood){
   buildPanel(); const log=$("#v12log",panel); const d=document.createElement("div"); d.className="v12-msg "+who; d.innerHTML=html; log.appendChild(d);
@@ -651,7 +754,7 @@ function settingsMsg(){
 function ask(text){
   msg("u",esc(text)); const t=text.trim(), low=t.toLowerCase();
   if(safe(()=>isJp(t),false)){
-    try{ LK.sel=t; LK.ctx=t; const html=lkBuild(t); const found=/lkent|v11-sent/.test(html);
+    try{ const jt=window.lkJpOnly?lkJpOnly(t):t; LK.sel=jt; LK.ctx=t; const html=lkBuild(jt); const found=/lkent|v11-sent/.test(html);
       msg("b",`<div class="small muted" style="margin-bottom:4px">${found?pick(LL().lkFound):pick(LL().lkNone)}</div><div class="lkbody">${html}</div>`,found?"explain":"think") }
     catch(e){ msg("b","Mình tra chưa được từ này, bạn thử lại nhé.","sad") }
     return;
@@ -690,6 +793,7 @@ function bye(){
   return body;
 }
 V.bye=bye;
+V.msg=msg; V.chrome=chrome; V.setMood=setMood; V.sfx=sfx; V.IC=IC; V.rawName=rawName; V.B=B; V.save=save; V.mission=mission; V.streakNow=streakNow; V.closePanel=closePanel; V.inFocus=inFocus; V.imp=imp; V.tone=tone;
 
 /* ---------- sự kiện chung ---------- */
 document.addEventListener("click",e=>{
