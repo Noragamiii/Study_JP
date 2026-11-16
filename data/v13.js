@@ -49,6 +49,7 @@ SHOP.push({id:"land",cat:"seed",kind:"land",n:"Mở rộng đảo",jp:"土地",p
 [["ribbon","Nơ đỏ","リボン",600],["sakura","Hoa anh đào cài tóc","桜の髪飾り",600],["whisker","Râu mèo","猫ひげ",700],["muffler","Khăn quàng","マフラー",800],["glasses","Kính tròn","眼鏡",800],["hachimaki","Khăn quyết đỗ","合格鉢巻",900],["bansoko","Băng cá nhân","絆創膏",500],["hoshipin","Kẹp sao","星のピン",600],["usamimi","Tai thỏ","うさ耳",900],["beret","Mũ nồi","ベレー帽",900],
  ["hanakan","Vòng hoa","花冠",900],["santa","Mũ Noel","サンタ帽",1000],["headphone","Tai nghe","ヘッドホン",1200],["shades","Kính râm","サングラス",1300],["heartglass","Kính trái tim","ハートめがね",1100],["tsuno","Sừng quỷ nhỏ","鬼の角",1200],["kitsunemen","Mặt nạ cáo","狐面",1400],["majo","Mũ phù thuỷ","魔女帽",1500],["gradcap","Mũ tốt nghiệp","角帽",1600],["tenshi","Vòng thiên thần","天使の輪",2000],["crown","Vương miện","王冠",2500]]
  .forEach(([a,n,jp,p])=>SHOP.push({id:"a:"+a,cat:"acc",acc:a,n,jp,p}));
+(A.ACC_NEW||[]).forEach(([a,n,jp,p])=>{ if(A.ACC[a]) SHOP.push({id:"a:"+a,cat:"acc",acc:a,n,jp,p}) });
 SHOP.push({id:"omamori",cat:"charm",n:"Bùa giữ chuỗi",jp:"お守り",p:700,max:3,d:"Lỡ nghỉ 1–2 ngày, bùa tự dùng để chuỗi ngày học không bị đứt. Mang tối đa 3 lá."},
  {id:"maneki",cat:"charm",n:"Mèo thần tài",jp:"招き猫",p:500,max:5,d:"Bấm Dùng để nhân đôi mọi xu kiếm được đến hết hôm nay."},
  {id:"ofuda",cat:"charm",n:"Bùa 50:50 (3 lá)",jp:"お札",p:250,q:3,max:30,d:"Khi luyện đề: loại 2 phương án sai của một câu. Không dùng được khi thi thử."},
@@ -302,7 +303,7 @@ const ACH=[
  ["w300","語彙300","300 từ đã thuộc","Thuộc 300 từ vựng",60,s=>s.words>=300],["w1000","語彙1000","1.000 từ đã thuộc","Thuộc 1.000 từ vựng",200,s=>s.words>=1000],
  ["early","早起き","Chim sớm","Học trước 7 giờ sáng",15,s=>!!s.fl.early],["night","夜更かし","Cú đêm","Học sau 11 giờ đêm",15,s=>!!s.fl.night],["daikichi","大吉","Đại cát","Rút được quẻ 大吉",30,s=>!!s.fl.daikichi],
  ["gd5","飾り好き","Thích trang trí","Có 5 món trang trí",30,s=>s.gd>=5],["gd20","コレクター","Nhà sưu tầm","Có 20 món trang trí",150,s=>s.gd>=20],["gd50","大コレクター","Đại sưu tầm","Có 50 món trang trí",400,s=>s.gd>=50],
- ["loc2","初旅行","Chuyến đi đầu tiên","Mở địa điểm thứ 2",50,s=>s.loc>=2],["loc4","旅人","Lữ khách","Mở 4 địa điểm",150,s=>s.loc>=4],["loc6","旅の達人","Bậc thầy du lịch","Mở 6 địa điểm",400,s=>s.loc>=6],["locall","日本一周","Vòng quanh Nhật Bản","Mở tất cả 11 địa điểm",800,s=>s.loc>=WL.ORDER.length],
+ ["loc2","初旅行","Chuyến đi đầu tiên","Mở địa điểm thứ 2",50,s=>s.loc>=2],["loc4","旅人","Lữ khách","Mở 4 địa điểm",150,s=>s.loc>=4],["loc6","旅の達人","Bậc thầy du lịch","Mở 6 địa điểm",400,s=>s.loc>=6],["locall","日本一周","Vòng quanh Nhật Bản","Mở tất cả "+WL.ORDER.length+" địa điểm",800,s=>s.loc>=WL.ORDER.length],
  ["dex1","初開花","Bông hoa đầu tiên","Trồng một cây ra hoa",20,s=>s.dex>=1],["dex8","植物好き","Yêu cây cỏ","8 loài ra hoa",120,s=>s.dex>=8],["dexall","植物博士","Tiến sĩ thực vật","Hoàn thành Sổ thực vật",500,s=>s.dex>=PL.ORDER.length],
  ["hv50","収穫祭","Lễ hội mùa màng","Thu hoạch 50 lần",100,s=>s.hv>=50],["land6","大農園","Đại nông trại","Mở rộng đảo cây 6×6",150,s=>s.land>=6],
  ["acc3","おしゃれ","Sành điệu","Có 3 phụ kiện",30,s=>s.acc>=3],["acc10","ファッショニスタ","Tín đồ thời trang","Có 10 phụ kiện",150,s=>s.acc>=10],
@@ -663,6 +664,32 @@ setTimeout(()=>{ try{
   else if(!ciState().done&&view==="today"&&!V12.B.quiet) V12.say(`Đừng quên <b>điểm danh</b> nhận xu hôm nay nha~`,{mood:"sing",acts:`<button type="button" class="btn small primary" data-v13="ci">Điểm danh</button>`});
   memSync(); checkAch(); refresh(); safe(()=>V13N2.check());
 }catch(e){console.error("[v13]",e)} },1800);
+
+/* ===== v16: hàng chọn cuộn ngang được (thanh kéo riêng, bánh xe chuột, kéo thả) ===== */
+(function(){
+ const SEL=".v13-cats,.v14-locs,.v14-memrow", store={};
+ const keyOf=el=>{ const c=el.className.split(" ")[0]; return c+":"+[...document.querySelectorAll(SEL)].filter(x=>x.className.split(" ")[0]===c).indexOf(el) };
+ const barOf=el=>{ const n=el.nextElementSibling; return n&&n.classList.contains("v16-bar")?n:null };
+ function upd(el){ const bar=barOf(el); if(!bar) return; const sw=el.scrollWidth, cw=el.clientWidth, can=sw>cw+6; bar.classList.toggle("on",can); if(!can) return;
+  const tw=bar.clientWidth, w=Math.max(36,tw*cw/sw), x=(tw-w)*(el.scrollLeft/(sw-cw)); const t=bar.firstChild; t.style.width=w+"px"; t.style.transform="translateX("+x+"px)" }
+ function deco(el){ if(el.dataset.v16){ upd(el); return } el.dataset.v16="1"; el.classList.add("v16-hs");
+  const bar=document.createElement("div"); bar.className="v16-bar"; bar.innerHTML="<i></i>"; el.after(bar);
+  const k=keyOf(el); if(store[k]!=null) el.scrollLeft=store[k]; else { const s=el.querySelector('[aria-selected="true"],.on'); if(s) el.scrollLeft=Math.max(0,s.offsetLeft-el.clientWidth/2+s.offsetWidth/2) }
+  upd(el) }
+ let raf=0; const scan=()=>{ cancelAnimationFrame(raf); raf=requestAnimationFrame(()=>{ document.querySelectorAll(".v16-bar").forEach(b=>{ const p=b.previousElementSibling; if(!p||!p.classList.contains("v16-hs")) b.remove() }); document.querySelectorAll(SEL).forEach(deco) }) };
+ new MutationObserver(scan).observe(document.body,{childList:true,subtree:true}); window.addEventListener("resize",scan); scan();
+ document.addEventListener("scroll",e=>{ const el=e.target; if(el&&el.matches&&el.matches(SEL)){ store[keyOf(el)]=el.scrollLeft; upd(el) } },true);
+ document.addEventListener("wheel",e=>{ const el=e.target.closest&&e.target.closest(SEL); if(!el||el.scrollWidth<=el.clientWidth+2) return; if(Math.abs(e.deltaY)<=Math.abs(e.deltaX)) return; const b=el.scrollLeft; el.scrollLeft+=e.deltaY; if(el.scrollLeft!==b) e.preventDefault() },{passive:false});
+ let dr=null, moved=false;
+ document.addEventListener("pointerdown",e=>{ if(e.button!==0) return;
+  const bar=e.target.closest&&e.target.closest(".v16-bar"); if(bar){ const el=bar.previousElementSibling, t=bar.firstChild, r=t.getBoundingClientRect(); const ratio=(el.scrollWidth-el.clientWidth)/Math.max(1,bar.clientWidth-t.offsetWidth);
+   if(e.clientX<r.left||e.clientX>r.right){ el.scrollLeft+=(e.clientX-(r.left+r.width/2))*ratio; dr={bar:1,el,x:e.clientX,l:el.scrollLeft,ratio} } else dr={bar:1,el,x:e.clientX,l:el.scrollLeft,ratio}; bar.classList.add("drag"); e.preventDefault(); return }
+  if(e.pointerType!=="mouse") return; const el=e.target.closest&&e.target.closest(SEL); if(!el||el.scrollWidth<=el.clientWidth+2) return; dr={el,x:e.clientX,l:el.scrollLeft}; moved=false });
+ document.addEventListener("pointermove",e=>{ if(!dr) return; const dx=e.clientX-dr.x; if(dr.bar){ dr.el.scrollLeft=dr.l+dx*dr.ratio; return } if(!moved&&Math.abs(dx)>6){ moved=true; dr.el.classList.add("v16-drag") } if(moved) dr.el.scrollLeft=dr.l-dx });
+ const end=()=>{ if(dr){ if(dr.bar) document.querySelectorAll(".v16-bar.drag").forEach(b=>b.classList.remove("drag")); else dr.el.classList.remove("v16-drag"); const m=moved; dr=null; if(m) setTimeout(()=>{ moved=false },0) } };
+ document.addEventListener("pointerup",end); document.addEventListener("pointercancel",end);
+ document.addEventListener("click",e=>{ if(moved&&e.target.closest&&e.target.closest(SEL)){ e.preventDefault(); e.stopPropagation() } },true);
+})();
 V.petNow=petNow; V.petSVG=()=>{ const id=petNow(); return id?A.petSVG(id,{mood:petMood(id),lv:petLv(RW().pets[id].x)}):"" };
 V.ready=true; V.SHOP=SHOP; V.RW=RW; V.refresh=refresh; V.popup=popup; V.bond=bond;
 })();
